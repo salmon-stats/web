@@ -16,6 +16,9 @@ a {
   font-weight: bold;
   color: #1ddbb4;
 }
+.clickable {
+  cursor: pointer;
+}
 </style>
 
 <script>

@@ -14,7 +14,7 @@
         </div>
 
         <table>
-          <tr
+          <tr class="clickable"
             :class="[result.fail_reason_id ? 'fail' : 'clear' ]"
             @click="toResultPage(result.id)"
             v-for="result in playerSummary.results" :key="result.id">
