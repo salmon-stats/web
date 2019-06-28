@@ -16,6 +16,33 @@ a {
   font-weight: bold;
   color: #1ddbb4;
 }
+
+table, tr, td {
+  border-collapse: collapse;
+  border: 0;
+}
+th {
+  text-align: left;
+  padding: .125em .5em;
+}
+td {
+  padding: .375em .5em;
+}
+.table-wrap {
+  display: inline-block;
+  padding: .25em;
+  background-color: lighten(#2c3e50, 5%);
+}
+tbody tr:nth-child(odd) {
+  background-color: lighten(#2c3e50, 2.5%);
+}
+tbody tr:nth-child(even) {
+  background-color: #2c3e50;
+}
+table.is-hoverable tbody tr:hover {
+  background-color: lighten(#2c3e50, 10%);
+}
+
 .clickable {
   cursor: pointer;
 }

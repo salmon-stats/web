@@ -13,17 +13,21 @@
           {{ playerId }} is not a registered user.
         </div>
 
-        <table>
-          <tr class="clickable"
-            :class="[result.fail_reason_id ? 'fail' : 'clear' ]"
-            @click="toResultPage(result.id)"
-            v-for="result in playerSummary.results" :key="result.id">
-            <td>{{ result.fail_reason_id ? 'Fail' : 'Clear'  }}</td>
-            <td>{{ result.start_at }}</td>
-            <td>{{ result.danger_rate }}</td>
-            <!-- <td>{{ result.members.length }}</td> -->
-          </tr>
-        </table>
+        <div class="table-wrap">
+          <table class="is-hoverable">
+            <tbody>
+              <tr class="clickable"
+                :class="[result.fail_reason_id ? 'fail' : 'clear' ]"
+                @click="toResultPage(result.id)"
+                v-for="result in playerSummary.results" :key="result.id">
+                <td>{{ result.fail_reason_id ? 'Fail' : 'Clear'  }}</td>
+                <td>{{ result.start_at }}</td>
+                <td>{{ result.danger_rate }}</td>
+                <!-- <td>{{ result.members.length }}</td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       <div v-else>
         An error has occured during loading player summary for {{ playerId }}.
