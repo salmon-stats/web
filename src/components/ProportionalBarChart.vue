@@ -14,7 +14,7 @@ export default class ProportionalBarChart extends Vue {
   @Prop() highest!: number;
 
   get width() {
-    return `${this.value / this.highest * 100}%`;
+    return this.highest === 0 ? '0' : `${this.value / this.highest * 100}%`;
   }
 }
 </script>
