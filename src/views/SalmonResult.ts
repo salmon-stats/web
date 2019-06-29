@@ -3,11 +3,13 @@ import { Component, Vue } from 'vue-property-decorator';
 import axios from 'axios';
 
 import { extendSalmonResult } from '@/extend-salmon-result';
+import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import { BossId, PlayerId } from '@/types/salmon-result';
 import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-salmon-result';
 
 @Component({
   name: 'SalmonResult',
+  components: { ProportionalBarChart },
 })
 export default class SalmonResult extends Vue {
   public salmonResult: ExtendedSalmonResult | null = null;

@@ -40,18 +40,31 @@
               </td>
               <td>
                 <p><span :class="hasMost('rescue', p.rescue) ? 'has-most' : ''">{{ p.rescue }}</span></p>
+                <p class="proportional-bar-chart-container">
+                  <proportional-bar-chart chart-key="rescue" :value="p.rescue" :highest="salmonResult.highest.rescue" />
+                </p>
               </td>
               <td>
                 <p><span :class="hasMost('death', p.death) ? 'has-most' : ''">{{ p.death }}</span></p>
+                <p class="proportional-bar-chart-container">
+                  <proportional-bar-chart chart-key="death" :value="p.death" :highest="salmonResult.highest.death" />
+                </p>
               </td>
               <td>
                 <p><span :class="hasMost('total_boss_eliminations', p.total_boss_eliminations) ? 'has-most' : ''">{{ p.total_boss_eliminations }}</span></p>
+                <p class="proportional-bar-chart-container">
+                  <proportional-bar-chart chart-key="boss-kill" :value="p.total_boss_eliminations" :highest="salmonResult.highest.total_boss_eliminations" />
+                </p>
               </td>
               <td>
                 <p>
                   <span class="golden-egg" :class="hasMost('golden_eggs', p.golden_eggs) ? 'has-most' : ''">{{ p.golden_eggs }}</span>
                   +
                   <span class="power-egg" :class="hasMost('power_eggs', p.power_eggs) ? 'has-most' : ''">{{ p.power_eggs }}</span>
+                </p>
+                <p class="proportional-bar-chart egg-collection">
+                  <proportional-bar-chart chart-key="golden-egg" :value="p.golden_eggs" :highest="salmonResult.highest.golden_eggs" />
+                  <proportional-bar-chart chart-key="power-egg" :value="p.power_eggs" :highest="salmonResult.highest.power_eggs" />
                 </p>
               </td>
             </tr>
