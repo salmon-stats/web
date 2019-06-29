@@ -15,18 +15,21 @@
         <div v-for="file in selectedFiles">
           {{ file.name }}
         </div>
-        <div class="error" v-if="errorMessage">
-          {{ errorMessage }}
-        </div>
 
         <h2>Upload log</h2>
         <div>
-          <p v-for="log in uploadLog" :key="log.job_id">
-            <strong>{{ log.job_id ? log.job_id : '?' }}</strong>
-            <span v-if="!log.created"> already exists.</span>
-            <span v-else> uploaded successfully.</span>
-            <router-link :to="`/results/${log.salmon_id}`">Result page</router-link>
-          </p>
+          <div v-for="item in uploadLog" :key="item.job_id">
+            <p class="error" v-if="item.error">
+              {{ item.error.summary }}<br>
+              {{ item.error.message }}
+            </p>
+            <p v-else>
+              <strong>{{ item.job_id ? item.job_id : '?' }}</strong>
+              <span v-if="!item.created"> already exists.</span>
+              <span v-else> was uploaded successfully.</span>
+              See: <router-link :to="`/results/${item.salmon_id}`">/result/{{ item.salmon_id }}</router-link>
+            </p>
+          </div>
         </div>
       </form>
     </require-sign-in>
@@ -62,7 +65,6 @@ import RequireSignIn from '../components/RequireSignIn.vue';
 export default class SalmonResultUploader extends Vue {
   isUploading = false;
   removeListner = null;
-  errorMessage = '';
   selectedFiles = [];
   uploadLog = [];
 
@@ -132,7 +134,7 @@ export default class SalmonResultUploader extends Vue {
               this.uploadLog = res.data;
             })
             .catch((error) => {
-              this.errorMessage = error;
+              this.uploadLog = [{ error: { summary: error.toString(), message: error.response.data.message } }];
             })
             .finally(() => {
               this.selectedFiles = [];
