@@ -2,14 +2,15 @@ import dayjs from 'dayjs';
 import { Component, Vue } from 'vue-property-decorator';
 import axios from 'axios';
 
-import { extendSalmonResult } from '@/extend-salmon-result';
+import Blockies from '@/components/Blockies.vue';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
+import { extendSalmonResult } from '@/extend-salmon-result';
 import { BossId, PlayerId } from '@/types/salmon-result';
 import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-salmon-result';
 
 @Component({
   name: 'SalmonResult',
-  components: { ProportionalBarChart },
+  components: { Blockies, ProportionalBarChart },
 })
 export default class SalmonResult extends Vue {
   public salmonResult: ExtendedSalmonResult | null = null;
@@ -22,12 +23,10 @@ export default class SalmonResult extends Vue {
     return dayjs.unix(time).utc().local().format('YYYY-MM-DD HH:mm:ss');
   }
   public isRegistered(playerId: PlayerId): boolean {
-    return this.salmonResult!.member_accounts.some((member: any) =>
-      member && member.player_id === playerId);
+    return !!this.getAccountByPlayerId(playerId);
   }
   public getPlayerAvatar(playerId: PlayerId): string | null {
-    const user = this.salmonResult!.member_accounts.find((member) =>
-      member && member.player_id === playerId);
+    const user = this.getAccountByPlayerId(playerId);
     return user ? user.twitter_avatar : null;
   }
   public getPlayerName(playerId: PlayerId): string {
@@ -57,5 +56,10 @@ export default class SalmonResult extends Vue {
       .then((res: any) => {
         this.salmonResult = extendSalmonResult(res.data);
       });
+  }
+
+  private getAccountByPlayerId(playerId: PlayerId) {
+    return this.salmonResult!.member_accounts.find((member) =>
+      member && member.player_id === playerId);
   }
 }

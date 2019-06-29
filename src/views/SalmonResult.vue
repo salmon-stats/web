@@ -21,9 +21,8 @@
               v-for="p in salmonResult.player_results" :key="p.player_id"
               @click="toPlayerSummary(p.player_id)">
               <td>
-                <span v-if="isRegistered(p.player_id)">
-                  <img :src="getPlayerAvatar(p.player_id)">
-                </span>
+                <img :src="getPlayerAvatar(p.player_id)" v-if="isRegistered(p.player_id)">
+                <blockies :sizePerPixel="4" :pixels="8" :seed="p.player_id" v-else></blockies>
               </td>
               <td>
                 {{ getPlayerName(p.player_id) }}
