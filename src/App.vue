@@ -52,10 +52,25 @@ table.is-hoverable tbody tr:hover {
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import GlobalHeader from './components/GlobalHeader.vue';
+import { metadataModule } from './store/modules/metadata';
 
 @Component({
   name: 'App',
   components: { GlobalHeader },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  mounted() {
+    const timerId = setInterval(() => {
+      const now = new Date().getTime();
+      if (now > metadataModule.lastFetchedTime + SESSION_REFRESH_TIME) {
+        metadataModule.refreshSession()
+          .then(() => {
+            if (metadataModule.hasSessionExpired) {
+              clearInterval(timerId);
+            }
+          });
+      }
+    }, 60000);
+  }
+}
 </script>

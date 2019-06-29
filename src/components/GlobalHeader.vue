@@ -19,6 +19,10 @@
     <div v-else>
       <a :href="signInUrl">Sign in with Twitter</a>
     </div>
+
+    <div v-if="hasSessionExpired">
+      Session has expired.
+    </div>
   </div>
 </template>
 
@@ -40,6 +44,9 @@ export default class GlobalHeader extends Vue {
 
   get user() {
     return metadata.user;
+  }
+  get hasSessionExpired() {
+    return metadata.hasSessionExpired;
   }
   get hasMyPage() {
     return !!this.user.player_id;

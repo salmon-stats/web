@@ -15,17 +15,45 @@ export interface IMetadata {
 
 @Module({ dynamic: true, store, name: 'metadata', namespaced: true })
 class Metadata extends VuexModule implements IMetadata {
-  public bossIds = [];
+  // public bossIds = [];
   public user = null;
+  public hasSessionExpired = false;
+  public lastFetchedTime = 0;
 
   @Action
   public fetchMetadata() {
-    axios.get('http://localhost/metadata', { withCredentials: true })
+    // TODO: fetch other metadata (e.g. bosses, weapons, ...)
+    return axios.get('http://localhost/metadata', { withCredentials: true })
       .then((res) => {
         const data = res.data;
         this.SET_USER_METADATA(data.user);
+        this.SET_LAST_FETCHED_TIME(new Date().getTime());
+        return data;
       });
-    // TODO: fetch other metadata (e.g. bosses, weapons, ...)
+  }
+
+  @Action
+  public refreshSession() {
+    if (this.hasSessionExpired || this.user === null) {
+      return;
+    }
+
+    this.fetchMetadata()
+      .then((data) => {
+        if (data.user === null) {
+          this.SET_SESSION_EXPIRED_TRUE();
+        }
+      });
+  }
+
+  @Mutation
+  private SET_SESSION_EXPIRED_TRUE() {
+    this.hasSessionExpired = true;
+  }
+
+  @Mutation
+  private SET_LAST_FETCHED_TIME(time: number) {
+    this.lastFetchedTime = time;
   }
 
   @Mutation
