@@ -8,6 +8,7 @@
         <input id="file-selector" @change="onSelectFiles" type="file" accept="application/json" multiple>
       </label>
       <button :disabled="isUploading" @click="onClickUpload">Upload</button>
+      <button :disabled="isUploading" @click="onClickClearFiles">Clear files</button>
 
       <h2>Selected Files</h2>
       <div v-for="file in selectedFiles">
@@ -96,6 +97,9 @@ export default class SalmonResultUploader extends Vue {
   }
   onClickUpload(event) {
     this.uploadResults();
+  }
+  onClickClearFiles(event) {
+    this.selectedFiles = [];
   }
   uploadResults() {
     let filesProcessed = 0;
