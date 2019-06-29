@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { Component, Vue } from 'vue-property-decorator';
 import axios from 'axios';
 
-import Blockies from '@/components/Blockies.vue';
+import PlayerAvatar from '@/components/PlayerAvatar.vue';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import { extendSalmonResult } from '@/extend-salmon-result';
 import { BossId, PlayerId } from '@/types/salmon-result';
@@ -10,7 +10,7 @@ import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-sa
 
 @Component({
   name: 'SalmonResult',
-  components: { Blockies, ProportionalBarChart },
+  components: { PlayerAvatar, ProportionalBarChart },
 })
 export default class SalmonResult extends Vue {
   public salmonResult: ExtendedSalmonResult | null = null;
@@ -69,6 +69,10 @@ export default class SalmonResult extends Vue {
   public toPlayerSummary(playerId: PlayerId) {
     this.$router.push({ name: 'playerSummary', params: { playerId } });
   }
+  public getAccountByPlayerId(playerId: PlayerId) {
+    return this.salmonResult!.member_accounts.find((member) =>
+      member && member.player_id === playerId);
+  }
 
   protected mounted() {
     const id = this.$route.params.resultId;
@@ -76,10 +80,5 @@ export default class SalmonResult extends Vue {
       .then((res: any) => {
         this.salmonResult = extendSalmonResult(res.data);
       });
-  }
-
-  private getAccountByPlayerId(playerId: PlayerId) {
-    return this.salmonResult!.member_accounts.find((member) =>
-      member && member.player_id === playerId);
   }
 }

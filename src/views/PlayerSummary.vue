@@ -6,11 +6,19 @@
     <div v-else>
       <div v-if="playerSummary">
         <div v-if="user">
-          <h1><a :href="`https://twitter.com/${user.name}`">@{{ user.name }}</a></h1>
-          <!-- <img :src="user.twitter_avatar"> -->
+          <h1><a :href="`https://twitter.com/${user.name}`">
+            <player-avatar :size="48" :user="user">
+              @{{ user.name }}
+            </player-avatar>
+          </a></h1>
         </div>
         <div v-else>
-          {{ playerId }} is not a registered user.
+          <h1>
+            <player-avatar :size="48" :blockiesSeed="playerId">
+              {{ playerId }}
+            </player-avatar>
+          </h1>
+          <p>{{ playerId }} is not a registered user.</p>
         </div>
 
         <div class="table-wrap">
@@ -55,10 +63,12 @@
 
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
+import PlayerAvatar from '../components/PlayerAvatar.vue';
 import apiClient from '../api-client';
 
 @Component({
   name: 'PlayerSummary',
+  components: { PlayerAvatar },
 })
 export default class PlayerSummary extends Vue {
   loading = false;

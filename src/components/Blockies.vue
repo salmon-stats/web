@@ -7,6 +7,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 import { renderIcon } from '@download/blockies';
 
 @Component({
+  name: 'Blockies',
   props: {
     sizePerPixel: Number, // TODO: description
     pixels: Number, // TODO: description

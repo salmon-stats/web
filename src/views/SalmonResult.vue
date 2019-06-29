@@ -21,8 +21,8 @@
               v-for="p in salmonResult.player_results" :key="p.player_id"
               @click="toPlayerSummary(p.player_id)">
               <td>
-                <img :src="getPlayerAvatar(p.player_id)" v-if="isRegistered(p.player_id)">
-                <blockies :sizePerPixel="4" :pixels="8" :seed="p.player_id" v-else></blockies>
+                <player-avatar :user="getAccountByPlayerId(p.player_id)"
+                  :size="32" :blockiesSeed="p.player_id" />
               </td>
               <td>
                 {{ getPlayerName(p.player_id) }}
@@ -110,8 +110,8 @@
             <th></th>
             <th v-for="pid in salmonResult.members" :key="pid">
               <div class="clickable" @click="toPlayerSummary(pid)">
-                <img :src="getPlayerAvatar(pid)" v-if="isRegistered(pid)">
-                <blockies :sizePerPixel="4" :pixels="8" :seed="pid" v-else></blockies>
+                <player-avatar :user="getAccountByPlayerId(pid)"
+                  :size="32" :blockiesSeed="pid" />
               </div>
             </th>
           </thead>
