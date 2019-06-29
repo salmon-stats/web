@@ -39,4 +39,16 @@ span {
 .power-egg {
   background-color: #e67e22;
 }
+.player-1 {
+  background-color: #e74c3c;
+}
+.player-2 {
+  background-color: #2ecc71;
+}
+.player-3 {
+  background-color: #3498db;
+}
+.player-4 {
+  background-color: #f1c40f;
+}
 </style>

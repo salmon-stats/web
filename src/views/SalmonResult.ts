@@ -16,6 +16,10 @@ export default class SalmonResult extends Vue {
   public salmonResult: ExtendedSalmonResult | null = null;
   public bossIds: number[] = [3, 6, 9, 12, 13, 14, 15, 16, 21];
 
+  get appearedBossIds(): BossId[] {
+    return this.bossIds.filter((bossId) => this.totalBossSpawn(bossId) > 0);
+  }
+
   public specialsUsedInWave(wave: number): SpecialId[] {
     return this.salmonResult!.player_results
       .map((player) => {

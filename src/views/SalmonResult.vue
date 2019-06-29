@@ -102,6 +102,40 @@
           </tbody>
         </table>
       </div>
+
+      <h2>Boss Eliminations</h2>
+      <div class="table-wrap">
+        <table class="is-hoverable">
+          <thead>
+            <th></th>
+            <th v-for="pid in salmonResult.members" :key="pid">
+              <div class="clickable" @click="toPlayerSummary(pid)">
+                <img :src="getPlayerAvatar(pid)" v-if="isRegistered(pid)">
+                <blockies :sizePerPixel="4" :pixels="8" :seed="pid" v-else></blockies>
+              </div>
+            </th>
+          </thead>
+          <tbody>
+            <tr v-for="bossId in appearedBossIds" :key="bossId">
+              <td>{{ bossId }}</td>
+              <td class="player-boss-elimination" v-for="(p, playerIndex) in salmonResult.player_results" :key="p.pid">
+                {{ p.boss_eliminations.counts[bossId] }}
+                <proportional-bar-chart :chart-key="`player-${playerIndex + 1}`"
+                  :value="p.boss_eliminations.counts[bossId]"
+                  :highest="salmonResult.highest.boss_eliminations[bossId]" />
+              </td>
+              <td class="total-boss-elimination">
+                {{ totalBossElimination(bossId) }}/{{ totalBossSpawn(bossId) }}
+                <span class="total-boss-elimination-rate-chart">
+                  <proportional-bar-chart chart-key="boss-kill"
+                    :value="totalBossElimination(bossId)"
+                    :highest="totalBossSpawn(bossId)" />
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -148,5 +182,9 @@ a {
   &.egg-collection:first-child {
     margin-bottom: 2px;
   }
+}
+.total-boss-elimination-rate-chart {
+  display: block;
+  background-color: white;
 }
 </style>

@@ -93,6 +93,7 @@ interface TotalResult  {
   golden_eggs: number;
   normal_eggs: number;
   total_boss_eliminations: number;
+  boss_eliminations: Counts;
 }
 
 interface ExtendedPlayerResult extends ParsedPlayerResult {
