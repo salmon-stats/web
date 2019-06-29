@@ -119,7 +119,7 @@
             <tr v-for="bossId in appearedBossIds" :key="bossId">
               <td>{{ bossId }}</td>
               <td class="player-boss-elimination" v-for="(p, playerIndex) in salmonResult.player_results" :key="p.pid">
-                {{ p.boss_eliminations.counts[bossId] }}
+                <span :class="hasMost('boss_eliminations', p.boss_eliminations.counts[bossId], bossId) ? 'has-most' : null">{{ p.boss_eliminations.counts[bossId] }}</span>
                 <proportional-bar-chart :chart-key="`player-${playerIndex + 1}`"
                   :value="p.boss_eliminations.counts[bossId]"
                   :highest="salmonResult.highest.boss_eliminations[bossId]" />
