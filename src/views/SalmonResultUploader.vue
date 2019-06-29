@@ -151,7 +151,9 @@ export default class SalmonResultUploader extends Vue {
     });
   }
   beforeDestroy() {
-    this.removeListner();
+    if (this.removeListner) {
+      this.removeListner();
+    }
   }
 }
 </script>
