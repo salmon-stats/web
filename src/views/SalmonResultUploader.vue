@@ -1,33 +1,35 @@
 <template>
   <div class="salmon-result-uploader">
-    <h1>Upload results</h1>
-    <form @submit.prevent>
-      <label for="file-selector">
-        <a>Select result file(s)</a> or drag and drop result files (each file must be 20KB&lt;).<br>
-        You can upload up to 10 results at once.<br>
-        <input id="file-selector" @change="onSelectFiles" type="file" accept="application/json" multiple>
-      </label>
-      <button :disabled="isUploading" @click="onClickUpload">Upload</button>
-      <button :disabled="isUploading" @click="onClickClearFiles">Clear files</button>
+    <require-sign-in message="to upload results">
+      <h1>Upload results</h1>
+      <form @submit.prevent>
+        <label for="file-selector">
+          <a>Select result file(s)</a> or drag and drop result files (each file must be 20KB&lt;).<br>
+          You can upload up to 10 results at once.<br>
+          <input id="file-selector" @change="onSelectFiles" type="file" accept="application/json" multiple>
+        </label>
+        <button :disabled="isUploading" @click="onClickUpload">Upload</button>
+        <button :disabled="isUploading" @click="onClickClearFiles">Clear files</button>
 
-      <h2>Selected Files</h2>
-      <div v-for="file in selectedFiles">
-        {{ file.name }}
-      </div>
-      <div class="error" v-if="errorMessage">
-        {{ errorMessage }}
-      </div>
+        <h2>Selected Files</h2>
+        <div v-for="file in selectedFiles">
+          {{ file.name }}
+        </div>
+        <div class="error" v-if="errorMessage">
+          {{ errorMessage }}
+        </div>
 
-      <h2>Upload log</h2>
-      <div>
-        <p v-for="log in uploadLog" :key="log.job_id">
-          <strong>{{ log.job_id ? log.job_id : '?' }}</strong>
-          <span v-if="!log.created"> already exists.</span>
-          <span v-else> uploaded successfully.</span>
-          <router-link :to="`/results/${log.salmon_id}`">Result page</router-link>
-        </p>
-      </div>
-    </form>
+        <h2>Upload log</h2>
+        <div>
+          <p v-for="log in uploadLog" :key="log.job_id">
+            <strong>{{ log.job_id ? log.job_id : '?' }}</strong>
+            <span v-if="!log.created"> already exists.</span>
+            <span v-else> uploaded successfully.</span>
+            <router-link :to="`/results/${log.salmon_id}`">Result page</router-link>
+          </p>
+        </div>
+      </form>
+    </require-sign-in>
   </div>
 </template>
 
@@ -51,9 +53,11 @@ import { Component, Vue } from 'vue-property-decorator';
 import dragDrop from 'drag-drop';
 
 import { metadataModule as metadata } from '../store/modules/metadata';
+import RequireSignIn from '../components/RequireSignIn.vue';
 
 @Component({
   name: 'SalmonResultUploader',
+  extends: RequireSignIn,
 })
 export default class SalmonResultUploader extends Vue {
   isUploading = false;
@@ -62,10 +66,13 @@ export default class SalmonResultUploader extends Vue {
   selectedFiles = [];
   uploadLog = [];
 
-  mounted () {
-    this.removeListner = dragDrop('.salmon-result-uploader', (files) => {
-      this.addToSelectedFiles(files);
-    });
+  mounted() {
+    // Assume user can't sign in without page transition.
+    if (this.isSignedIn) {
+      this.removeListner = dragDrop('.salmon-result-uploader', (files) => {
+        this.addToSelectedFiles(files);
+      });
+    }
   }
   addToSelectedFiles(files) {
     Array.from(files) // Convert FileList to Array
