@@ -84,6 +84,24 @@
           </tbody>
         </table>
       </div>
+
+      <h2>Waves</h2>
+      <div class="table-wrap">
+        <table class="is-hoverable">
+          <tbody>
+            <tr v-for="wave in salmonResult.waves" :key="wave.wave">
+              <th>{{ wave.wave }}</th>
+              <td>{{ wave.water.name }}</td>
+              <td>{{ wave.event ? wave.event.name : '' }}</td>
+              <td>
+                <img :src="img('special', specialId)" v-for="(specialId, i) in specialsUsedInWave(wave.wave)">
+              </td>
+              <td class="golden-egg">{{ wave.golden_egg_delivered }}/{{ wave.golden_egg_quota }}</td>
+              <td class="power-egg">{{ wave.power_egg_collected }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>

@@ -16,6 +16,19 @@ export default class SalmonResult extends Vue {
   public salmonResult: ExtendedSalmonResult | null = null;
   public bossIds: number[] = [3, 6, 9, 12, 13, 14, 15, 16, 21];
 
+  public specialsUsedInWave(wave: number): SpecialId[] {
+    return this.salmonResult!.player_results
+      .map((player) => {
+        return {
+          specialId: player.special_id,
+          count: player.special_uses[wave - 1].count,
+        };
+      })
+      .map((specialUse) => {
+        return new Array(specialUse.count).fill(specialUse.specialId);
+      })
+      .flat();
+  }
   public img(type: string, id: string|number): string {
     return `https://splatoon-stats-api.yuki.games/static/images/${type}/${id}.png`;
   }
