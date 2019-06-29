@@ -4,7 +4,7 @@ import axios from 'axios';
 import { PlayerId, BossId } from '@/types/salmon-result';
 
 export interface IMetadata {
-  bossIds: BossId[];
+  // bossIds: BossId[];
   user: null | {
     id: number;
     name: string;
@@ -13,7 +13,7 @@ export interface IMetadata {
   };
 }
 
-@Module({ dynamic: true, store, name: 'counter', namespaced: true })
+@Module({ dynamic: true, store, name: 'metadata', namespaced: true })
 class Metadata extends VuexModule implements IMetadata {
   public bossIds = [];
   public user = null;
@@ -21,13 +21,16 @@ class Metadata extends VuexModule implements IMetadata {
   @Action
   public fetchMetadata() {
     axios.get('http://localhost/metadata', { withCredentials: true })
-      .then((res) => this.SET_USER_METADATA(res.data));
+      .then((res) => {
+        const data = res.data;
+        this.SET_USER_METADATA(data.user);
+      });
     // TODO: fetch other metadata (e.g. bosses, weapons, ...)
   }
 
   @Mutation
-  private SET_USER_METADATA(metadata: any) {
-    this.user = metadata.user;
+  private SET_USER_METADATA(user: any) {
+    this.user = user;
   }
 }
 
