@@ -9,7 +9,8 @@
           <thead>
             <th></th>
             <th>Player</th>
-            <th>Weapon</th>
+            <th>Special</th>
+            <th>Main</th>
             <th>Rescue</th>
             <th>Death</th>
             <th>Boss</th>
@@ -28,13 +29,13 @@
                 {{ getPlayerName(p.player_id) }}
               </td>
               <td>
-                <span class="weapon-icons">
-                  <span class="weapon-icon special">
-                    <img :src="img('special', p.special_id)">
-                  </span>
-                  <span class="weapon-icon main" v-for="(w, i) in p.weapons" :key="i">
-                    <img :src="img('weapon', w.weapon_id)">
-                  </span>
+                <span class="weapon-icon special">
+                  <img :src="img('special', p.special_id)">
+                </span>
+              </td>
+              <td>
+                <span class="weapon-icon main" v-for="(w, i) in p.weapons" :key="i">
+                  <img :src="img('weapon', w.weapon_id)">
                 </span>
               </td>
               <td>
@@ -68,6 +69,7 @@
               </td>
             </tr>
             <tr>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
