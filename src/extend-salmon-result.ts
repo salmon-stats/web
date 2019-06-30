@@ -26,7 +26,7 @@ const extendSalmonResult = (result: any): ExtendedSalmonResult => {
     totalResult[key] =
       result.player_results!.reduce((sum: number, p: any) => sum + p[key], 0);
     highest[key] =
-      result.player_results!.reduce((max: number, p: any) => p[key] > max ? p[key] : max, 0);
+      Math.max(...result.player_results!.map((p: any) => p[key]));
   });
 
   const extendedSalmonResult: ExtendedSalmonResult = {
