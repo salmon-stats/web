@@ -49,7 +49,9 @@ export default class SalmonResult extends Vue {
     return user ? user.name : playerId;
   }
   public hasMost(key: keyof TotalResult, value: number, bossId?: number): boolean {
-    if (key === 'boss_eliminations') {
+    if (value === 0) {
+      return false;
+    } else if (key === 'boss_eliminations') {
       return this.salmonResult!.highest[key][bossId] === value;
     }
     return this.salmonResult!.highest[key] === value;
