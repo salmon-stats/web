@@ -29,14 +29,12 @@
                 {{ getPlayerName(p.player_id) }}
               </td>
               <td>
-                <span class="weapon-icon special">
-                  <img :src="img('special', p.special_id)">
-                  {{ p.special_uses.reduce((sum, s) => sum + s.count, 0) }}
-                </span>
+                <special-usage :special-id="p.special_id"
+                  :count="p.special_uses.reduce((sum, s) => sum + s.count, 0)" />
               </td>
               <td>
                 <span class="weapon-icon main" v-for="(w, i) in p.weapons" :key="i">
-                  <img :src="img('weapon', w.weapon_id)">
+                  <img :src="weaponIcon('weapon', w.weapon_id)">
                 </span>
               </td>
               <td>
@@ -97,10 +95,7 @@
               <td>{{ wave.water.name }}</td>
               <td>{{ wave.event ? wave.event.name : '' }}</td>
               <td v-for="special in specialsUsedInWave(wave.wave)">
-                <span v-if="special.count">
-                  <img :src="img('special', special.id)">
-                  {{ special.count }}
-                </span>
+                <special-usage v-if="special.count" :special-id="special.id" :count="special.count" />
               </td>
               <td class="golden-egg">{{ wave.golden_egg_delivered }}/{{ wave.golden_egg_quota }}</td>
               <td class="power-egg">{{ wave.power_egg_collected }}</td>
@@ -175,16 +170,6 @@ a {
   color: $power-egg;
 }
 
-.weapon-icons {
-  height: 32px;
-  display: flex;
-  .weapon-icon {
-    align-items: center;
-    &.special {
-      margin-right: 16px;
-    }
-  }
-}
 .proportional-bar-chart-container {
   height: 12px;
   &.egg-collection:first-child {

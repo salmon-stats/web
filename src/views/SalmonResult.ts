@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import PlayerAvatar from '@/components/PlayerAvatar.vue';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
+import SpecialUsage from '@/components/SpecialUsage.vue';
 import { extendSalmonResult } from '@/extend-salmon-result';
 import { BossId, PlayerId } from '@/types/salmon-result';
 import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-salmon-result';
@@ -11,7 +12,7 @@ import { weaponIcon } from '../helper';
 
 @Component({
   name: 'SalmonResult',
-  components: { PlayerAvatar, ProportionalBarChart },
+  components: { PlayerAvatar, ProportionalBarChart, SpecialUsage },
 })
 export default class SalmonResult extends Vue {
   public salmonResult: ExtendedSalmonResult | null = null;
