@@ -44,7 +44,7 @@
                 </p>
               </td>
               <td>
-                <p><span :class="hasMost('death', p.death) ? 'has-most' : ''">{{ p.death }}</span></p>
+                <p><span :class="hasLeastDeath(p.death) ? 'has-least-death' : ''">{{ p.death }}</span></p>
                 <p class="proportional-bar-chart-container">
                   <proportional-bar-chart chart-key="death" :value="p.death" :highest="salmonResult.highest.death" />
                 </p>
@@ -160,7 +160,7 @@ li {
 a {
   color: #42b983;
 }
-.has-most {
+.has-most, .has-least-death {
   text-decoration: underline;
 }
 .golden-egg {

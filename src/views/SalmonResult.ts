@@ -56,6 +56,9 @@ export default class SalmonResult extends Vue {
     }
     return this.salmonResult!.highest[key] === value;
   }
+  public hasLeastDeath(value: number): boolean {
+    return value === Math.min(...this.salmonResult!.player_results.map(p => p.death));
+  }
   public totalBossElimination(bossId: BossIdKeys): number {
     return this.salmonResult!.player_results.reduce(
       (sum: number, p) => sum + p.boss_eliminations.counts[bossId],
