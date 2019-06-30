@@ -31,6 +31,7 @@
               <td>
                 <span class="weapon-icon special">
                   <img :src="img('special', p.special_id)">
+                  {{ p.special_uses.reduce((sum, s) => sum + s.count, 0) }}
                 </span>
               </td>
               <td>
