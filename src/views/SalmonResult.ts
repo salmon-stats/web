@@ -7,6 +7,7 @@ import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import { extendSalmonResult } from '@/extend-salmon-result';
 import { BossId, PlayerId } from '@/types/salmon-result';
 import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-salmon-result';
+import { weaponIcon } from '../helper';
 
 @Component({
   name: 'SalmonResult',
@@ -30,9 +31,7 @@ export default class SalmonResult extends Vue {
       })
       .flat();
   }
-  public img(type: string, id: string|number): string {
-    return `https://splatoon-stats-api.yuki.games/static/images/${type}/${id}.png`;
-  }
+  public weaponIcon = weaponIcon;
   public convertEpoch(time: number): string {
     return dayjs.unix(time).utc().local().format('YYYY-MM-DD HH:mm:ss');
   }
