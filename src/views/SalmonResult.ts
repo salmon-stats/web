@@ -20,16 +20,13 @@ export default class SalmonResult extends Vue {
     return this.bossIds.filter((bossId) => this.totalBossSpawn(bossId) > 0);
   }
 
-  public specialsUsedInWave(wave: number): SpecialId[] {
+  public specialsUsedInWave(wave: number) {
     return this.salmonResult!.player_results
       .map((player) => {
         return {
-          specialId: player.special_id,
+          id: player.special_id,
           count: player.special_uses[wave - 1].count,
         };
-      })
-      .map((specialUse) => {
-        return new Array(specialUse.count).fill(specialUse.specialId);
       })
       .flat();
   }

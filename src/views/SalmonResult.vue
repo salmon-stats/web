@@ -93,8 +93,11 @@
               <th>{{ wave.wave }}</th>
               <td>{{ wave.water.name }}</td>
               <td>{{ wave.event ? wave.event.name : '' }}</td>
-              <td>
-                <img :src="img('special', specialId)" v-for="(specialId, i) in specialsUsedInWave(wave.wave)">
+              <td v-for="special in specialsUsedInWave(wave.wave)">
+                <span v-if="special.count">
+                  <img :src="img('special', special.id)">
+                  {{ special.count }}
+                </span>
               </td>
               <td class="golden-egg">{{ wave.golden_egg_delivered }}/{{ wave.golden_egg_quota }}</td>
               <td class="power-egg">{{ wave.power_egg_collected }}</td>
