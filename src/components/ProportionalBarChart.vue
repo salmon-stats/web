@@ -19,36 +19,38 @@ export default class ProportionalBarChart extends Vue {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../assets/variables.scss';
+
 span {
   display: block;
   height: 5px;
 }
 .rescue {
-  background-color: #2ecc71;
+  background-color: $rescue;
 }
 .death {
-  background-color: #e74c3c;
+  background-color: $death;
 }
 .boss-kill {
-  background-color: #9b59b6;
+  background-color:$boss-elimination;
 }
 .golden-egg {
-  background-color: #f1c40f;
+  background-color: $golden-egg;
 }
 .power-egg {
-  background-color: #e67e22;
+  background-color: $power-egg;
 }
 .player-1 {
-  background-color: #e74c3c;
+  background-color: $player-1;
 }
 .player-2 {
-  background-color: #2ecc71;
+  background-color: $player-2;
 }
 .player-3 {
-  background-color: #3498db;
+  background-color: $player-3;
 }
 .player-4 {
-  background-color: #f1c40f;
+  background-color: $player-4;
 }
 </style>

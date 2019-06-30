@@ -148,7 +148,9 @@
 
 <script src="./SalmonResult.ts" lang="ts"></script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@import '../assets/variables.scss';
+
 img {
   width: 32px;
 }
@@ -167,10 +169,10 @@ a {
   text-decoration: underline;
 }
 .golden-egg {
-  color: #f1c40f;
+  color: $golden-egg;
 }
 .power-egg {
-  color: #e67e22;
+  color: $power-egg;
 }
 
 .weapon-icons {
@@ -191,6 +193,6 @@ a {
 }
 .total-boss-elimination-rate-chart {
   display: block;
-  background-color: white;
+  background-color: lighten($boss-elimination, 30%);
 }
 </style>
