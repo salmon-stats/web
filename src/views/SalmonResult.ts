@@ -22,6 +22,10 @@ export default class SalmonResult extends Vue {
   get appearedBossIds(): BossId[] {
     return this.bossIds.filter((bossId) => this.totalBossSpawn(bossId) > 0);
   }
+  get failedWave(): number | null {
+    const clearWaves = this.salmonResult!.clear_waves;
+    return clearWaves ? clearWaves + 1 : null;
+  }
 
   public specialsUsedInWave(wave: number) {
     return this.salmonResult!.player_results

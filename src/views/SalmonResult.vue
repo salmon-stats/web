@@ -87,14 +87,18 @@
       </div>
 
       <h2>Waves</h2>
-      <div class="table-wrap">
+      <div class="table-wrap waves">
         <table class="is-hoverable">
           <tbody>
-            <tr v-for="wave in salmonResult.waves" :key="wave.wave">
-              <th>{{ wave.wave }}</th>
-              <td>{{ wave.water.name }}</td>
-              <td>{{ wave.event ? wave.event.name : '' }}</td>
-              <td v-for="special in specialsUsedInWave(wave.wave)">
+            <tr :class="{ 'failed-wave': failedWave === wave.wave }"
+              v-for="wave in salmonResult.waves" :key="wave.wave">
+              <th>
+                {{ wave.wave }}
+                <span class="failed-wave-overlay" v-if="failedWave === wave.wave"></span>
+              </th>
+              <td class="tide">{{ wave.water.name }}</td>
+              <td class="event">{{ wave.event ? wave.event.name : '' }}</td>
+              <td class="special-usage" v-for="special in specialsUsedInWave(wave.wave)">
                 <special-usage v-if="special.count" :special-id="special.id" :count="special.count" />
               </td>
               <td class="golden-egg">{{ wave.golden_egg_delivered }}/{{ wave.golden_egg_quota }}</td>
@@ -180,5 +184,38 @@ a {
 .total-boss-elimination-rate-chart {
   display: block;
   @include gradientBackground(lighten($boss-elimination, 30%));
+}
+
+.waves {
+  tr {
+    /* TODO: don't use magic number */
+    height: 44px;
+  }
+
+  th:first-of-type {
+    text-align: center;
+    width: 1.5em;
+    position: relative;
+    .failed-wave-overlay {
+      position: absolute;
+      z-index: 1;
+      left: .25em; /* == padding / 2 */
+      right: .25em;
+      top: 22px; /* 44 / 2 */
+      transform: rotate(-45deg);
+      border-top: 2px solid #ff4c4c;
+    }
+  }
+
+  .tide {
+    min-width: 5em;
+  }
+  .event {
+    min-width: 10em;
+  }
+  .special-usage {
+    /* TODO: don't use magic number */
+    width: 44px;
+  }
 }
 </style>
