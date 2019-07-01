@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import { Component, Vue } from 'vue-property-decorator';
 import axios from 'axios';
 
+import MainWeapon from '@/components/MainWeapon.vue';
 import PlayerAvatar from '@/components/PlayerAvatar.vue';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import SpecialUsage from '@/components/SpecialUsage.vue';
@@ -12,7 +13,7 @@ import { weaponIcon } from '../helper';
 
 @Component({
   name: 'SalmonResult',
-  components: { PlayerAvatar, ProportionalBarChart, SpecialUsage },
+  components: { MainWeapon, PlayerAvatar, ProportionalBarChart, SpecialUsage },
 })
 export default class SalmonResult extends Vue {
   public salmonResult: ExtendedSalmonResult | null = null;

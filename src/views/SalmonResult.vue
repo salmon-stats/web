@@ -34,7 +34,7 @@
               </td>
               <td>
                 <span class="weapon-icon main" v-for="(w, i) in p.weapons" :key="i">
-                  <img :src="weaponIcon('weapon', w.weapon_id)">
+                  <main-weapon :weapon-id="w.weapon_id" />
                 </span>
               </td>
               <td>
