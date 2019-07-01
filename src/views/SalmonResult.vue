@@ -89,6 +89,15 @@
       <h2>Waves</h2>
       <div class="table-wrap waves">
         <table class="is-hoverable">
+          <thead>
+            <tr>
+              <th>Wave</th>
+              <th>Water level</th>
+              <th>Event</th>
+              <th colspan="4">Specials used</th>
+              <th colspan="2">Egg</th>
+            </tr>
+          </thead>
           <tbody>
             <tr :class="{ 'failed-wave': failedWave === wave.wave }"
               v-for="wave in salmonResult.waves" :key="wave.wave">
