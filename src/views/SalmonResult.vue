@@ -145,6 +145,7 @@
 
 <style lang="scss" scoped>
 @import '../assets/variables.scss';
+@import '../assets/helper-functions.scss';
 
 img {
   width: 32px;
@@ -178,6 +179,6 @@ a {
 }
 .total-boss-elimination-rate-chart {
   display: block;
-  background-color: lighten($boss-elimination, 30%);
+  @include gradientBackground(lighten($boss-elimination, 30%));
 }
 </style>
