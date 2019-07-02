@@ -1,9 +1,30 @@
 <template>
   <div>
     <div v-if="salmonResult">
+      <h2>Overview</h2>
       <p>Hazard level: {{ salmonResult.danger_rate }}%</p>
+      <p>Schedule: {{ salmonResult.schedule_id }}</p>
+      <p>Start: {{ salmonResult.start_at }}</p>
+      <p>Result:
+        <span v-if="salmonResult.fail_reason_id">
+          Fail (wave {{ failedWave }})
+          ({{ translate('fail_reason', salmonResult.fail_reason_id) }})
+        </span>
+        <span v-else>Clear</span>
+      </p>
+      <p>Weapons:
+        <span v-for="weaponId in salmonResult.schedule.weapons">
+          <main-weapon :weapon-id="weaponId" :highlight-on-hover="false" />
+        </span>
+        <span v-if="salmonResult.schedule.weapons.some(id => id === -1)">
+          Rare:
+          <main-weapon :weapon-id="salmonResult.schedule.rare_weapon_id"
+            :highlight-on-hover="false" />
+        </span>
+      </p>
+      <p>Stage: {{ translate('stage', salmonResult.schedule.stage_id) }}</p>
 
-      <h2>Summary</h2>
+      <h2>Scores</h2>
       <div class="table-wrap">
         <table class="is-hoverable">
           <thead>
