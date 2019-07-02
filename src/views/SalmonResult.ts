@@ -10,6 +10,7 @@ import { extendSalmonResult } from '@/extend-salmon-result';
 import { BossId, PlayerId } from '@/types/salmon-result';
 import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-salmon-result';
 import { weaponIcon } from '../helper';
+import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 
 @Component({
   name: 'SalmonResult',
@@ -52,6 +53,9 @@ export default class SalmonResult extends Vue {
     const user = this.salmonResult!.member_accounts.find((member) =>
       member && member.player_id === playerId);
     return user ? user.name : playerId;
+  }
+  public translate(category: string, key: string): string {
+    return this.$t(`${category}.${idKeyMap[category][key]}`);
   }
   public hasMost(key: keyof TotalResult, value: number, bossId?: number): boolean {
     if (value === 0) {
