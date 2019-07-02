@@ -17,6 +17,7 @@
     "splatoon2-constants": "git+https://github.com/yukidaruma/splatoon2-constants.git",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
+    "vue-i18n": "^8.11.2",
     "vue-property-decorator": "^8.1.0",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"
