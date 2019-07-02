@@ -105,8 +105,8 @@
                 {{ wave.wave }}
                 <span class="failed-wave-overlay" v-if="failedWave === wave.wave"></span>
               </th>
-              <td class="tide">{{ wave.water.name }}</td>
-              <td class="event">{{ wave.event ? wave.event.name : '' }}</td>
+              <td class="tide">{{ translate('water_level', wave.water.id) }}</td>
+              <td class="event">{{ wave.event ? translate('event', wave.event.id) : '-' }}</td>
               <td class="special-usage" v-for="special in specialsUsedInWave(wave.wave)">
                 <special-usage v-if="special.count" :special-id="special.id" :count="special.count" />
               </td>

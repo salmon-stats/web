@@ -5,9 +5,11 @@ import App from './App.vue';
 import router from './router';
 import store from './store/store';
 import { metadataModule } from './store/modules/metadata';
+import { idKeyMapModule } from './store/modules/id-key-map';
 import { i18n, loadLanguageAsync } from './i18n-setup';
 
 metadataModule.fetchMetadata();
+idKeyMapModule.fetchIdKeyMap();
 
 Vue.config.productionTip = false;
 
