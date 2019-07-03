@@ -1,51 +1,47 @@
 <template>
-  <div>
-    <div v-if="loading">
-      Loading...
-    </div>
-    <div v-else>
-      <div v-if="playerSummary">
-        <div v-if="user">
-          <h1><a :href="`https://twitter.com/${user.name}`">
-            <player-avatar :size="48" :user="user">
-              @{{ user.name }}
-            </player-avatar>
-          </a></h1>
-        </div>
-        <div v-else>
-          <h1>
-            <player-avatar :size="48" :blockiesSeed="playerId">
-              {{ playerId }}
-            </player-avatar>
-          </h1>
-          <p>{{ playerId }} is not a registered user.</p>
-        </div>
-
-        <div class="table-wrap">
-          <table class="is-hoverable">
-            <tbody>
-              <tr class="clickable"
-                :class="[result.fail_reason_id ? 'fail' : 'clear' ]"
-                @click="toResultPage(result.id)"
-                v-for="result in playerSummary.results" :key="result.id">
-                <td>{{ result.fail_reason_id ? 'Fail' : 'Clear'  }}</td>
-                <td>{{ result.start_at }}</td>
-                <td>{{ result.danger_rate }}</td>
-                <!-- <td>{{ result.members.length }}</td> -->
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <require-fetch-template>
+    <div v-if="playerSummary">
+      <div v-if="user">
+        <h1><a :href="`https://twitter.com/${user.name}`">
+          <player-avatar :size="48" :user="user">
+            @{{ user.name }}
+          </player-avatar>
+        </a></h1>
       </div>
       <div v-else>
-        An error has occured during loading player summary for {{ playerId }}.
+        <h1>
+          <player-avatar :size="48" :blockiesSeed="playerId">
+            {{ playerId }}
+          </player-avatar>
+        </h1>
+        <p>{{ playerId }} is not a registered user.</p>
       </div>
 
       <div>
-        <p><a :href="splatoonStatsUrl">Check {{ playerName }} on Splatoon Stats</a></p>
+        <router-link :to="`/players/${playerId}/peers`">Peers</router-link>
+      </div>
+
+      <div class="table-wrap">
+        <table class="is-hoverable">
+          <tbody>
+            <tr class="clickable"
+              :class="[result.fail_reason_id ? 'fail' : 'clear' ]"
+              @click="toResultPage(result.id)"
+              v-for="result in playerSummary.results" :key="result.id">
+              <td>{{ result.fail_reason_id ? 'Fail' : 'Clear'  }}</td>
+              <td>{{ result.start_at }}</td>
+              <td>{{ result.danger_rate }}</td>
+              <!-- <td>{{ result.members.length }}</td> -->
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-  </div>
+
+    <div>
+      <p><a :href="splatoonStatsUrl">Check {{ playerName }} on Splatoon Stats</a></p>
+    </div>
+  </require-fetch-template>
 </template>
 
 <style lang="scss" scoped>
@@ -64,16 +60,18 @@
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import PlayerAvatar from '../components/PlayerAvatar.vue';
-import apiClient from '../api-client';
+import RequireFetchTemplate from '../components/RequireFetchTemplate.vue';
+import RequireFetchBase from '../components/RequireFetchBase.vue';
+import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 
 @Component({
   name: 'PlayerSummary',
-  components: { PlayerAvatar },
+  components: { PlayerAvatar, RequireFetchTemplate },
 })
-export default class PlayerSummary extends Vue {
-  loading = false;
-  playerSummary = null;
-
+export default class PlayerSummary extends RequireFetchBase {
+  get apiPath() {
+    return `players/${this.$route.params.playerId}`;
+  }
   get playerId() {
     return this.$route.params.playerId;
   }
@@ -86,31 +84,19 @@ export default class PlayerSummary extends Vue {
   get splatoonStatsUrl() {
     return SPLATOON_STATS_URL + `/players/${this.playerId}`;
   }
-
-  mounted() {
-    this.fetchPlayerSummary(this.playerId);
+  get playerSummary() {
+    return state.data;
   }
 
-  @Watch('playerId')
-  onPlayerIdChange(newPlayerId) {
-    this.fetchPlayerSummary(newPlayerId);
-  }
-
-  fetchPlayerSummary(playerId) {
-    this.loading = true;
-    apiClient.get(`/players/${playerId}`)
-      .then((res) => {
-        this.playerSummary = res.data;
-      })
-      .catch(() => {
-        this.playerSummary = null;
-      })
-      .finally(() => {
-        this.loading = false;
-      });
-  }
   toResultPage(resultId) {
     this.$router.push({ name: 'result', params: { resultId } });
+  }
+  mounted() {
+    state.fetch(this.apiPath);
+  }
+  @Watch('$route')
+  onRouteChange() {
+    state.fetch(this.apiPath);
   }
 }
 </script>

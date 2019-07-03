@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <require-fetch-template>
     <div v-if="salmonResult">
       <h2>Overview</h2>
       <p>Hazard level: {{ salmonResult.danger_rate }}%</p>
@@ -191,7 +191,7 @@
         </table>
       </div>
     </div>
-  </div>
+  </require-fetch-template>
 </template>
 
 <script src="./SalmonResult.ts" lang="ts"></script>

@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 import { Component, Vue } from 'vue-property-decorator';
-import axios from 'axios';
 
 import MainWeapon from '@/components/MainWeapon.vue';
 import PlayerAvatar from '@/components/PlayerAvatar.vue';
@@ -11,15 +10,20 @@ import { BossId, PlayerId } from '@/types/salmon-result';
 import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-salmon-result';
 import { weaponIcon } from '../helper';
 import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
+import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
+import RequireFetchBase from '@/components/RequireFetchBase.vue';
+import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 
 @Component({
   name: 'SalmonResult',
-  components: { MainWeapon, PlayerAvatar, ProportionalBarChart, SpecialUsage },
+  components: { MainWeapon, PlayerAvatar, ProportionalBarChart, SpecialUsage, RequireFetchTemplate },
 })
-export default class SalmonResult extends Vue {
-  public salmonResult: ExtendedSalmonResult | null = null;
+export default class SalmonResult extends RequireFetchBase {
   public bossIds: number[] = [3, 6, 9, 12, 13, 14, 15, 16, 21];
 
+  get salmonResult(): ExtendedSalmonResult | null {
+    return state.data ? extendSalmonResult(state.data) : null;
+  }
   get appearedBossIds(): BossId[] {
     return this.bossIds.filter((bossId) => this.totalBossSpawn(bossId) > 0);
   }
@@ -91,11 +95,7 @@ export default class SalmonResult extends Vue {
     return collection.reduce((sum: number, item: number) => sum + item, 0);
   }
 
-  protected mounted() {
-    const id = this.$route.params.resultId;
-    axios.get(`http://localhost/api/results/${id}`)
-      .then((res: any) => {
-        this.salmonResult = extendSalmonResult(res.data);
-      });
+  public mounted() {
+    state.fetch(`results/${this.$route.params.resultId}`);
   }
 }
