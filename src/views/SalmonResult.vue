@@ -168,6 +168,25 @@
                 </span>
               </td>
             </tr>
+            <tr class="total">
+              <th>Total</th>
+              <td class="player-boss-elimination" v-for="(p, playerIndex) in salmonResult.player_results" :key="p.pid">
+                <span :class="hasMost('total_boss_eliminations', p.total_boss_eliminations) ? 'has-most' : null">
+                  {{ p.total_boss_eliminations }}
+                </span>
+                <proportional-bar-chart :chart-key="`player-${playerIndex + 1}`"
+                  :value="p.total_boss_eliminations"
+                  :highest="salmonResult.highest.total_boss_eliminations" />
+              </td>
+              <td class="total-boss-elimination">
+                {{ salmonResult.total_result.total_boss_eliminations }}/{{ sum(salmonResult.boss_appearances) }}
+                <span class="total-boss-elimination-rate-chart">
+                  <proportional-bar-chart chart-key="boss-kill"
+                    :value="salmonResult.total_result.total_boss_eliminations"
+                    :highest="sum(salmonResult.boss_appearances)" />
+                </span>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

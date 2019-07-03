@@ -84,6 +84,12 @@ export default class SalmonResult extends Vue {
     return this.salmonResult!.member_accounts.find((member) =>
       member && member.player_id === playerId);
   }
+  public sum(collection: Array<number | object>) {
+    if (!Array.isArray(collection)) {
+      collection = Object.values(collection);
+    }
+    return collection.reduce((sum: number, item: number) => sum + item, 0);
+  }
 
   protected mounted() {
     const id = this.$route.params.resultId;
