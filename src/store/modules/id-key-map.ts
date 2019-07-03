@@ -12,7 +12,7 @@ export interface IIdKeyMap {
   weapon: object;
 }
 
-@Module({ dynamic: true, store, name: 'highlighted-weapon', namespaced: true })
+@Module({ dynamic: true, store, name: 'id-key-map', namespaced: true })
 class IdKeyMap extends VuexModule implements IIdKeyMap {
   public boss: object = {};
   public event: object = {};
