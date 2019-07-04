@@ -5,7 +5,7 @@ export interface IUiState {
   highlightedWeaponId: number | null;
 }
 
-@Module({ dynamic: true, store, name: 'highlighted-weapon', namespaced: true })
+@Module({ dynamic: true, store, name: 'ui-state', namespaced: true })
 class UiState extends VuexModule implements IUiState {
   public highlightedWeaponId: number | null = null;
 
