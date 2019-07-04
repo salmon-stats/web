@@ -61,19 +61,22 @@
               <td>
                 <p><span :class="hasMost('rescue', p.rescue) ? 'has-most' : ''">{{ p.rescue }}</span></p>
                 <p class="proportional-bar-chart-container">
-                  <proportional-bar-chart chart-key="rescue" :value="p.rescue" :highest="salmonResult.highest.rescue" />
+                  <proportional-bar-chart chart-key="rescue"
+                    :value="p.rescue" :max="salmonResult.highest.rescue" />
                 </p>
               </td>
               <td>
                 <p><span :class="hasLeastDeath(p.death) ? 'has-least-death' : ''">{{ p.death }}</span></p>
                 <p class="proportional-bar-chart-container">
-                  <proportional-bar-chart chart-key="death" :value="p.death" :highest="salmonResult.highest.death" />
+                  <proportional-bar-chart chart-key="death"
+                    :value="p.death" :max="salmonResult.highest.death" />
                 </p>
               </td>
               <td>
                 <p><span :class="hasMost('total_boss_eliminations', p.total_boss_eliminations) ? 'has-most' : ''">{{ p.total_boss_eliminations }}</span></p>
                 <p class="proportional-bar-chart-container">
-                  <proportional-bar-chart chart-key="boss-kill" :value="p.total_boss_eliminations" :highest="salmonResult.highest.total_boss_eliminations" />
+                  <proportional-bar-chart chart-key="boss-kill"
+                    :value="p.total_boss_eliminations" :max="salmonResult.highest.total_boss_eliminations" />
                 </p>
               </td>
               <td>
@@ -83,8 +86,10 @@
                   <span class="power-egg" :class="hasMost('power_eggs', p.power_eggs) ? 'has-most' : ''">{{ p.power_eggs }}</span>
                 </p>
                 <p class="proportional-bar-chart egg-collection">
-                  <proportional-bar-chart chart-key="golden-egg" :value="p.golden_eggs" :highest="salmonResult.highest.golden_eggs" />
-                  <proportional-bar-chart chart-key="power-egg" :value="p.power_eggs" :highest="salmonResult.highest.power_eggs" />
+                  <proportional-bar-chart chart-key="golden-egg"
+                    :value="p.golden_eggs" :max="salmonResult.highest.golden_eggs" />
+                  <proportional-bar-chart chart-key="power-egg"
+                    :value="p.power_eggs" :max="salmonResult.highest.power_eggs" />
                 </p>
               </td>
             </tr>
@@ -157,15 +162,14 @@
                 <span :class="hasMost('boss_eliminations', p.boss_eliminations.counts[bossId], bossId) ? 'has-most' : null">{{ p.boss_eliminations.counts[bossId] }}</span>
                 <proportional-bar-chart :chart-key="`player-${playerIndex + 1}`"
                   :value="p.boss_eliminations.counts[bossId]"
-                  :highest="salmonResult.highest.boss_eliminations[bossId]" />
+                  :max="salmonResult.highest.boss_eliminations[bossId]" />
               </td>
               <td class="total-boss-elimination">
                 {{ totalBossElimination(bossId) }}/{{ totalBossSpawn(bossId) }}
-                <span class="total-boss-elimination-rate-chart">
-                  <proportional-bar-chart chart-key="boss-kill"
-                    :value="totalBossElimination(bossId)"
-                    :highest="totalBossSpawn(bossId)" />
-                </span>
+                <proportional-bar-chart chart-key="boss-kill"
+                  :fill-remainder="true"
+                  :value="totalBossElimination(bossId)"
+                  :max="totalBossSpawn(bossId)" />
               </td>
             </tr>
             <tr class="total">
@@ -176,15 +180,14 @@
                 </span>
                 <proportional-bar-chart :chart-key="`player-${playerIndex + 1}`"
                   :value="p.total_boss_eliminations"
-                  :highest="salmonResult.highest.total_boss_eliminations" />
+                  :max="salmonResult.highest.total_boss_eliminations" />
               </td>
               <td class="total-boss-elimination">
                 {{ salmonResult.total_result.total_boss_eliminations }}/{{ sum(salmonResult.boss_appearances) }}
-                <span class="total-boss-elimination-rate-chart">
-                  <proportional-bar-chart chart-key="boss-kill"
-                    :value="salmonResult.total_result.total_boss_eliminations"
-                    :highest="sum(salmonResult.boss_appearances)" />
-                </span>
+                <proportional-bar-chart chart-key="boss-kill"
+                  :fill-remainder="true"
+                  :value="salmonResult.total_result.total_boss_eliminations"
+                  :max="sum(salmonResult.boss_appearances)" />
               </td>
             </tr>
           </tbody>
@@ -229,10 +232,6 @@ a {
   &.egg-collection:first-child {
     margin-bottom: 2px;
   }
-}
-.total-boss-elimination-rate-chart {
-  display: block;
-  @include gradientBackground(lighten($boss-elimination, 30%));
 }
 
 .waves {
