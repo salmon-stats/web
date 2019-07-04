@@ -22,6 +22,10 @@ class IdKeyMap extends VuexModule implements IIdKeyMap {
   public water_level: object = {};
   public weapon: object = {};
 
+  get bossIds() {
+    return Object.keys(this.boss);
+  }
+
   @Action
   public fetchIdKeyMap() {
     apiCleint.get('id-key-map')

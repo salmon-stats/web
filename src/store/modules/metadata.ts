@@ -1,10 +1,9 @@
 import { Mutation, Action, VuexModule, getModule, Module } from 'vuex-module-decorators';
 import store from '@/store/store';
 import axios from 'axios';
-import { PlayerId, BossId } from '@/types/salmon-result';
+import { PlayerId } from '@/types/salmon-result';
 
 export interface IMetadata {
-  // bossIds: BossId[];
   user: null | {
     id: number;
     name: string;
@@ -15,7 +14,6 @@ export interface IMetadata {
 
 @Module({ dynamic: true, store, name: 'metadata', namespaced: true })
 class Metadata extends VuexModule implements IMetadata {
-  // public bossIds = [];
   public user = null;
   public hasSessionExpired = false;
   public lastFetchedTime = 0;

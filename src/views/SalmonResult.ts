@@ -19,9 +19,11 @@ import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
   components: { MainWeapon, PlayerAvatar, ProportionalBarChart, SpecialUsage, RequireFetchTemplate },
 })
 export default class SalmonResult extends RequireFetchBase {
-  public bossIds: number[] = [3, 6, 9, 12, 13, 14, 15, 16, 21];
   public iconUrl = iconUrl;
 
+  get bossIds() {
+    return idKeyMap.bossIds;
+  }
   get salmonResult(): ExtendedSalmonResult | null {
     return state.data ? extendSalmonResult(state.data) : null;
   }
