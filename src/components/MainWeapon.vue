@@ -1,6 +1,6 @@
 <template>
   <img @mouseover="onMouseover" @mouseleave="onMouseleave"
-    :class="classNames" :src="weaponIcon('weapon', weaponId)">
+    :class="classNames" :src="iconUrl('weapon', weaponId)">
 </template>
 
 <style scoped>
@@ -11,7 +11,7 @@
 
 <script>
 import { Vue, Component } from 'vue-property-decorator';
-import { weaponIcon } from '../helper';
+import { iconUrl } from '../helper';
 import { uiStateModule } from '../store/modules/ui-state';
 
 @Component({
@@ -25,7 +25,7 @@ import { uiStateModule } from '../store/modules/ui-state';
   },
 })
 export default class MainWeapon extends Vue {
-  weaponIcon = weaponIcon;
+  iconUrl = iconUrl;
 
   get isHighlighted() {
     return uiStateModule.highlightedWeaponId === this.weaponId;

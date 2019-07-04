@@ -8,7 +8,7 @@ import SpecialUsage from '@/components/SpecialUsage.vue';
 import { extendSalmonResult } from '@/extend-salmon-result';
 import { BossId, PlayerId } from '@/types/salmon-result';
 import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-salmon-result';
-import { weaponIcon } from '../helper';
+import { iconUrl } from '../helper';
 import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
@@ -20,6 +20,7 @@ import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 })
 export default class SalmonResult extends RequireFetchBase {
   public bossIds: number[] = [3, 6, 9, 12, 13, 14, 15, 16, 21];
+  public iconUrl = iconUrl;
 
   get salmonResult(): ExtendedSalmonResult | null {
     return state.data ? extendSalmonResult(state.data) : null;
@@ -42,7 +43,6 @@ export default class SalmonResult extends RequireFetchBase {
       })
       .flat();
   }
-  public weaponIcon = weaponIcon;
   public convertEpoch(time: number): string {
     return dayjs.unix(time).utc().local().format('YYYY-MM-DD HH:mm:ss');
   }

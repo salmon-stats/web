@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img :src="weaponIcon('special', specialId)">
+    <img :src="iconUrl('special', specialId)">
     <span class="count">{{ count }}</span>
   </div>
 </template>
@@ -26,7 +26,7 @@ img {
 
 <script>
 import { Vue, Component } from 'vue-property-decorator';
-import { weaponIcon } from '../helper';
+import { iconUrl } from '../helper';
 
 @Component({
   name: 'SpecialUsage',
@@ -36,6 +36,6 @@ import { weaponIcon } from '../helper';
   },
 })
 export default class SpecialUsage extends Vue {
-  weaponIcon = weaponIcon;
+  iconUrl = iconUrl;
 }
 </script>
