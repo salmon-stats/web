@@ -39,5 +39,10 @@ export default new Router({
       name: 'playerSummary',
       component: PlayerSummary,
     },
+    { // Fallback route
+      path: '*',
+      component: Home,
+      redirect: '/',
+    },
   ],
 });
