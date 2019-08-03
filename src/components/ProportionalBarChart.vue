@@ -16,16 +16,16 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 })
 export default class ProportionalBarChart extends Vue {
   @Prop({ required: true })
-  public chartKey: string = '';
+  public chartKey!: string;
 
   @Prop({ required: true })
-  public value: number = 0;
+  public value!: number;
 
   @Prop({ required: true })
-  public max: number = 0;
+  public max!: number;
 
-  @Prop()
-  public fillRemainder: boolean = false;
+  @Prop({ default: false })
+  public fillRemainder!: boolean;
 
   get width(): string {
     return this.max === 0 ? '0' : `${this.value / this.max * 100}%`;
