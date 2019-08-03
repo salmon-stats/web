@@ -21,7 +21,8 @@ class Metadata extends VuexModule implements IMetadata {
   @Action
   public fetchMetadata() {
     // TODO: fetch other metadata (e.g. bosses, weapons, ...)
-    return axios.get('http://localhost/metadata', { withCredentials: true })
+    // @ts-ignore
+    return axios.get(VUE_APP_API_URL + '/metadata', { withCredentials: true })
       .then((res) => {
         const data = res.data;
         this.SET_USER_METADATA(data.user);
