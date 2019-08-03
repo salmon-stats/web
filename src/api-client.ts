@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const apiBaseUrl = VUE_APP_API_URL; // eslint-disable-line no-undef
+// @ts-ignore
+const apiBaseUrl = VUE_APP_API_URL;
 const client = axios.create({
   baseURL: apiBaseUrl + '/api',
   responseType: 'json',
