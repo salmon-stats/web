@@ -40,6 +40,7 @@ import { metadataModule as metadata } from '../store/modules/metadata';
   name: 'GlobalHeader',
 })
 export default class GlobalHeader extends Vue {
+  // @ts-ignore
   signInUrl = VUE_APP_API_URL + '/auth/twitter';
 
   get user() {

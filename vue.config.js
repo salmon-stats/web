@@ -30,7 +30,6 @@ module.exports = {
     } else {
       plugins.push(constantPlugin(
         'VUE_APP_API_URL',
-        // eslint-disable-next-line no-template-curly-in-string
         "'http://' + location.hostname",
       ));
     }

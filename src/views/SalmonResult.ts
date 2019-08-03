@@ -9,7 +9,7 @@ import { extendSalmonResult } from '@/extend-salmon-result';
 import { BossId, PlayerId } from '@/types/salmon-result';
 import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-salmon-result';
 import { iconUrl } from '../helper';
-import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
+import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
@@ -21,8 +21,8 @@ import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 export default class SalmonResult extends RequireFetchBase {
   public iconUrl = iconUrl;
 
-  get bossIds() {
-    return idKeyMap.bossIds;
+  get bossIds(): BossIdKeys[] {
+    return idKeyMap.bossIds as BossIdKeys[];
   }
   get salmonResult(): ExtendedSalmonResult | null {
     return state.data ? extendSalmonResult(state.data) : null;
@@ -60,10 +60,11 @@ export default class SalmonResult extends RequireFetchBase {
       member && member.player_id === playerId);
     return user ? user.name : playerId;
   }
-  public translate(category: string, key: string): string {
-    return this.$t(`${category}.${idKeyMap[category][key]}`);
+  public translate(key: keyof IIdKeyMap, id: string | number): string {
+    // @ts-ignore
+    return key ? this.$t(`${key}.${idKeyMap[key][id]}`) as string : '';
   }
-  public hasMost(key: keyof TotalResult, value: number, bossId?: number): boolean {
+  public hasMost(key: keyof TotalResult, value: number, bossId: BossIdKeys): boolean {
     if (value === 0) {
       return false;
     } else if (key === 'boss_eliminations') {
@@ -90,11 +91,16 @@ export default class SalmonResult extends RequireFetchBase {
     return this.salmonResult!.member_accounts.find((member) =>
       member && member.player_id === playerId);
   }
-  public sum(collection: Array<number | object>) {
+  public sum(collection: number[] | object) {
+    let numbers: number[];
+
     if (!Array.isArray(collection)) {
-      collection = Object.values(collection);
+      numbers = Object.values(collection);
+    } else {
+      numbers = collection;
     }
-    return collection.reduce((sum: number, item: number) => sum + item, 0);
+
+    return numbers.reduce((sum: number, item: number) => sum + item, 0);
   }
 
   public mounted() {

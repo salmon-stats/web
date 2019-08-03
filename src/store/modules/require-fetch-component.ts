@@ -30,6 +30,7 @@ class RequireFetchComponent extends VuexModule implements IRequireFetchComponent
       }),
     };
 
+    // @ts-ignore
     axios.get(VUE_APP_API_URL + `/api/${path}`, options)
       .then((res: any) => {
         this.SET_DATA(res.data);

@@ -15,16 +15,19 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
   name: 'ProportionalBarChart',
 })
 export default class ProportionalBarChart extends Vue {
-  @Prop()
-  public chartKey: string;
-  @Prop()
-  public value: number;
-  @Prop()
-  public max: number;
-  @Prop()
-  public fillRemainder: boolean;
+  @Prop({ required: true })
+  public chartKey: string = '';
 
-  get width() {
+  @Prop({ required: true })
+  public value: number = 0;
+
+  @Prop({ required: true })
+  public max: number = 0;
+
+  @Prop()
+  public fillRemainder: boolean = false;
+
+  get width(): string {
     return this.max === 0 ? '0' : `${this.value / this.max * 100}%`;
   }
 }
@@ -85,6 +88,5 @@ span {
   .chart-body {
     @include gradientBackground($player-4);
   }
-}
 }
 </style>
