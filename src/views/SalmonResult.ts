@@ -42,8 +42,7 @@ export default class SalmonResult extends RequireFetchBase {
           id: player.special_id,
           count: player.special_uses[wave - 1].count,
         };
-      })
-      .flat();
+      });
   }
   public convertEpoch(time: number): string {
     return dayjs.unix(time).utc().local().format('YYYY-MM-DD HH:mm:ss');
