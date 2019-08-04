@@ -1,21 +1,7 @@
 <template>
   <require-fetch-template>
     <div v-if="playerSummary">
-      <div v-if="user">
-        <h1><a :href="`https://twitter.com/${user.name}`">
-          <player-avatar :size="48" :user="user">
-            @{{ user.name }}
-          </player-avatar>
-        </a></h1>
-      </div>
-      <div v-else>
-        <h1>
-          <player-avatar :size="48" :blockiesSeed="playerId">
-            {{ playerId }}
-          </player-avatar>
-        </h1>
-        <p>{{ playerId }} is not a registered user.</p>
-      </div>
+      <player-page-header :player-id="playerId" :user="user" />
 
       <div>
         <router-link :to="`/players/${playerId}/peers`">Peers</router-link>
@@ -59,14 +45,14 @@
 
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import PlayerAvatar from '../components/PlayerAvatar.vue';
+import PlayerPageHeader from '../components/PlayerPageHeader.vue';
 import RequireFetchTemplate from '../components/RequireFetchTemplate.vue';
 import RequireFetchBase from '../components/RequireFetchBase.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 
 @Component({
   name: 'PlayerSummary',
-  components: { PlayerAvatar, RequireFetchTemplate },
+  components: { PlayerPageHeader, RequireFetchTemplate },
 })
 export default class PlayerSummary extends RequireFetchBase {
   get apiPath() {
