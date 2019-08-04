@@ -69,12 +69,9 @@ export default class SalmonResultUploader extends Vue {
   uploadLog = [];
 
   mounted() {
-    // Assume user can't sign in without page transition.
-    if (this.isSignedIn) {
-      this.removeListner = dragDrop('.salmon-result-uploader', (files) => {
-        this.addToSelectedFiles(files);
-      });
-    }
+    this.removeListner = dragDrop('.salmon-result-uploader', (files) => {
+      if (this.isSignedIn) this.addToSelectedFiles(files);
+    });
   }
   addToSelectedFiles(files) {
     Array.from(files) // Convert FileList to Array
