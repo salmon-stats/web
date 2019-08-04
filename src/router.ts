@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import PlayerSummary from './views/PlayerSummary.vue';
+import PlayerResults from './views/PlayerResults.vue';
 import SalmonResult from './views/SalmonResult.vue';
 import SalmonResultUploader from './views/SalmonResultUploader.vue';
 
@@ -38,6 +39,11 @@ export default new Router({
       path: '/players/:playerId([a-f\\d]{16})',
       name: 'playerSummary',
       component: PlayerSummary,
+    },
+    {
+      path: '/players/:playerId([a-f\\d]{16})/results',
+      name: 'playerResults',
+      component: PlayerResults,
     },
     { // Fallback route
       path: '*',

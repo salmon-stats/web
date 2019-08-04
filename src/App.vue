@@ -46,6 +46,13 @@ table.is-hoverable tbody tr:hover {
 .clickable {
   cursor: pointer;
 }
+
+.clear {
+  color: greenyellow;
+}
+.fail {
+  color: orange;
+}
 </style>
 
 <script>
