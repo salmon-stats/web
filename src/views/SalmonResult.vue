@@ -214,9 +214,6 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-a {
-  color: #42b983;
-}
 .has-most, .has-least-death {
   text-decoration: underline;
 }
