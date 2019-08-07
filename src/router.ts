@@ -5,6 +5,7 @@ import PlayerSummary from './views/PlayerSummary.vue';
 import PlayerResults from './views/PlayerResults.vue';
 import SalmonResult from './views/SalmonResult.vue';
 import SalmonResultUploader from './views/SalmonResultUploader.vue';
+import ScheduleRecords from './views/ScheduleRecords.vue';
 
 Vue.use(Router);
 
@@ -44,6 +45,11 @@ export default new Router({
       path: '/players/:playerId([a-f\\d]{16})/results',
       name: 'playerResults',
       component: PlayerResults,
+    },
+    {
+      path: '/schedules/:scheduleId(\\d{10})/records',
+      name: 'scheduleRecords',
+      component: ScheduleRecords,
     },
     { // Fallback route
       path: '*',
