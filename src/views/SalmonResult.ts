@@ -8,7 +8,7 @@ import SpecialUsage from '@/components/SpecialUsage.vue';
 import { extendSalmonResult } from '@/extend-salmon-result';
 import { BossId, PlayerId } from '@/types/salmon-result';
 import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-salmon-result';
-import { iconUrl } from '../helper';
+import { getTranslationKey, iconUrl } from '../helper';
 import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
@@ -60,8 +60,7 @@ export default class SalmonResult extends RequireFetchBase {
     return user ? user.name : playerId;
   }
   public translate(key: keyof IIdKeyMap, id: string | number): string {
-    // @ts-ignore
-    return key ? this.$t(`${key}.${idKeyMap[key][id]}`) as string : '';
+    return key ? this.$t(getTranslationKey(key, id)) as string : '';
   }
   public hasMost(key: keyof TotalResult, value: number, bossId: BossIdKeys): boolean {
     if (value === 0) {
