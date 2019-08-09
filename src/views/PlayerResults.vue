@@ -39,10 +39,10 @@ import { requireFetchComponentModule as state } from '@/store/modules/require-fe
 // import Pagination from ;
 
 @Component({
-  name: 'PlayerSummary',
+  name: 'PlayerResults',
   components: { PlayerPageHeader, RequireFetchTemplate },
 })
-export default class PlayerSummary extends RequireFetchBase {
+export default class PlayerResults extends RequireFetchBase {
   currentPage = 1;
 
   get apiPath() {

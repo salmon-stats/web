@@ -31,10 +31,10 @@ import { requireFetchComponentModule as state } from '@/store/modules/require-fe
 import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 
 @Component({
-  name: 'PlayerSummary',
+  name: 'ScheduleRecords',
   components: { RequireFetchTemplate, ScheduleRecord },
 })
-export default class PlayerSummary extends RequireFetchBase {
+export default class ScheduleRecords extends RequireFetchBase {
   activeTabIndex = 0;
 
   get eggType() {
