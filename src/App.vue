@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <header>
       <global-header />
     </header>
@@ -8,18 +8,18 @@
 </template>
 
 <style lang="scss">
-body {
-  background-color: darken(#2c3e50, 10%);
-  color: #ecf0f1;
-}
+@import '@/assets/bulma.scss';
+
 a {
   font-weight: bold;
-  color: #1ddbb4;
 }
 
 table, tr, td {
   border-collapse: collapse;
   border: 0;
+}
+th, td {
+  vertical-align: middle !important; // TODO
 }
 th {
   text-align: left;

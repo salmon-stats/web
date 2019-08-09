@@ -1,0 +1,9 @@
+@import './variables.scss';
+
+$fullhd-enabled: false;
+$text-strong: $body-color;
+$link-hover: lighten($link, 10%);
+
+@import '~bulma/sass/utilities/_all';
+@import '~bulma';
+@import '~buefy/src/scss/buefy';
