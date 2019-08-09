@@ -11,10 +11,10 @@
   "dependencies": {
     "@download/blockies": "git+https://github.com/download13/blockies.git",
     "axios": "^0.19.0",
+    "buefy": "^0.8.2",
     "core-js": "^2.6.5",
     "dayjs": "^1.8.14",
     "drag-drop": "^4.2.0",
-    "laravel-vue-pagination": "^2.3.0",
     "splatoon2-constants": "git+https://github.com/yukidaruma/splatoon2-constants.git",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",

@@ -1,0 +1,34 @@
+@import './variables.scss';
+
+$fullhd-enabled: false;
+$text-strong: $body-color;
+$link-hover: lighten($link, 10%);
+
+// Navbar
+$navbar-height: 2.5rem;
+$navbar-background-color: darken($body-background-color, 5%); // lighten($background, 5%);
+$navbar-item-color: white;
+$navbar-item-hover-color: $navbar-item-color;
+$navbar-item-hover-background-color: $navbar-background-color;
+$navbar-item-active-color: white;
+$navbar-item-img-max-height: initial;
+$navbar-item-active-background-color: $navbar-item-hover-background-color; // lighten($navbar-background-color, 5%);
+
+$navbar-dropdown-radius: 0;
+$navbar-dropdown-background-color: lighten($navbar-background-color, 5%);
+$navbar-dropdown-item-hover-color: $navbar-item-hover-color;
+$navbar-dropdown-item-hover-background-color: lighten($navbar-dropdown-background-color, 10%);
+$navbar-dropdown-item-active-color: $navbar-item-active-color;
+$navbar-dropdown-item-active-background-color: $navbar-dropdown-item-hover-background-color;
+
+// Pagination
+.pagination-link, .pagination-next, .pagination-previous {
+  background-color: white;
+}
+nav.pagination > a[role=button] {
+  display: none;
+}
+
+@import '~bulma/sass/utilities/_all';
+@import '~bulma';
+@import '~buefy/src/scss/buefy';

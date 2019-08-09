@@ -1,25 +1,43 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <header>
       <global-header />
     </header>
     <router-view />
+
+    <footer>
+      <global-footer />
+    </footer>
   </div>
 </template>
 
 <style lang="scss">
-body {
-  background-color: darken(#2c3e50, 10%);
-  color: #ecf0f1;
+@import '@/assets/bulma.scss';
+
+$footer-height: 5em;
+
+#app {
+  min-height: 100vh;
+  padding-bottom: $footer-height;
 }
-a {
-  font-weight: bold;
-  color: #1ddbb4;
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: $footer-height;
 }
 
 table, tr, td {
   border-collapse: collapse;
   border: 0;
+}
+th, td {
+  vertical-align: middle !important; // TODO
 }
 th {
   text-align: left;
@@ -59,11 +77,12 @@ table.is-hoverable tbody tr:hover {
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import GlobalHeader from './components/GlobalHeader.vue';
+import GlobalFooter from './components/GlobalFooter.vue';
 import { metadataModule } from './store/modules/metadata';
 
 @Component({
   name: 'App',
-  components: { GlobalHeader },
+  components: { GlobalHeader, GlobalFooter },
 })
 export default class App extends Vue {
   mounted() {

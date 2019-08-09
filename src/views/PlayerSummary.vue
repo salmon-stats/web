@@ -62,7 +62,7 @@ export default class PlayerSummary extends RequireFetchBase {
   }
 
   toResultPage(resultId) {
-    this.$router.push({ name: 'result', params: { resultId } });
+    this.$router.push({ name: 'results.detail', params: { resultId } });
   }
   mounted() {
     state.fetch(this.apiPath);
