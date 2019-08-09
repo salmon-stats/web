@@ -1,18 +1,18 @@
 <template>
   <require-fetch-template>
     <div v-if="records">
-      <a @click="eggType = 'power_eggs'">Power eggs</a>
-      <a @click="eggType = 'golden_eggs'">Golden eggs</a>
-
-      <h1>{{ eggType }}</h1>
+      <b-tabs v-model="activeTabIndex">
+        <b-tab-item label="Golden Eggs" />
+        <b-tab-item label="Power Eggs" />
+      </b-tabs>
 
       <div>
         <schedule-record :record="records.totals[eggType]" :record-type="eggType" />
       </div>
 
       <table>
-        <tr v-for="eventId in events">
-          <td v-for="waterLevelId in waterLevels">
+        <tr v-for="waterLevelId in waterLevels">
+          <td v-for="eventId in events">
             <schedule-record v-if="eventWaterLevelRecord(eventId, waterLevelId)"
               :record="eventWaterLevelRecord(eventId, waterLevelId)" :record-type="eggType" />
           </td>
@@ -35,8 +35,11 @@ import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
   components: { RequireFetchTemplate, ScheduleRecord },
 })
 export default class PlayerSummary extends RequireFetchBase {
-  eggType = 'golden_eggs';
+  activeTabIndex = 0;
 
+  get eggType() {
+    return ['golden_eggs', 'power_eggs'][this.activeTabIndex];
+  }
   get apiPath() {
     return `schedules/${this.$route.params.scheduleId}/records`;
   }
