@@ -1,16 +1,16 @@
 import dayjs from 'dayjs';
 import { Component, Vue } from 'vue-property-decorator';
 
-import MainWeapon from '@/components/MainWeapon.vue';
-import PlayerAvatar from '@/components/PlayerAvatar.vue';
-import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
-import SpecialUsage from '@/components/SpecialUsage.vue';
 import { extendSalmonResult } from '@/extend-salmon-result';
 import { BossId, PlayerId } from '@/types/salmon-result';
 import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-salmon-result';
 import { getTranslationKey, iconUrl } from '../helper';
 import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
+import MainWeapon from '@/components/MainWeapon.vue';
+import PlayerAvatar from '@/components/PlayerAvatar.vue';
+import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
+import SpecialUsage from '@/components/SpecialUsage.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 
@@ -83,7 +83,7 @@ export default class SalmonResult extends RequireFetchBase {
     return this.salmonResult!.boss_appearances[bossId];
   }
   public toPlayerSummary(playerId: PlayerId) {
-    this.$router.push({ name: 'player.summary', params: { playerId } });
+    this.$router.push({ name: 'players.summary', params: { playerId } });
   }
   public getAccountByPlayerId(playerId: PlayerId) {
     return this.salmonResult!.member_accounts.find((member) =>
