@@ -10,9 +10,6 @@
 <style lang="scss">
 @import '@/assets/bulma.scss';
 
-a {
-  font-weight: bold;
-}
 
 table, tr, td {
   border-collapse: collapse;

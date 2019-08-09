@@ -61,6 +61,10 @@
 <style lang="scss" scoped>
 @import '@/assets/variables.scss';
 
+a {
+  font-weight: bold;
+}
+
 .navbar-item a {
   padding: 0 .25rem;
 }
