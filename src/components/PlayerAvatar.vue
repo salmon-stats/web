@@ -1,11 +1,8 @@
 <template>
-  <div>
-    <img v-if="user"
-      :width="size" :height="size" :src="user.twitter_avatar">
-    <blockies v-else
-      :sizePerPixel="blockiesSizePerPixel" :pixels="blockiesPixels" :seed="blockiesSeed" />
-    <slot />
-  </div>
+  <img v-if="user"
+    :width="size" :height="size" :src="user.twitter_avatar">
+  <blockies v-else
+    :sizePerPixel="blockiesSizePerPixel" :pixels="blockiesPixels" :seed="blockiesSeed" />
 </template>
 
 <script>
