@@ -15,7 +15,6 @@
     "core-js": "^2.6.5",
     "dayjs": "^1.8.14",
     "drag-drop": "^4.2.0",
-    "laravel-vue-pagination": "^2.3.0",
     "splatoon2-constants": "git+https://github.com/yukidaruma/splatoon2-constants.git",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
