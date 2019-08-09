@@ -68,14 +68,14 @@
   color: inherit;
   background-size: 0%;
   background-image: linear-gradient(transparent 60%, #f33 60% 90%, transparent 90%);
-	text-shadow: 1px 1.5px 0px hsl(0, 0%, 0%);
+  background-repeat: no-repeat;
+  text-shadow: 1px 1.5px 0px hsl(0, 0%, 0%);
   &.router-link-active {
     background-size: 100%;
   }
   &:hover {
     background-size: 100%;
-    // TODO: Fix aniomation is not working
-    transition: background-size 2s;
+    transition: background-size .2s;
   }
 }
 .my-profile {
