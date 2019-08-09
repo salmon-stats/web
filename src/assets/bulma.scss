@@ -21,6 +21,14 @@ $navbar-dropdown-item-hover-background-color: lighten($navbar-dropdown-backgroun
 $navbar-dropdown-item-active-color: $navbar-item-active-color;
 $navbar-dropdown-item-active-background-color: $navbar-dropdown-item-hover-background-color;
 
+// Pagination
+.pagination-link, .pagination-next, .pagination-previous {
+  background-color: white;
+}
+nav.pagination > a[role=button] {
+  display: none;
+}
+
 @import '~bulma/sass/utilities/_all';
 @import '~bulma';
 @import '~buefy/src/scss/buefy';

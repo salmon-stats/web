@@ -2,12 +2,11 @@
   <require-fetch-template>
     <div v-if="playerResults">
       <player-page-header :player-id="playerId" :user="user" />
-
       <div class="table-wrap">
         <table class="is-hoverable">
           <tbody>
             <tr class="clickable" @click="toResultPage(result.id)"
-              v-for="result in playerResults.results.data" :key="result.id">
+              v-for="result in playerResults.data" :key="result.id">
               <td :class="result.fail_reason_id ? 'fail' : 'clear'">
                 {{ result.fail_reason_id ? 'Fail' : 'Clear' }}
               </td>
@@ -18,10 +17,15 @@
         </table>
       </div>
 
-      <pagination :data="playerResults.results" @pagination-change-page="paginate">
-        <span slot="prev-nav">&lt;</span>
-        <span slot="next-nav">&gt;</span>
-      </pagination>
+      <b-pagination
+        :total="playerResults.total"
+        :current.sync="currentPage"
+        :per-page="playerResults.per_page"
+        :range-before="3"
+        :range-after="3"
+        icon-pack="material-icons"
+        @change="paginate"
+      />
     </div>
   </require-fetch-template>
 </template>
@@ -32,15 +36,17 @@ import PlayerPageHeader from '../components/PlayerPageHeader.vue';
 import RequireFetchTemplate from '../components/RequireFetchTemplate.vue';
 import RequireFetchBase from '../components/RequireFetchBase.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
-import Pagination from 'laravel-vue-pagination';
+// import Pagination from ;
 
 @Component({
   name: 'PlayerSummary',
-  components: { Pagination, PlayerPageHeader, RequireFetchTemplate },
+  components: { PlayerPageHeader, RequireFetchTemplate },
 })
 export default class PlayerSummary extends RequireFetchBase {
+  currentPage = 1;
+
   get apiPath() {
-    return `players/${this.$route.params.playerId}/results?page=${this.$route.query.page}`;
+    return `players/${this.$route.params.playerId}/results?page=${this.$route.query.page || 1}`;
   }
   get playerId() {
     return this.$route.params.playerId;
@@ -63,7 +69,7 @@ export default class PlayerSummary extends RequireFetchBase {
     });
   }
   toResultPage(resultId) {
-    this.$router.push({ name: 'result', params: { resultId } });
+    this.$router.push({ name: 'results.detail', params: { resultId } });
   }
   mounted() {
     state.fetch(this.apiPath);
