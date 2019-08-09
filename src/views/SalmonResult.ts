@@ -83,7 +83,7 @@ export default class SalmonResult extends RequireFetchBase {
     return this.salmonResult!.boss_appearances[bossId];
   }
   public toPlayerSummary(playerId: PlayerId) {
-    this.$router.push({ name: 'playerSummary', params: { playerId } });
+    this.$router.push({ name: 'player.summary', params: { playerId } });
   }
   public getAccountByPlayerId(playerId: PlayerId) {
     return this.salmonResult!.member_accounts.find((member) =>

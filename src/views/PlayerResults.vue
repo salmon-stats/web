@@ -63,7 +63,7 @@ export default class PlayerResults extends RequireFetchBase {
 
   paginate(toPage) {
     this.$router.push({
-      name: 'playerResults',
+      name: 'players.results',
       params: { playerId: this.playerId },
       query: { page: toPage },
     });

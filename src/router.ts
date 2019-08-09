@@ -38,17 +38,17 @@ export default new Router({
     },
     {
       path: '/players/:playerId([a-f\\d]{16})',
-      name: 'playerSummary',
+      name: 'players.summary',
       component: PlayerSummary,
     },
     {
       path: '/players/:playerId([a-f\\d]{16})/results',
-      name: 'playerResults',
+      name: 'players.results',
       component: PlayerResults,
     },
     {
       path: '/schedules/:scheduleId(\\d{10})/records',
-      name: 'scheduleRecords',
+      name: 'schedules.records',
       component: ScheduleRecords,
     },
     { // Fallback route
