@@ -23,15 +23,27 @@ module.exports = {
     );
 
     if (process.env.NODE_ENV === 'production') {
-      plugins.push(constantPlugin(
-        'VUE_APP_API_URL',
-        JSON.stringify('https://salmon-stats-api.yuki.games'),
-      ));
+      plugins.push(
+        constantPlugin(
+          'VUE_APP_API_URL',
+          JSON.stringify('https://salmon-stats-api.yuki.games'),
+        ),
+        constantPlugin(
+          'IS_BROWSER_UPLOAD_ENABLED',
+          JSON.stringify(false),
+        ),
+      );
     } else {
-      plugins.push(constantPlugin(
-        'VUE_APP_API_URL',
-        "'http://' + location.hostname",
-      ));
+      plugins.push(
+        constantPlugin(
+          'VUE_APP_API_URL',
+          "'http://' + location.hostname",
+        ),
+        constantPlugin(
+          'IS_BROWSER_UPLOAD_ENABLED',
+          JSON.stringify(true),
+        ),
+      );
     }
 
     return { plugins };
