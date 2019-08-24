@@ -6,9 +6,10 @@
         <p><button @click="onClickGenerateApiToken">Generate API token</button></p>
         <p>
           <input type="text" :value="apiToken" disabled>
+          <button ref="copyToClipboard" :disabled="apiToken === ''">Copy to clipboard</button>
         </p>
         <p>
-          Note: Every time you press 'Request API token' button,
+          Note: Every time you press 'Generate API token' button,
           new API token will be generated and existing token will be invalidated.
         </p>
       </div>
@@ -66,7 +67,8 @@
 
 <script>
 import axios from 'axios';
-import { Component, Vue } from 'vue-property-decorator';
+import Clipboard from 'clipboard';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import dragDrop from 'drag-drop';
 
 import { metadataModule as metadata } from '../store/modules/metadata';
@@ -82,6 +84,7 @@ const requestOptions = {
 })
 export default class SalmonResultUploader extends Vue {
   apiToken = '';
+  clipboard = null;
   isUploading = false;
   removeListner = null;
   selectedFiles = [];
@@ -91,10 +94,21 @@ export default class SalmonResultUploader extends Vue {
     return IS_BROWSER_UPLOAD_ENABLED;
   }
 
-  mounted() {
-    this.removeListner = dragDrop('.salmon-result-uploader', (files) => {
-      if (this.isSignedIn) this.addToSelectedFiles(files);
-    });
+  onAuthenticated() {
+    if (this.clipboard === null && this.$refs.copyToClipboard !== undefined) {
+      this.clipboard = new Clipboard(this.$refs.copyToClipboard, {
+        text: (trigger) => this.apiToken,
+      });
+      this.clipboard.on('success', (e) => {
+        alert('Successfully copied API token to clipboard.');
+      });
+    }
+
+    if (this.removeListner === null) {
+      this.removeListner = dragDrop('body', (files) => {
+        if (this.isSignedIn) this.addToSelectedFiles(files);
+      });
+    }
   }
   addToSelectedFiles(files) {
     Array.from(files) // Convert FileList to Array
@@ -173,6 +187,10 @@ export default class SalmonResultUploader extends Vue {
     });
   }
   beforeDestroy() {
+    if (this.clipboard) {
+      this.clipboard.destroy();
+    }
+
     if (this.removeListner) {
       this.removeListner();
     }
