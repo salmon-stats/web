@@ -1,6 +1,18 @@
 <template>
   <div class="salmon-result-uploader">
     <require-sign-in message="to upload results">
+      <div>
+        <h1>Generate API token</h1>
+        <p><button @click="onClickGenerateApiToken">Generate API token</button></p>
+        <p>
+          <input type="text" :value="apiToken" disabled>
+        </p>
+        <p>
+          Note: Every time you press 'Request API token' button,
+          new API token will be generated and existing token will be invalidated.
+        </p>
+      </div>
+
       <div v-if="isBrowserUploadEnabled">
         <h1>Upload results</h1>
         <form @submit.prevent>
@@ -60,15 +72,24 @@ import dragDrop from 'drag-drop';
 import { metadataModule as metadata } from '../store/modules/metadata';
 import RequireSignIn from '../components/RequireSignIn.vue';
 
+const requestOptions = {
+  withCredentials: true,
+};
+
 @Component({
   name: 'SalmonResultUploader',
   extends: RequireSignIn,
 })
 export default class SalmonResultUploader extends Vue {
+  apiToken = '';
   isUploading = false;
   removeListner = null;
   selectedFiles = [];
   uploadLog = [];
+
+  get isBrowserUploadEnabled() {
+    return IS_BROWSER_UPLOAD_ENABLED;
+  }
 
   mounted() {
     this.removeListner = dragDrop('.salmon-result-uploader', (files) => {
@@ -109,6 +130,12 @@ export default class SalmonResultUploader extends Vue {
   onClickClearFiles(event) {
     this.selectedFiles = [];
   }
+  onClickGenerateApiToken(event) {
+    axios.get(VUE_APP_API_URL + '/api-token', requestOptions)
+      .then((res) => {
+        this.apiToken = res.data.api_token;
+      });
+  }
   uploadResults() {
     let filesProcessed = 0;
     const payload = { results: [] };
@@ -124,11 +151,7 @@ export default class SalmonResultUploader extends Vue {
           this.isUploading = true;
           this.uploadLog = [];
 
-          const options = {
-            withCredentials: true,
-          };
-
-          axios.post(VUE_APP_API_URL + '/upload-results', payload, options)
+          axios.post(VUE_APP_API_URL + '/upload-results', payload, requestOptions)
             .then((res) => {
               this.uploadLog = res.data;
             })
