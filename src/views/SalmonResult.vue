@@ -16,7 +16,7 @@
         <span v-for="weaponId in salmonResult.schedule.weapons">
           <main-weapon :weapon-id="weaponId" :highlight-on-hover="false" />
         </span>
-        <span v-if="salmonResult.schedule.weapons.some(id => id === -1)">
+        <span v-if="salmonResult.schedule.weapons.some(id => id === -1) && salmonResult.schedule.rare_weapon_id !== null">
           Rare:
           <main-weapon :weapon-id="salmonResult.schedule.rare_weapon_id"
             :highlight-on-hover="false" />
