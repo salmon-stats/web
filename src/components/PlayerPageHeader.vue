@@ -7,7 +7,7 @@
         </player-avatar>
       </h1>
 
-      <a :href="`https://twitter.com/players/${playerId}`">Twitter</a>
+      <a :href="`https://twitter.com/${user.name}`">Twitter</a>
     </div>
     <div v-else>
       <h1>
