@@ -3,6 +3,13 @@ import store from '@/store/store';
 import axios from 'axios';
 import { PlayerId } from '@/types/salmon-result';
 
+interface Schedule {
+  schedule_id: string;
+  end_at: string;
+  weapons: number[];
+  stage_id: number;
+  rare_weapon_id: null | 20000 | 20010 | 20020 | 20030;
+}
 export interface IMetadata {
   user: null | {
     id: number;
@@ -10,11 +17,13 @@ export interface IMetadata {
     player_id: PlayerId;
     twitter_id: string;
   };
+  schedules: null | Schedule[];
 }
 
 @Module({ dynamic: true, store, name: 'metadata', namespaced: true })
 class Metadata extends VuexModule implements IMetadata {
   public user = null;
+  public schedules = null;
   public hasSessionExpired = false;
   public lastFetchedTime = 0;
 
@@ -26,6 +35,7 @@ class Metadata extends VuexModule implements IMetadata {
       .then((res) => {
         const data = res.data;
         this.SET_USER_METADATA(data.user);
+        this.SET_SCHEDULE_METADATA(data.schedules);
         this.SET_LAST_FETCHED_TIME(new Date().getTime());
         return data;
       });
@@ -58,6 +68,11 @@ class Metadata extends VuexModule implements IMetadata {
   @Mutation
   private SET_USER_METADATA(user: any) {
     this.user = user;
+  }
+
+  @Mutation
+  private SET_SCHEDULE_METADATA(schedules: any) {
+    this.schedules = schedules;
   }
 }
 
