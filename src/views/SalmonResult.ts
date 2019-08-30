@@ -54,6 +54,9 @@ export default class SalmonResult extends RequireFetchBase {
     const user = this.getAccountByPlayerId(playerId);
     return user ? user.twitter_avatar : null;
   }
+  public hasEliminatedEverySpawn(bossId: BossIdKeys): boolean {
+    return this.totalBossElimination(bossId) === this.totalBossSpawn(bossId);
+  }
   public getPlayerName(playerId: PlayerId): string {
     const user = this.salmonResult!.member_accounts.find((member) =>
       member && member.player_id === playerId);

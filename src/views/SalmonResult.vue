@@ -156,7 +156,7 @@
             </th>
           </thead>
           <tbody>
-            <tr v-for="bossId in appearedBossIds" :key="bossId">
+            <tr :class="hasEliminatedEverySpawn(bossId) ? 'has-eliminated-every-spawn' : null" v-for="bossId in appearedBossIds" :key="bossId">
               <th>
                 <img :src="iconUrl('salmon-boss', bossId)">
                 {{ translate('boss', bossId) }}
@@ -175,7 +175,7 @@
                   :max="totalBossSpawn(bossId)" />
               </td>
             </tr>
-            <tr class="total">
+            <tr :class="['total', appearedBossIds.every(hasEliminatedEverySpawn) ? 'has-eliminated-every-spawn' : null]">
               <th>Total</th>
               <td class="player-boss-elimination" v-for="(p, playerIndex) in salmonResult.player_results" :key="p.pid">
                 <span :class="hasMost('total_boss_eliminations', p.total_boss_eliminations) ? 'has-most' : null">
@@ -219,6 +219,15 @@ li {
 }
 .has-most, .has-least-death {
   text-decoration: underline;
+}
+.has-eliminated-every-spawn {
+  th {
+    color: $golden-egg;
+  }
+  .total-boss-elimination {
+    color: $golden-egg;
+    font-weight: bold;
+  }
 }
 .golden-egg {
   color: $golden-egg;
