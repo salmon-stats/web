@@ -1,29 +1,35 @@
-import { Mutation, Action, VuexModule, getModule, Module } from 'vuex-module-decorators';
-import store from '@/store/store';
 import axios from 'axios';
-import { PlayerId } from '@/types/salmon-result';
+import dayjs from 'dayjs';
+import { Mutation, Action, VuexModule, getModule, Module } from 'vuex-module-decorators';
 
-interface Schedule {
-  schedule_id: string;
-  end_at: string;
-  weapons: number[];
-  stage_id: number;
-  rare_weapon_id: null | 20000 | 20010 | 20020 | 20030;
-}
+import store from '@/store/store';
+import { Schedule, User } from '@/types/salmon-stats';
+
 export interface IMetadata {
-  user: null | {
-    id: number;
-    name: string;
-    player_id: PlayerId;
-    twitter_id: string;
-  };
+  user: null | User;
   schedules: null | Schedule[];
+  hasSessionExpired: boolean;
+  lastFetchedTime: number;
+}
+
+function parseRawSchedule(rawSchedule: any): Schedule {
+  const startAt = dayjs.utc(rawSchedule.schedule_id);
+  const endAt = dayjs.utc(rawSchedule.end_at);
+
+  return {
+    scheduleId: startAt.format('YYYYMMDDhh'),
+    startAt: startAt.toDate(),
+    endAt: endAt.toDate(),
+    weapons: rawSchedule.weapons,
+    stageId: rawSchedule.stage_id,
+    rareWeaponId: rawSchedule.rare_weapon_id,
+  };
 }
 
 @Module({ dynamic: true, store, name: 'metadata', namespaced: true })
 class Metadata extends VuexModule implements IMetadata {
-  public user = null;
-  public schedules = null;
+  public user: null | User = null;
+  public schedules: null | Schedule[] = null;
   public hasSessionExpired = false;
   public lastFetchedTime = 0;
 
@@ -72,7 +78,7 @@ class Metadata extends VuexModule implements IMetadata {
 
   @Mutation
   private SET_SCHEDULE_METADATA(schedules: any) {
-    this.schedules = schedules;
+    this.schedules = schedules.map(parseRawSchedule);
   }
 }
 

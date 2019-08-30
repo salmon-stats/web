@@ -1,6 +1,4 @@
-type PlayerId = string;
-type BossId = string | number;
-type BossIdKeys = '3' | '6' | '9' | '12' | '13' | '14' | '15' | '16' | '21';
+import { BossIdKeys, PlayerId } from './salmon-stats';
 
 interface Boss {
   key: string;
@@ -147,9 +145,6 @@ interface SalmonResult {
 }
 
 export {
-  PlayerId,
-  BossId,
-  BossIdKeys,
   PlayerResult,
   SalmonResult,
 };

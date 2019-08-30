@@ -1,4 +1,4 @@
-import { BossIdKeys, PlayerId } from './salmon-result';
+import { BossIdKeys, PlayerId } from './salmon-stats';
 
 type BossAppearances = { [key in BossIdKeys]: number };
 

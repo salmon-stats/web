@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { Component, Vue } from 'vue-property-decorator';
 
 import { extendSalmonResult } from '@/extend-salmon-result';
-import { BossId, PlayerId } from '@/types/salmon-result';
+import { BossId, PlayerId } from '@/types/salmon-stats';
 import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-salmon-result';
 import { getTranslationKey, iconUrl } from '../helper';
 import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
