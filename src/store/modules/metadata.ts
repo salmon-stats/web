@@ -78,7 +78,10 @@ class Metadata extends VuexModule implements IMetadata {
 
   @Mutation
   private SET_SCHEDULE_METADATA(schedules: any) {
-    this.schedules = schedules.map(parseRawSchedule);
+    const collator = new Intl.Collator('en', { numeric: true });
+    this.schedules = schedules
+      .map(parseRawSchedule)
+      .sort((a: Schedule, b: Schedule) => collator.compare(a.scheduleId, b.scheduleId));
   }
 }
 
