@@ -144,7 +144,7 @@
       </div>
 
       <h2>Boss Eliminations</h2>
-      <div class="table-wrap">
+      <div class="table-wrap boss-eliminations">
         <table class="is-hoverable">
           <thead>
             <th></th>
@@ -157,7 +157,10 @@
           </thead>
           <tbody>
             <tr v-for="bossId in appearedBossIds" :key="bossId">
-              <td>{{ bossId }}</td>
+              <th>
+                <img :src="iconUrl('salmon-boss', bossId)">
+                {{ translate('boss', bossId) }}
+              </th>
               <td class="player-boss-elimination" v-for="(p, playerIndex) in salmonResult.player_results" :key="p.pid">
                 <span :class="hasMost('boss_eliminations', p.boss_eliminations.counts[bossId], bossId) ? 'has-most' : null">{{ p.boss_eliminations.counts[bossId] }}</span>
                 <proportional-bar-chart :chart-key="`player-${playerIndex + 1}`"
@@ -261,6 +264,12 @@ li {
   .special-usage {
     /* TODO: don't use magic number */
     width: 44px;
+  }
+}
+
+.boss-eliminations {
+  th {
+    font-weight: normal;
   }
 }
 </style>
