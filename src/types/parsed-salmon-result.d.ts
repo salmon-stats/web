@@ -33,6 +33,7 @@ interface ParsedPlayerResult {
   death: number;
   special_id: number;
   boss_eliminations: BossEliminations;
+  boss_elimination_count: number;
   special_uses: SpecialUses[];
   weapons: Weapon[];
 }
@@ -92,16 +93,12 @@ interface TotalResult  {
   death: number;
   golden_eggs: number;
   normal_eggs: number;
-  total_boss_eliminations: number;
   boss_eliminations: Counts;
-}
-
-interface ExtendedPlayerResult extends ParsedPlayerResult {
-  total_boss_eliminations: number;
+  boss_elimination_count: number;
 }
 
 interface ExtendedSalmonResult extends ParsedSalmonResult {
-  player_results: ExtendedPlayerResult[];
+  player_results: ParsedPlayerResult[];
   total_result: TotalResult;
   highest: TotalResult;
 }
@@ -112,6 +109,5 @@ export {
   ParsedSalmonResult,
   ParsedPlayerResult,
   MemberAccount,
-  ExtendedPlayerResult,
   ExtendedSalmonResult,
 }

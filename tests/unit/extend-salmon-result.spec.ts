@@ -1,4 +1,4 @@
-import { ExtendedPlayerResult } from '@/types/parsed-salmon-result';
+import { ParsedPlayerResult } from '@/types/parsed-salmon-result';
 import { extendSalmonResult } from '@/extend-salmon-result';
 import apiSalmonResult from '@/../tests/unit/api-salmon-result.json';
 
@@ -12,7 +12,7 @@ describe('salmon-job.ts', () => {
   it('.total_result.rescue should be some of .player_result[].rescue', () => {
     const helpCount = result
       .player_results
-      .reduce((sum: number, playerResult: ExtendedPlayerResult) => sum + playerResult.rescue, 0);
+      .reduce((sum: number, playerResult: ParsedPlayerResult) => sum + playerResult.rescue, 0);
     expect(result.total_result.rescue).toBe(helpCount);
   });
 

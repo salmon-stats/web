@@ -1,17 +1,11 @@
-import { ExtendedPlayerResult, ExtendedSalmonResult } from '@/types/parsed-salmon-result';
+import { ExtendedSalmonResult } from '@/types/parsed-salmon-result';
 import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 
 const extendSalmonResult = (result: any): ExtendedSalmonResult => {
   // Note: 'boss_eliminations' is not included here.
-  const keysToSumUp = ['rescue', 'death', 'golden_eggs', 'power_eggs', 'total_boss_eliminations'];
+  const keysToSumUp = ['rescue', 'death', 'golden_eggs', 'power_eggs', 'boss_elimination_count'];
   const totalResult: any = { boss_eliminations: {} };
   const highest: any = { boss_eliminations: {} };
-
-  result.player_results!.forEach((playerResult: Partial<ExtendedPlayerResult>) => {
-    const totalBossEliminations = Object.values(playerResult.boss_eliminations!.counts)
-      .reduce((sum: number, count: number) => sum + count, 0);
-    playerResult.total_boss_eliminations = totalBossEliminations;
-  });
 
   idKeyMap.bossIds.forEach((bossId) => {
     const bossEliminationCounts = result.player_results!

@@ -73,10 +73,10 @@
                 </p>
               </td>
               <td>
-                <p><span :class="hasMost('total_boss_eliminations', p.total_boss_eliminations) ? 'has-most' : ''">{{ p.total_boss_eliminations }}</span></p>
+                <p><span :class="hasMost('boss_elimination_count', p.boss_elimination_count) ? 'has-most' : ''">{{ p.boss_elimination_count }}</span></p>
                 <p class="proportional-bar-chart-container">
                   <proportional-bar-chart chart-key="boss-kill"
-                    :value="p.total_boss_eliminations" :max="salmonResult.highest.total_boss_eliminations" />
+                    :value="p.boss_elimination_count" :max="salmonResult.highest.boss_elimination_count" />
                 </p>
               </td>
               <td>
@@ -101,7 +101,7 @@
               <!-- sum of rescue always equals to sum of death -->
               <td><!-- {{ salmonResult.total_result.rescue }} --></td>
               <td>{{ salmonResult.total_result.death }}</td>
-              <td>{{ salmonResult.total_result.total_boss_eliminations }}</td>
+              <td>{{ salmonResult.boss_elimination_count }}</td>
               <td>
                 <span class="golden-egg">{{ salmonResult.total_result.golden_eggs }}</span>
                 +
@@ -178,19 +178,19 @@
             <tr :class="['total', appearedBossIds.every(hasEliminatedEverySpawn) ? 'has-eliminated-every-spawn' : null]">
               <th>Total</th>
               <td class="player-boss-elimination" v-for="(p, playerIndex) in salmonResult.player_results" :key="p.pid">
-                <span :class="hasMost('total_boss_eliminations', p.total_boss_eliminations) ? 'has-most' : null">
-                  {{ p.total_boss_eliminations }}
+                <span :class="hasMost('boss_elimination_count', p.boss_elimination_count) ? 'has-most' : null">
+                  {{ p.boss_elimination_count }}
                 </span>
                 <proportional-bar-chart :chart-key="`player-${playerIndex + 1}`"
-                  :value="p.total_boss_eliminations"
-                  :max="salmonResult.highest.total_boss_eliminations" />
+                  :value="p.boss_elimination_count"
+                  :max="salmonResult.highest.boss_elimination_count" />
               </td>
               <td class="total-boss-elimination">
-                {{ salmonResult.total_result.total_boss_eliminations }}/{{ sum(salmonResult.boss_appearances) }}
+                {{ salmonResult.boss_elimination_count }}/{{ salmonResult.boss_appearance_count }}
                 <proportional-bar-chart chart-key="boss-kill"
                   :fill-remainder="true"
-                  :value="salmonResult.total_result.total_boss_eliminations"
-                  :max="sum(salmonResult.boss_appearances)" />
+                  :value="salmonResult.boss_elimination_count"
+                  :max="salmonResult.boss_appearance_count" />
               </td>
             </tr>
           </tbody>
