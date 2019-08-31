@@ -41,17 +41,19 @@
 <style lang="scss" scoped>
 @import '../assets/variables.scss';
 
+$cell-width: 6em;
+
 .table-container {
   overflow-x: auto;
 }
 table {
-  width: 35em;
+  width: $cell-width * 7;
 }
 thead, tbody {
   th, td {
     padding: .5em;
     height: 4em;
-    width: 5em;
+    width: $cell-width;
   }
 }
 thead th {

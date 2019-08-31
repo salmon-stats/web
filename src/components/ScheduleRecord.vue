@@ -1,7 +1,13 @@
 <template>
-  <div :class="className">
+  <div>
     <router-link :to="`/results/${record.id}`">
-      <span class="value">{{ value }}</span>
+      <span :class="['golden-egg', recordType === 'golden_eggs' ? 'highlight' : null]">
+        {{ record.golden_eggs }}
+      </span>
+      <span class="text">/</span>
+      <span :class="['power-egg', recordType === 'power_eggs' ? 'highlight' : null]">
+        {{ record.power_eggs }}
+      </span>
     </router-link>
   </div>
 </template>
@@ -9,13 +15,16 @@
 <style lang="scss" scoped>
 @import '../assets/variables.scss';
 
-.value {
+.text {
+  color: $body-color;
+}
+.highlight {
   font-weight: bold;
 }
-.golden-egg .value {
+.golden-egg {
   color: $golden-egg;
 }
-.power-egg .value {
+.power-egg {
   color: $power-egg;
 }
 </style>
@@ -31,12 +40,5 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
   },
 })
 export default class ScheduleRecord extends Vue {
-  get value() { return this.record[this.recordType]; }
-  get className() {
-    return {
-      golden_eggs: 'golden-egg',
-      power_eggs: 'power-egg',
-    }[this.recordType];
-  }
 }
 </script>
