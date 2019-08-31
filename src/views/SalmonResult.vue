@@ -51,7 +51,7 @@
               </td>
               <td>
                 <special-usage :special-id="p.special_id"
-                  :count="p.special_uses.reduce((sum, s) => sum + s.count, 0)" />
+                  :count="sum(p.special_uses.map(special => special.count))" />
               </td>
               <td>
                 <span class="weapon-icon main" v-for="(w, i) in p.weapons" :key="i">

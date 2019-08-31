@@ -77,10 +77,8 @@ export default class SalmonResult extends RequireFetchBase {
     return value === Math.min(...this.salmonResult!.player_results.map(p => p.death));
   }
   public totalBossElimination(bossId: BossIdKeys): number {
-    return this.salmonResult!.player_results.reduce(
-      (sum: number, p) => sum + p.boss_eliminations.counts[bossId],
-      0,
-    );
+    return this.sum(this.salmonResult!.player_results
+      .map((player) => player.boss_eliminations.counts[bossId]));
   }
   public totalBossSpawn(bossId: BossIdKeys): number {
     return this.salmonResult!.boss_appearances[bossId];
