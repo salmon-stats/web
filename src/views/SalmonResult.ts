@@ -31,8 +31,8 @@ export default class SalmonResult extends RequireFetchBase {
     return this.bossIds.filter((bossId) => this.totalBossSpawn(bossId) > 0);
   }
   get failedWave(): number | null {
-    const clearWaves = this.salmonResult!.clear_waves;
-    return clearWaves ? clearWaves + 1 : null;
+    const clearedWaves = this.salmonResult!.clear_waves;
+    return clearedWaves === 3 ? null : clearedWaves + 1; // Magic number
   }
 
   public specialsUsedInWave(wave: number) {
