@@ -23,7 +23,8 @@
 
       <div class="column">
         <h2>Ongoing Schedule</h2>
-        <schedule-card difference-to="endAt"
+        <p v-if="!ongoingSchedule">There's no ongoing Salmon Run schedule.</p>
+        <schedule-card v-else difference-to="endAt"
           :now="now" :schedule="ongoingSchedule" />
       </div>
 
