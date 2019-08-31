@@ -1,6 +1,6 @@
 <template>
   <require-fetch-template>
-    <div v-if="records">
+    <div v-if="records && Object.keys(records).length > 0">
       <b-tabs v-model="activeTabIndex">
         <b-tab-item label="Golden Eggs" />
         <b-tab-item label="Power Eggs" />
