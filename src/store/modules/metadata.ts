@@ -42,8 +42,10 @@ class Metadata extends VuexModule implements IMetadata {
         const data = res.data;
         this.SET_USER_METADATA(data.user);
         this.SET_SCHEDULE_METADATA(data.schedules);
-        this.SET_LAST_FETCHED_TIME(new Date().getTime());
         return data;
+      })
+      .finally(() => {
+        this.SET_LAST_FETCHED_TIME(new Date().getTime());
       });
   }
 
