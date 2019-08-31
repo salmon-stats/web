@@ -9,8 +9,38 @@
       developed &amp; run by <a href="https://twitter.com">@Yukinkling</a>.
     </p>
 
-    <ul>
-      <li v-for="schedule in schedules">{{ schedule }}</li>
-    </ul>
+    <!-- TODO: Use tab for phones -->
+    <div v-if="isSchedulesAvailable" class="columns">
+      <div class="column">
+        <h2>Past Schedules</h2>
+        <ul>
+          <li v-for="schedule in pastSchedules" :key="schedule.scheduleId">
+            <schedule-card :now="now" :schedule="schedule" />
+          </li>
+          <!-- TODO: Add "Show more" button (link to /schedules) -->
+        </ul>
+      </div>
+
+      <div class="column">
+        <h2>Ongoing Schedule</h2>
+        <schedule-card difference-to="endAt"
+          :now="now" :schedule="ongoingSchedule" />
+      </div>
+
+      <div class="column">
+        <h2>Future Schedules</h2>
+        <ul>
+          <li v-for="schedule in futureSchedules" :key="schedule.scheduleId">
+            <schedule-card difference-to="startAt"
+              :now="now" :schedule="schedule" />
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div v-else>
+      Loading schedule...
+    </div>
   </div>
 </template>
+
+<script src="./Home.ts"></script>
