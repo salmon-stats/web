@@ -40,7 +40,7 @@ import { requireFetchComponentModule as state } from '@/store/modules/require-fe
   components: { PlayerPageHeader, RequireFetchTemplate },
 })
 export default class latestResults extends RequireFetchBase {
-  currentPage = this.$route.query.page || 1;
+  currentPage = 1;
 
   get apiPath() {
     return `results?page=${this.$route.query.page || 1}`;
