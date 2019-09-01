@@ -1,5 +1,5 @@
 <template>
-  <img v-if="user"
+  <img v-if="user && user.twitter_avatar"
     :width="size" :height="size" :src="user.twitter_avatar">
   <blockies v-else
     :sizePerPixel="blockiesSizePerPixel" :pixels="blockiesPixels" :seed="blockiesSeed" />
