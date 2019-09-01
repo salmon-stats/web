@@ -40,14 +40,14 @@
           <tbody>
             <!-- Todo: highlight if my row -->
             <tr class="player-summary clickable"
-              v-for="(p, i) in salmonResult.player_results" :key="p.player_id"
+              v-for="p in salmonResult.player_results" :key="p.player_id"
               @click="toPlayerSummary(p.player_id)">
               <td>
                 <player-avatar :user="getAccountByPlayerId(p.player_id)"
                   :size="32" :blockiesSeed="p.player_id" />
               </td>
               <td>
-                {{ getPlayerName(i) }}
+                {{ getPlayerName(p.player_id) }}
               </td>
               <td>
                 <special-usage :special-id="p.special_id"

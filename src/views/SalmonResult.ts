@@ -3,7 +3,7 @@ import { Component, Vue } from 'vue-property-decorator';
 
 import { extendSalmonResult } from '@/extend-salmon-result';
 import { BossId, PlayerId } from '@/types/salmon-stats';
-import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-salmon-result';
+import { ExtendedSalmonResult, TotalResult, BossIdKeys, MemberAccount } from '@/types/parsed-salmon-result';
 import { getTranslationKey, iconUrl } from '../helper';
 import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
@@ -48,17 +48,17 @@ export default class SalmonResult extends RequireFetchBase {
     return dayjs.unix(time).utc().local().format('YYYY-MM-DD HH:mm:ss');
   }
   public isRegistered(playerId: PlayerId): boolean {
-    return !!this.getAccountByPlayerId(playerId);
+    return !!this.getAccountByPlayerId(playerId).created_at;
   }
-  public getPlayerAvatar(playerId: PlayerId): string | null {
+  public getPlayerAvatar(playerId: PlayerId): string | undefined {
     const user = this.getAccountByPlayerId(playerId);
-    return user ? user.twitter_avatar : null;
+    return user.twitter_avatar;
   }
   public hasEliminatedEverySpawn(bossId: BossIdKeys): boolean {
     return this.totalBossElimination(bossId) === this.totalBossSpawn(bossId);
   }
-  public getPlayerName(playerPosition: number): string {
-    return this.salmonResult!.member_accounts[playerPosition].name;
+  public getPlayerName(playerId: PlayerId): string {
+    return this.getAccountByPlayerId(playerId).name;
   }
   public translate(key: keyof IIdKeyMap, id: string | number): string {
     return key ? this.$t(getTranslationKey(key, id)) as string : '';
@@ -84,9 +84,9 @@ export default class SalmonResult extends RequireFetchBase {
   public toPlayerSummary(playerId: PlayerId) {
     this.$router.push({ name: 'players.summary', params: { playerId } });
   }
-  public getAccountByPlayerId(playerId: PlayerId) {
+  public getAccountByPlayerId(playerId: PlayerId): MemberAccount {
     return this.salmonResult!.member_accounts.find((member) =>
-      member && member.player_id === playerId);
+      member && member.player_id === playerId)!;
   }
   public sum(collection: number[] | object) {
     let numbers: number[];
