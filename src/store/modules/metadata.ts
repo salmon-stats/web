@@ -17,7 +17,7 @@ function parseRawSchedule(rawSchedule: any): Schedule {
   const endAt = dayjs.utc(rawSchedule.end_at);
 
   return {
-    scheduleId: startAt.format('YYYYMMDDhh'),
+    scheduleId: startAt.utc().format('YYYYMMDDHH'),
     startAt: startAt.toDate(),
     endAt: endAt.toDate(),
     weapons: rawSchedule.weapons,
