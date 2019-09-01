@@ -14,12 +14,11 @@
       </p>
       <p>Weapons:
         <span v-for="weaponId in salmonResult.schedule.weapons">
-          <main-weapon :weapon-id="weaponId" :highlight-on-hover="false" />
+          <main-weapon :weapon-id="weaponId" />
         </span>
         <span v-if="salmonResult.schedule.weapons.some(id => id === -1) && salmonResult.schedule.rare_weapon_id !== null">
           Rare:
-          <main-weapon :weapon-id="salmonResult.schedule.rare_weapon_id"
-            :highlight-on-hover="false" />
+          <main-weapon :weapon-id="salmonResult.schedule.rare_weapon_id" />
         </span>
       </p>
       <p>Stage: {{ translate('stage', salmonResult.schedule.stage_id) }}</p>

@@ -8,7 +8,7 @@
 
     <div>
       <main-weapon v-for="weapon in schedule.weapons" :key="weapon"
-        :weapon-id="weapon" :highlight-on-hover="false" :size="32" />
+        :weapon-id="weapon" :size="32" />
     </div>
   </div>
 </template>
