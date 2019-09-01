@@ -5,10 +5,10 @@ type BossAppearances = { [key in BossIdKeys]: number };
 interface MemberAccount {
   id: number;
   name: string;
-  player_id: string;
-  twitter_avatar: string;
-  created_at: string;
-  updated_at: string;
+  player_id?: string;
+  twitter_avatar?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 type Counts = { [key in BossIdKeys]: number };
@@ -82,7 +82,7 @@ interface ParsedSalmonResult {
   danger_rate: string;
   created_at: string;
   updated_at: string;
-  member_accounts: Array<MemberAccount | null>;
+  member_accounts: Array<MemberAccount>;
   player_results: ParsedPlayerResult[];
   schedule: Schedule;
   waves: Wave[];

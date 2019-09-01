@@ -57,10 +57,8 @@ export default class SalmonResult extends RequireFetchBase {
   public hasEliminatedEverySpawn(bossId: BossIdKeys): boolean {
     return this.totalBossElimination(bossId) === this.totalBossSpawn(bossId);
   }
-  public getPlayerName(playerId: PlayerId): string {
-    const user = this.salmonResult!.member_accounts.find((member) =>
-      member && member.player_id === playerId);
-    return user ? user.name : playerId;
+  public getPlayerName(playerPosition: number): string {
+    return this.salmonResult!.member_accounts[playerPosition].name;
   }
   public translate(key: keyof IIdKeyMap, id: string | number): string {
     return key ? this.$t(getTranslationKey(key, id)) as string : '';
