@@ -10,14 +10,14 @@
       <div class="table-wrap">
         <table class="is-hoverable">
           <tbody>
-            <tr class="clickable" @click="toResultPage(result.id)"
-              v-for="result in playerSummary.results" :key="result.id">
-              <td :class="result.fail_reason_id ? 'fail' : 'clear'">
-                {{ result.fail_reason_id ? 'Fail' : 'Clear' }}
+            <tr class="clickable" @click="toResultPage(result.salmon_result.id)"
+              v-for="result in playerSummary.results" :key="result.salmon_result.id">
+              <td :class="result.salmon_result.fail_reason_id ? 'fail' : 'clear'">
+                {{ result.salmon_result.fail_reason_id ? 'Fail' : 'Clear' }}
               </td>
-              <td>{{ result.start_at }}</td>
-              <td>{{ result.danger_rate }}</td>
-              <!-- <td>{{ result.members.length }}</td> -->
+              <td>{{ result.salmon_result.start_at }}</td>
+              <td>{{ result.salmon_result.danger_rate }}</td>
+              <!-- <td>{{ result.salmon_result.members.length }}</td> -->
             </tr>
           </tbody>
         </table>

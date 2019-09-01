@@ -5,13 +5,13 @@
       <div class="table-wrap">
         <table class="is-hoverable">
           <tbody>
-            <tr class="clickable" @click="toResultPage(result.id)"
-              v-for="result in playerResults.data" :key="result.id">
-              <td :class="result.fail_reason_id ? 'fail' : 'clear'">
-                {{ result.fail_reason_id ? 'Fail' : 'Clear' }}
+            <tr class="clickable" @click="toResultPage(result.salmon_result.id)"
+              v-for="result in playerResults.data" :key="result.salmon_result.id">
+              <td :class="result.salmon_result.fail_reason_id ? 'fail' : 'clear'">
+                {{ result.salmon_result.fail_reason_id ? 'Fail' : 'Clear' }}
               </td>
-              <td>{{ result.start_at }}</td>
-              <td>{{ result.danger_rate }}</td>
+              <td>{{ result.salmon_result.start_at }}</td>
+              <td>{{ result.salmon_result.danger_rate }}</td>
             </tr>
           </tbody>
         </table>
@@ -72,11 +72,16 @@ export default class PlayerResults extends RequireFetchBase {
     this.$router.push({ name: 'results.detail', params: { resultId } });
   }
   mounted() {
+    if (this.$route.query.page) {
+      this.currentPage = parseInt(this.$route.query.page, 10);
+    }
+
     state.fetch(this.apiPath);
   }
 
   @Watch('$route')
   onRouteChange() {
+    this.currentPage = parseInt(this.$route.query.page || 1, 10);
     state.fetch(this.apiPath);
   }
 }
