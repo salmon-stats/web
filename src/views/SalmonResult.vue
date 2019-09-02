@@ -148,7 +148,7 @@
       <div class="table-wrap boss-eliminations">
         <table class="is-hoverable">
           <thead>
-            <th></th>
+            <th class="boss-name"></th>
             <th v-for="pid in salmonResult.members" :key="pid">
               <div class="clickable" @click="toPlayerSummary(pid)">
                 <player-avatar :user="getAccountByPlayerId(pid)"
@@ -158,9 +158,9 @@
           </thead>
           <tbody>
             <tr :class="hasEliminatedEverySpawn(bossId) ? 'has-eliminated-every-spawn' : null" v-for="bossId in appearedBossIds" :key="bossId">
-              <th>
+              <th class="boss-name">
                 <img :src="iconUrl('salmon-boss', bossId)">
-                {{ translate('boss', bossId) }}
+                <span class="is-hidden-touch">{{ translate('boss', bossId) }}</span>
               </th>
               <td class="player-boss-elimination" v-for="(p, playerIndex) in salmonResult.player_results" :key="p.pid">
                 <span :class="hasMost('boss_eliminations', p.boss_eliminations.counts[bossId], bossId) ? 'has-most' : null">{{ p.boss_eliminations.counts[bossId] }}</span>
@@ -177,7 +177,9 @@
               </td>
             </tr>
             <tr :class="['total', appearedBossIds.every(hasEliminatedEverySpawn) ? 'has-eliminated-every-spawn' : null]">
-              <th>Total</th>
+              <th class="boss-name total">
+                <span>Total</span>
+              </th>
               <td class="player-boss-elimination" v-for="(p, playerIndex) in salmonResult.player_results" :key="p.pid">
                 <span :class="hasMost('boss_elimination_count', p.boss_elimination_count) ? 'has-most' : null">
                   {{ p.boss_elimination_count }}
@@ -207,6 +209,16 @@
 @import '../assets/variables.scss';
 @import '../assets/helper-functions.scss';
 
+@media (max-width: $desktop - 1) {
+  th.boss-name {
+    width: 32px;
+  }
+}
+@media (min-width: $desktop) {
+  th.boss-name.total span {
+    margin-left: 32px;
+  }
+}
 img {
   width: 32px;
 }
