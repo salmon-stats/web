@@ -100,7 +100,9 @@
               <!-- sum of rescue always equals to sum of death -->
               <td><!-- {{ salmonResult.total_result.rescue }} --></td>
               <td>{{ salmonResult.total_result.death }}</td>
-              <td>{{ salmonResult.boss_elimination_count }}</td>
+              <td>
+                {{ salmonResult.boss_elimination_count }}/{{ salmonResult.boss_appearance_count }}
+              </td>
               <td>
                 <span class="golden-egg">{{ salmonResult.total_result.golden_eggs }}</span>
                 +
