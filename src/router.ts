@@ -35,7 +35,7 @@ export default new Router({
       component: SalmonResultUploader,
     },
     {
-      path: '/players/:playerId([a-f\\d]{16})',
+      path: '/players/:playerId([a-f\\d]{16}|@\\w{1,15})',
       name: 'players.summary',
       component: PlayerSummary,
     },
