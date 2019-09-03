@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link :to="`/schedules/${schedule.scheduleId}/records`">
+    <router-link :to="{ name: 'schedules.summary', params: { scheduleId: schedule.scheduleId } }">
       {{ startAt }} ~ {{ endAt }}
     </router-link>
 

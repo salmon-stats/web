@@ -110,10 +110,12 @@ export default class ScheduleRecords extends RequireFetchBase {
     return ['golden_eggs', 'power_eggs'][this.activeTabIndex];
   }
   get apiPath() {
-    return `schedules/${this.scheduleId}/records`;
+    return `schedules/${this.scheduleId}`;
   }
   get records() {
-    return state.data;
+    if (!state.data || !('records' in state.data)) return;
+
+    return state.data.records;
   }
   get waterLevels() {
     return Object.keys(idKeyMap.water_level).map(id => parseInt(id, 10));
