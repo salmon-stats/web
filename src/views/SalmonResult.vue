@@ -101,7 +101,7 @@
               <td><!-- {{ salmonResult.total_result.rescue }} --></td>
               <td>{{ salmonResult.total_result.death }}</td>
               <td>
-                {{ salmonResult.boss_elimination_count }}/{{ salmonResult.boss_appearance_count }}
+                {{ salmonResult.boss_elimination_count }}<span class="boss-appearance-count">/{{ salmonResult.boss_appearance_count }}</span>
               </td>
               <td>
                 <span class="golden-egg">{{ salmonResult.total_result.golden_eggs }}</span>
@@ -219,6 +219,12 @@
     margin-left: 32px;
   }
 }
+
+.boss-appearance-count {
+  font-size: 80%;
+  color: darken($body-color, 20%);
+}
+
 img {
   width: 32px;
 }
