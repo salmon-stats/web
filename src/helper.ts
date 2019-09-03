@@ -1,3 +1,4 @@
+import { Schedule } from '@/types/salmon-stats';
 import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import dayjs, { Dayjs } from 'dayjs';
 
