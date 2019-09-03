@@ -1,29 +1,15 @@
 import axios from 'axios';
-import dayjs from 'dayjs';
 import { Mutation, Action, VuexModule, getModule, Module } from 'vuex-module-decorators';
 
 import store from '@/store/store';
 import { Schedule, User } from '@/types/salmon-stats';
+import { parseRawSchedule } from '@/helper';
 
 export interface IMetadata {
   user: null | User;
   schedules: null | Schedule[];
   hasSessionExpired: boolean;
   lastFetchedTime: number;
-}
-
-function parseRawSchedule(rawSchedule: any): Schedule {
-  const startAt = dayjs.utc(rawSchedule.schedule_id);
-  const endAt = dayjs.utc(rawSchedule.end_at);
-
-  return {
-    scheduleId: startAt.utc().format('YYYYMMDDHH'),
-    startAt: startAt.toDate(),
-    endAt: endAt.toDate(),
-    weapons: rawSchedule.weapons,
-    stageId: rawSchedule.stage_id,
-    rareWeaponId: rawSchedule.rare_weapon_id,
-  };
 }
 
 @Module({ dynamic: true, store, name: 'metadata', namespaced: true })

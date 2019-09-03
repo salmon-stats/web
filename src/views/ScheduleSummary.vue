@@ -1,40 +1,46 @@
 <template>
   <require-fetch-template>
-    <div v-if="records && Object.keys(records).length > 0">
-      <b-tabs v-model="activeTabIndex">
-        <b-tab-item label="Golden Eggs" />
-        <b-tab-item label="Power Eggs" />
-      </b-tabs>
+    <template v-if="schedule">
+      <schedule-card :schedule="schedule" />
 
-      <div>
-        <p>3-Wave Total Record</p>
-        <schedule-record :record="records.totals[eggType]" :record-type="eggType" />
+      <div v-if="records">
+        <h2>Records</h2>
+
+        <b-tabs v-model="activeTabIndex">
+          <b-tab-item label="Golden Eggs" />
+          <b-tab-item label="Power Eggs" />
+        </b-tabs>
+
+        <div>
+          <p>3-Wave Total Record</p>
+          <schedule-record :record="records.totals[eggType]" :record-type="eggType" />
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th v-for="eventId in events" :key="eventId">
+                {{ eventId ? $t(getTranslationKey('event', eventId)) : '-' }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="waterLevelId in waterLevels" :key="waterLevelId"
+              :class="['low', 'normal', 'high'][waterLevelId - 1]">
+              <td v-for="eventId in events" :key="`${waterLevelId}-${eventId}`"
+                :class="isCellClicable(eventId, waterLevelId) ? 'clickable' : ''"
+                @click="toResultPage(eventWaterLevelRecord(eventId, waterLevelId).id)">
+                <schedule-record v-if="eventWaterLevelRecord(eventId, waterLevelId)"
+                  :record="eventWaterLevelRecord(eventId, waterLevelId)" :record-type="eggType" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th v-for="eventId in events" :key="eventId">
-              {{ eventId ? $t(getTranslationKey('event', eventId)) : '-' }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="waterLevelId in waterLevels" :key="waterLevelId"
-            :class="['low', 'normal', 'high'][waterLevelId - 1]">
-            <td v-for="eventId in events" :key="`${waterLevelId}-${eventId}`"
-              :class="isCellClicable(eventId, waterLevelId) ? 'clickable' : ''"
-              @click="toResultPage(eventWaterLevelRecord(eventId, waterLevelId).id)">
-              <schedule-record v-if="eventWaterLevelRecord(eventId, waterLevelId)"
-                :record="eventWaterLevelRecord(eventId, waterLevelId)" :record-type="eggType" />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div v-else>
-      No records found for {{ scheduleId }}.
-    </div>
+      <div v-else>
+        No records found for {{ scheduleId }}.
+      </div>
+    </template>
   </require-fetch-template>
 </template>
 
@@ -91,14 +97,15 @@ td:not(:first-child) {
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import RequireFetchTemplate from '../components/RequireFetchTemplate.vue';
 import RequireFetchBase from '../components/RequireFetchBase.vue';
+import ScheduleCard from '../components/ScheduleCard.vue';
 import ScheduleRecord from '../components/ScheduleRecord.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
-import { getTranslationKey } from '@/helper.ts';
+import { getTranslationKey, parseRawSchedule } from '@/helper.ts';
 
 @Component({
   name: 'ScheduleRecords',
-  components: { RequireFetchTemplate, ScheduleRecord },
+  components: { RequireFetchTemplate, ScheduleCard, ScheduleRecord },
 })
 export default class ScheduleRecords extends RequireFetchBase {
   activeTabIndex = 0;
@@ -111,6 +118,11 @@ export default class ScheduleRecords extends RequireFetchBase {
   }
   get apiPath() {
     return `schedules/${this.scheduleId}`;
+  }
+  get schedule() {
+    if (!state.data || !('records' in state.data)) return;
+
+    return parseRawSchedule(state.data.schedule);
   }
   get records() {
     if (!state.data || !('records' in state.data)) return;

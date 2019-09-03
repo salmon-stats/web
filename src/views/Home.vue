@@ -15,7 +15,7 @@
         <h2>Past Schedules</h2>
         <ul>
           <li v-for="schedule in pastSchedules" :key="schedule.scheduleId">
-            <schedule-card :now="now" :schedule="schedule" />
+            <schedule-card :schedule="schedule" />
           </li>
           <!-- TODO: Add "Show more" button (link to /schedules) -->
         </ul>
