@@ -16,6 +16,24 @@ export const formatDateInLocalTz = (dateLikeObject: string | number | Date | Day
 };
 
 /**
+ * @param dateLikeObject
+ */
+export const formatDateToYmdhm = (dateLikeObject: string | number | Date | Dayjs) =>
+  formatDateInLocalTz(dateLikeObject, 'YYYY-MM-DD HH:mm');
+
+/**
+ * @param dateLikeObject
+ */
+export const formatDateToMdhm = (dateLikeObject: string | number | Date | Dayjs) =>
+  formatDateInLocalTz(dateLikeObject, 'MM-DD HH:mm');
+
+  /**
+ * @param dateLikeObject in UTC
+ */
+export const formatScheduleId = (dateLikeObject: string | number | Date | Dayjs) =>
+  dayjs(dateLikeObject).format('YYYYMMDDHH');
+
+/**
  * @param key
  * @param id
  */
@@ -32,7 +50,7 @@ export const parseRawSchedule = (rawSchedule: any): Schedule => {
   const endAt = dayjs.utc(rawSchedule.end_at);
 
   return {
-    scheduleId: startAt.utc().format('YYYYMMDDHH'),
+    scheduleId: formatScheduleId(startAt),
     startAt: startAt.toDate(),
     endAt: endAt.toDate(),
     weapons: rawSchedule.weapons,

@@ -1,7 +1,7 @@
 <template>
   <require-fetch-template>
     <template v-if="schedule">
-      <schedule-card :schedule="schedule" />
+      <schedule-card :date-formatter="formatDateToYmdhm" :schedule="schedule" />
 
       <div v-if="records">
 
@@ -42,7 +42,7 @@
         </table>
       </div>
       <div v-else>
-        No records found for {{ scheduleId }}.
+        No records found for <schedule :date-formatter="formatDateToYmdhm" :is-link-disabled="true" :schedule-id="scheduleId" />.
       </div>
     </template>
   </require-fetch-template>
@@ -101,19 +101,21 @@ td:not(:first-child) {
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import RequireFetchTemplate from '../components/RequireFetchTemplate.vue';
 import RequireFetchBase from '../components/RequireFetchBase.vue';
+import Schedule from '../components/Schedule.vue';
 import ScheduleCard from '../components/ScheduleCard.vue';
 import ScheduleRecord from '../components/ScheduleRecord.vue';
 import Results from '../components/Results.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
-import { getTranslationKey, parseRawSchedule } from '@/helper.ts';
+import { formatDateToYmdhm, getTranslationKey, parseRawSchedule } from '@/helper.ts';
 
 @Component({
   name: 'ScheduleRecords',
-  components: { Results, RequireFetchTemplate, ScheduleCard, ScheduleRecord },
+  components: { Results, RequireFetchTemplate, Schedule, ScheduleCard, ScheduleRecord },
 })
 export default class ScheduleRecords extends RequireFetchBase {
   activeTabIndex = 0;
+  formatDateToYmdhm = formatDateToYmdhm;
 
   get scheduleId() {
     return this.$route.params.scheduleId;
@@ -163,7 +165,7 @@ export default class ScheduleRecords extends RequireFetchBase {
   }
 
   toResultPage(resultId) {
-    this.$router.push({ name: 'results.detail', params: { resultId } });
+    this.$router.push({ name: 'results.summary', params: { resultId } });
   }
 
   mounted() {

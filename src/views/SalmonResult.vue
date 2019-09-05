@@ -2,16 +2,16 @@
   <require-fetch-template>
     <div v-if="salmonResult">
       <h2>Overview</h2>
-      <p>Hazard level: {{ salmonResult.danger_rate }}%</p>
-      <p>Schedule: {{ salmonResult.schedule_id }}</p>
-      <p>Start: {{ salmonResult.start_at }}</p>
+      <p>Schedule: <schedule :date-formatter="formatDate" :schedule-id="salmonResult.schedule_id" /></p>
+      <p>Start: {{ formatDate(salmonResult.start_at) }}</p>
       <p>Result:
-        <span v-if="salmonResult.fail_reason_id">
-          Fail (wave {{ failedWave }})
-          ({{ translate('fail_reason', salmonResult.fail_reason_id) }})
-        </span>
-        <span v-else>Clear</span>
+        <template v-if="salmonResult.fail_reason_id">
+          <span class="fail">Fail</span>
+          ({{ translate('fail_reason', salmonResult.fail_reason_id) }} in wave {{ failedWave }})
+        </template>
+        <span v-else class="clear">Clear</span>
       </p>
+      <p>Hazard level: <hazard-level :hazard-level="salmonResult.danger_rate" /></p>
       <p>Weapons:
         <span v-for="weaponId in salmonResult.schedule.weapons">
           <main-weapon :weapon-id="weaponId" />
@@ -27,10 +27,10 @@
       <div class="table-wrap">
         <table class="is-hoverable">
           <thead>
-            <th></th>
-            <th>Player</th>
-            <th>Special</th>
-            <th>Main</th>
+            <th class="player-icon"></th>
+            <th class="player-name">Player</th>
+            <th class="special-usage">Special</th>
+            <th class="main-weapons">Main</th>
             <th>Rescue</th>
             <th>Death</th>
             <th>Boss</th>
@@ -38,21 +38,21 @@
           </thead>
           <tbody>
             <!-- Todo: highlight if my row -->
-            <tr class="player-summary clickable"
+            <tr :class="['player-summary', 'clickable', isMyPlayerId(p.player_id) ? 'my' : null]"
               v-for="p in salmonResult.player_results" :key="p.player_id"
               @click="toPlayerSummary(p.player_id)">
-              <td>
+              <td class="player-icon">
                 <player-avatar :user="getAccountByPlayerId(p.player_id)"
                   :size="32" :blockiesSeed="p.player_id" />
               </td>
-              <td>
+              <td class="player-name">
                 {{ getPlayerName(p.player_id) }}
               </td>
-              <td>
+              <td class="special-usage">
                 <special-usage :special-id="p.special_id"
                   :count="sum(p.special_uses.map(special => special.count))" />
               </td>
-              <td>
+              <td class="main-weapons">
                 <span class="weapon-icon main" v-for="(w, i) in p.weapons" :key="i">
                   <main-weapon :weapon-id="w.weapon_id" />
                 </span>
@@ -132,12 +132,12 @@
                 {{ wave.wave }}
                 <span class="failed-wave-overlay" v-if="failedWave === wave.wave"></span>
               </th>
-              <td class="tide">{{ translate('water_level', wave.water.id) }}</td>
-              <td class="event">{{ wave.event ? translate('event', wave.event.id) : '-' }}</td>
+              <td class="tide">{{ translate('water_level', wave.water_id) }}</td>
+              <td class="event">{{ wave.event_id ? translate('event', wave.event_id) : '-' }}</td>
               <td class="special-usage" v-for="special in specialsUsedInWave(wave.wave)">
                 <special-usage v-if="special.count" :special-id="special.id" :count="special.count" />
               </td>
-              <td class="golden-egg">{{ wave.golden_egg_delivered }}/{{ wave.golden_egg_quota }}</td>
+              <td><span class="golden-egg">{{ wave.golden_egg_delivered }}</span>/<span class="golden-egg">{{ wave.golden_egg_quota }}</span></td>
               <td class="power-egg">{{ wave.power_egg_collected }}</td>
             </tr>
           </tbody>
@@ -206,9 +206,22 @@
 <script src="./SalmonResult.ts" lang="ts"></script>
 
 <style lang="scss" scoped>
+@import '@/assets/bulma.scss';
 @import '../assets/variables.scss';
 @import '../assets/helper-functions.scss';
 
+th.player-icon, td.player-icon {
+  width: 32px;
+}
+td.player-name {
+  width: 11em;
+}
+td.special-usage {
+  width: 4em;
+}
+td.main-weapons {
+  width: 112px; // magic number
+}
 @media (max-width: $desktop - 1) {
   th.boss-name {
     width: 32px;
@@ -223,6 +236,10 @@
 .boss-appearance-count {
   font-size: 80%;
   color: darken($body-color, 20%);
+}
+
+.table-wrap, table {
+  width: 100%;
 }
 
 img {

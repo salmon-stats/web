@@ -39,12 +39,14 @@ table, tr, td {
 th, td {
   vertical-align: middle !important; // TODO
 }
-th {
-  text-align: left;
-  padding: .125em .5em;
-}
-td {
-  padding: .375em .5em;
+:not(.table) {
+  th {
+    text-align: left;
+    padding: .125em .5em !important;
+  }
+  td {
+    padding: .375em .5em !important;
+  }
 }
 .table-wrap {
   display: inline-block;
@@ -73,7 +75,7 @@ table.is-hoverable tbody tr:hover {
 }
 
 .max-hazard {
-  color: red;
+  color: $death;
 }
 
 .clear {

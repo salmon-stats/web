@@ -1,24 +1,26 @@
-import dayjs from 'dayjs';
-import { Component, Vue } from 'vue-property-decorator';
+import { Component } from 'vue-property-decorator';
 
 import { extendSalmonResult } from '@/extend-salmon-result';
 import { BossId, PlayerId } from '@/types/salmon-stats';
 import { ExtendedSalmonResult, TotalResult, BossIdKeys, MemberAccount } from '@/types/parsed-salmon-result';
-import { getTranslationKey, iconUrl } from '../helper';
+import { formatScheduleId, formatDateToYmdhm, getTranslationKey, iconUrl } from '@/helper';
 import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
+import HazardLevel from '@/components/HazardLevel.vue';
 import MainWeapon from '@/components/MainWeapon.vue';
 import PlayerAvatar from '@/components/PlayerAvatar.vue';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
+import Schedule from '@/components/Schedule.vue';
 import SpecialUsage from '@/components/SpecialUsage.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 
 @Component({
   name: 'SalmonResult',
-  components: { MainWeapon, PlayerAvatar, ProportionalBarChart, SpecialUsage, RequireFetchTemplate },
+  components: { HazardLevel, MainWeapon, PlayerAvatar, ProportionalBarChart, Schedule, SpecialUsage, RequireFetchTemplate },
 })
 export default class SalmonResult extends RequireFetchBase {
+  public formatDate = formatDateToYmdhm;
   public iconUrl = iconUrl;
 
   get bossIds(): BossIdKeys[] {
@@ -34,6 +36,9 @@ export default class SalmonResult extends RequireFetchBase {
     const clearedWaves = this.salmonResult!.clear_waves;
     return clearedWaves === 3 ? null : clearedWaves + 1; // Magic number
   }
+  get scheduleId(): string {
+    return formatScheduleId(this.salmonResult!.schedule_id);
+  }
 
   public specialsUsedInWave(wave: number) {
     return this.salmonResult!.player_results
@@ -43,9 +48,6 @@ export default class SalmonResult extends RequireFetchBase {
           count: player.special_uses[wave - 1].count,
         };
       });
-  }
-  public convertEpoch(time: number): string {
-    return dayjs.unix(time).utc().local().format('YYYY-MM-DD HH:mm:ss');
   }
   public isRegistered(playerId: PlayerId): boolean {
     return !!this.getAccountByPlayerId(playerId).created_at;

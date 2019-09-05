@@ -5,9 +5,10 @@
         <thead>
           <tr>
             <th></th>
+            <th>Schedule</th>
             <th>Date</th>
             <th>Hazard</th>
-            <th>Gold Eggs</th>
+            <th>Golden Eggs</th>
             <th>Power Eggs</th>
             <th>Boss Eliminations</th>
           </tr>
@@ -22,10 +23,14 @@
               <span class="clear">Clear</span>
             </td>
 
-            <td>{{ formatDate(result.start_at) }}</td>
+            <td>
+              <schedule :date-formatter="dateFormatter" :is-link-disabled="true" :schedule-id="result.schedule_id" />
+            </td>
 
-            <td :class="isMaxHazard(result.danger_rate) ? 'max-hazard' : null">
-              {{ result.danger_rate }}
+            <td>{{ dateFormatter(result.start_at) }}</td>
+
+            <td>
+              <hazard-level :hazard-level="result.danger_rate" />
             </td>
 
             <td>
@@ -37,7 +42,12 @@
             </td>
 
             <td>
-              {{ result.boss_elimination_count }}/{{ result.boss_appearance_count }}
+              <p>{{ result.boss_elimination_count }}/{{ result.boss_appearance_count }}</p>
+              <p class="proportional-bar-chart-container">
+                <proportional-bar-chart chart-key="boss-kill"
+                  :fill-remainder="true"
+                  :value="result.boss_elimination_count" :max="result.boss_appearance_count" />
+              </p>
             </td>
          </tr>
         </tbody>

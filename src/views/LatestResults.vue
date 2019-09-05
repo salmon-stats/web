@@ -16,10 +16,10 @@ import Results from '../components/Results.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 
 @Component({
-  name: 'latestResults',
+  name: 'LatestResults',
   components: { PlayerPageHeader, RequireFetchTemplate, Results },
 })
-export default class latestResults extends RequireFetchBase {
+export default class LatestResults extends RequireFetchBase {
   get apiPath() {
     return `results?page=${this.$route.query.page || 1}`;
   }

@@ -26,7 +26,7 @@ export default new Router({
     },
     {
       path: '/results/:resultId([1-9]\\d*)',
-      name: 'results.detail',
+      name: 'results.summary',
       component: SalmonResult,
     },
     {

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div>
-      <p>To upload results to this website, please use <a href="https://github.com/tkgstrator/Salmonia/releases">command-line result uploader</a>.</p>
+      <p>To upload results to this website, please use <a href="https://github.com/tkgstrator/Salmonia/releases">command-line result uploader (Salmonia)</a>.</p>
     </div>
 
     <p>

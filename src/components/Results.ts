@@ -1,11 +1,18 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
-import { formatDateInLocalTz, isMaxHazard } from '@/helper';
+import HazardLevel from '@/components/HazardLevel.vue';
+import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
+import Schedule from '@/components/Schedule.vue';
+import { formatDateToMdhm } from '@/helper';
 
 @Component({
   name: 'Results',
+  components: { HazardLevel, ProportionalBarChart, Schedule },
 })
 export default class Results extends Vue {
+  @Prop({ default: formatDateToMdhm, type: Function })
+  dateFormatter!: Function;
+
   @Prop()
   paginator?: (toPage: number) => Object;
 
@@ -25,12 +32,6 @@ export default class Results extends Vue {
       : this.rawResults;
   }
 
-  public formatDate(date: any) {
-    return formatDateInLocalTz(date, 'MM-DD HH:mm');
-  }
-
-  public isMaxHazard = isMaxHazard;
-
   public paginate(toPage: number) {
     if (!this.paginator) return;
 
@@ -40,7 +41,7 @@ export default class Results extends Vue {
   }
 
   public toResultPage(resultId: any) {
-    this.$router.push({ name: 'results.detail', params: { resultId } });
+    this.$router.push({ name: 'results.summary', params: { resultId } });
   }
 
   public mounted() {
