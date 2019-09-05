@@ -65,6 +65,13 @@ table.is-hoverable tbody tr:hover {
   cursor: pointer;
 }
 
+.golden-egg {
+  color: $golden-egg;
+}
+.power-egg {
+  color: $power-egg;
+}
+
 .clear {
   color: greenyellow;
 }

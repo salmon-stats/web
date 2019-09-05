@@ -21,12 +21,6 @@
 .highlight {
   font-weight: bold;
 }
-.golden-egg {
-  color: $golden-egg;
-}
-.power-egg {
-  color: $power-egg;
-}
 </style>
 
 <script>

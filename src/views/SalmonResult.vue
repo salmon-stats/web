@@ -248,12 +248,6 @@ li {
     font-weight: bold;
   }
 }
-.golden-egg {
-  color: $golden-egg;
-}
-.power-egg {
-  color: $power-egg;
-}
 
 .proportional-bar-chart-container {
   height: 12px;
