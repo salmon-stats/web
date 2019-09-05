@@ -120,7 +120,7 @@ export default class ScheduleRecords extends RequireFetchBase {
     return `schedules/${this.scheduleId}`;
   }
   get schedule() {
-    if (!state.data || !('records' in state.data)) return;
+    if (!state.data || !('schedule' in state.data)) return;
 
     return parseRawSchedule(state.data.schedule);
   }
