@@ -6,6 +6,15 @@ export const iconUrl = (weaponType: string, id: string | number) => {
   return `https://splatoon-stats-api.yuki.games/static/images/${weaponType}/${id}.png`;
 };
 
+
+/**
+ * @param dateString
+ * @param formatter
+ */
+export const formatDateInLocalTz = (dateLikeObject: string | number | Date | Dayjs, formatter: string): string => {
+  return dayjs(dateLikeObject).utc().format(formatter);
+};
+
 /**
  * @param key
  * @param id
@@ -14,6 +23,9 @@ export const getTranslationKey = (key: keyof IIdKeyMap, id: string | number) => 
     // @ts-ignore
     return `${key}.${idKeyMap[key][id]}`;
 };
+
+export const isMaxHazard = (hazardLevel: any): boolean =>
+  parseInt(hazardLevel, 10) === 200;
 
 export const parseRawSchedule = (rawSchedule: any): Schedule => {
   const startAt = dayjs.utc(rawSchedule.schedule_id);

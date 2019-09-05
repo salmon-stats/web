@@ -72,6 +72,10 @@ table.is-hoverable tbody tr:hover {
   color: $power-egg;
 }
 
+.max-hazard {
+  color: red;
+}
+
 .clear {
   color: greenyellow;
 }
