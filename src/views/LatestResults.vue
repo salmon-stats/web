@@ -2,7 +2,7 @@
   <require-fetch-template>
     <div v-if="latestResults">
       <results :results-with-pagination="latestResults"
-        :pagination-callback="paginate" />
+        :paginator="paginator" />
     </div>
   </require-fetch-template>
 </template>
@@ -20,8 +20,6 @@ import { requireFetchComponentModule as state } from '@/store/modules/require-fe
   components: { PlayerPageHeader, RequireFetchTemplate, Results },
 })
 export default class latestResults extends RequireFetchBase {
-  currentPage = 1;
-
   get apiPath() {
     return `results?page=${this.$route.query.page || 1}`;
   }
@@ -29,17 +27,14 @@ export default class latestResults extends RequireFetchBase {
     return state.data;
   }
 
-  paginate(toPage) {
-    this.$router.push({
+  paginator(toPage) {
+    return {
       name: 'results',
       query: { page: toPage },
-    });
+    };
   }
-  mounted() {
-    if (this.$route.query.page) {
-      this.currentPage = parseInt(this.$route.query.page, 10);
-    }
 
+  mounted() {
     state.fetch(this.apiPath);
   }
 

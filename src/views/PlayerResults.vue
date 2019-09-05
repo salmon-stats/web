@@ -3,7 +3,7 @@
     <div v-if="playerResults">
       <player-page-header :player-id="playerId" :user="user" />
       <results :results-with-pagination="playerResults"
-        :pagination-callback="paginate" />
+        :paginator="paginator" />
     </div>
   </require-fetch-template>
 </template>
@@ -22,8 +22,6 @@ import { requireFetchComponentModule as state } from '@/store/modules/require-fe
   components: { PlayerPageHeader, RequireFetchTemplate, Results },
 })
 export default class PlayerResults extends RequireFetchBase {
-  currentPage = 1;
-
   get apiPath() {
     return `players/${this.$route.params.playerId}/results?page=${this.$route.query.page || 1}`;
   }
@@ -40,24 +38,20 @@ export default class PlayerResults extends RequireFetchBase {
     return state.data;
   }
 
-  paginate(toPage) {
-    this.$router.push({
+  paginator(toPage) {
+    return {
       name: 'players.results',
       params: { playerId: this.playerId },
       query: { page: toPage },
-    });
+    };
   }
-  mounted() {
-    if (this.$route.query.page) {
-      this.currentPage = parseInt(this.$route.query.page, 10);
-    }
 
+  mounted() {
     state.fetch(this.apiPath);
   }
 
   @Watch('$route')
   onRouteChange() {
-    this.currentPage = parseInt(this.$route.query.page || 1, 10);
     state.fetch(this.apiPath);
   }
 }

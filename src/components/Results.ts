@@ -1,5 +1,3 @@
-import { ExtendedSalmonResult } from '@/types/parsed-salmon-result';
-
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 import { formatDateInLocalTz, isMaxHazard } from '@/helper';
@@ -8,10 +6,8 @@ import { formatDateInLocalTz, isMaxHazard } from '@/helper';
   name: 'Results',
 })
 export default class Results extends Vue {
-  currentPage: number = 1;
-
   @Prop()
-  paginationCallback: Function | undefined;
+  paginator?: (toPage: number) => Object;
 
   @Prop({ default: '' })
   showMoreLink!: string;
@@ -21,6 +17,8 @@ export default class Results extends Vue {
 
   @Prop()
   rawResults!: any[];
+
+  public currentPage = 1;
 
   private get results(): any[] {
     return this.resultsWithPagination ? this.resultsWithPagination.data
@@ -33,7 +31,19 @@ export default class Results extends Vue {
 
   public isMaxHazard = isMaxHazard;
 
+  public paginate(toPage: number) {
+    if (!this.paginator) return;
+
+    this.$router.push(
+      this.paginator(toPage),
+    );
+  }
+
   public toResultPage(resultId: any) {
     this.$router.push({ name: 'results.detail', params: { resultId } });
+  }
+
+  public mounted() {
+    this.currentPage = parseInt(this.$route.query.page as string, 10) || 1;
   }
 }

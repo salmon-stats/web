@@ -56,7 +56,7 @@
         :range-before="3"
         :range-after="3"
         icon-pack="material-icons"
-        @change="paginationCallback"
+        @change="paginate"
       />
     </div>
   </div>
