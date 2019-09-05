@@ -4,12 +4,16 @@
       <schedule-card :schedule="schedule" />
 
       <div v-if="records">
-        <h2>Records</h2>
+
+        <h2>Results</h2>
+        <results :raw-results="results" />
 
         <b-tabs v-model="activeTabIndex">
           <b-tab-item label="Golden Eggs" />
           <b-tab-item label="Power Eggs" />
         </b-tabs>
+
+        <h2>Records</h2>
 
         <div>
           <p>3-Wave Total Record</p>
@@ -99,13 +103,14 @@ import RequireFetchTemplate from '../components/RequireFetchTemplate.vue';
 import RequireFetchBase from '../components/RequireFetchBase.vue';
 import ScheduleCard from '../components/ScheduleCard.vue';
 import ScheduleRecord from '../components/ScheduleRecord.vue';
+import Results from '../components/Results.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import { getTranslationKey, parseRawSchedule } from '@/helper.ts';
 
 @Component({
   name: 'ScheduleRecords',
-  components: { RequireFetchTemplate, ScheduleCard, ScheduleRecord },
+  components: { Results, RequireFetchTemplate, ScheduleCard, ScheduleRecord },
 })
 export default class ScheduleRecords extends RequireFetchBase {
   activeTabIndex = 0;
@@ -129,11 +134,22 @@ export default class ScheduleRecords extends RequireFetchBase {
 
     return state.data.records;
   }
+  get results() {
+    if (!state.data || !('results' in state.data)) return;
+
+    return state.data.results;
+  }
   get waterLevels() {
     return Object.keys(idKeyMap.water_level).map(id => parseInt(id, 10));
   }
   get events() {
     return Object.keys(idKeyMap.event).map(id => parseInt(id, 10));
+  }
+  get showMoreLink() {
+    return {
+      name: 'schedules.results',
+      params: { scheduleId: this.scheduleId },
+    };
   }
 
   eventWaterLevelRecord(eventId, waterLevelId) {
