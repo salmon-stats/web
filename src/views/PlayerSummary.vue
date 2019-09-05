@@ -7,21 +7,7 @@
         <router-link :to="`/players/${playerId}/results`">Results</router-link>
       </div>
 
-      <div class="table-wrap">
-        <table class="is-hoverable">
-          <tbody>
-            <tr class="clickable" @click="toResultPage(result.salmon_result.id)"
-              v-for="result in playerSummary.results" :key="result.salmon_result.id">
-              <td :class="result.salmon_result.fail_reason_id ? 'fail' : 'clear'">
-                {{ result.salmon_result.fail_reason_id ? 'Fail' : 'Clear' }}
-              </td>
-              <td>{{ result.salmon_result.start_at }}</td>
-              <td>{{ result.salmon_result.danger_rate }}</td>
-              <!-- <td>{{ result.salmon_result.members.length }}</td> -->
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <results :raw-results="playerSummary.results" />
     </div>
 
     <div>
@@ -35,11 +21,12 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import PlayerPageHeader from '../components/PlayerPageHeader.vue';
 import RequireFetchTemplate from '../components/RequireFetchTemplate.vue';
 import RequireFetchBase from '../components/RequireFetchBase.vue';
+import Results from '../components/Results.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 
 @Component({
   name: 'PlayerSummary',
-  components: { PlayerPageHeader, RequireFetchTemplate },
+  components: { PlayerPageHeader, RequireFetchTemplate, Results },
 })
 export default class PlayerSummary extends RequireFetchBase {
   get apiPath() {
