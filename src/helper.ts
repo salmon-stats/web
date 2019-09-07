@@ -12,6 +12,11 @@ export const iconUrl = (weaponType: string, id: string | number) => {
  * @param formatter
  */
 export const formatDateInLocalTz = (dateLikeObject: string | number | Date | Dayjs, formatter: string): string => {
+  // Date object is timezone aware
+  if (dateLikeObject instanceof Date) {
+    return dayjs(dateLikeObject).format(formatter);
+  }
+
   return dayjs(dateLikeObject).utc().format(formatter);
 };
 
