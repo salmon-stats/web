@@ -1,6 +1,9 @@
 import { Mutation, Action, VuexModule, getModule, Module } from 'vuex-module-decorators';
 import store from '@/store/store';
 import axios from 'axios';
+import { createApiClient } from '@/api-client';
+
+const CancelToken = axios.CancelToken;
 
 export interface IRequireFetchComponent {
   isLoading: boolean;
@@ -23,15 +26,14 @@ class RequireFetchComponent extends VuexModule implements IRequireFetchComponent
 
     this.SET_LOADING(true);
 
-    const CancelToken = axios.CancelToken;
-    const options: any = {
+    const client = createApiClient({
       cancelToken: new CancelToken((canceler) => {
         this.SET_CANCELER(canceler);
       }),
-    };
+    });
 
-    // @ts-ignore
-    axios.get(VUE_APP_API_URL + `/api/${path}`, options)
+    client
+      .get(`/api/${path}`)
       .then((res: any) => {
         this.SET_DATA(res.data);
         this.SET_LOADING(false);

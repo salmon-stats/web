@@ -1,9 +1,9 @@
-import axios from 'axios';
 import { Mutation, Action, VuexModule, getModule, Module } from 'vuex-module-decorators';
 
 import store from '@/store/store';
 import { Schedule, User } from '@/types/salmon-stats';
 import { parseRawSchedule } from '@/helper';
+import { statefulApiClient } from '@/api-client';
 
 export interface IMetadata {
   user: null | User;
@@ -22,8 +22,8 @@ class Metadata extends VuexModule implements IMetadata {
   @Action
   public fetchMetadata() {
     // TODO: fetch other metadata (e.g. bosses, weapons, ...)
-    // @ts-ignore
-    return axios.get(VUE_APP_API_URL + '/metadata', { withCredentials: true })
+    return statefulApiClient
+      .get('/metadata')
       .then((res) => {
         const data = res.data;
         this.SET_USER_METADATA(data.user);

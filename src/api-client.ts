@@ -1,10 +1,18 @@
 import axios from 'axios';
 
 // @ts-ignore
-const apiBaseUrl = VUE_APP_API_URL;
-const client = axios.create({
-  baseURL: apiBaseUrl + '/api',
+export const apiBaseUrl = VUE_APP_API_URL;
+
+export const createApiClient = (options = {}) => axios.create({
+  baseURL: apiBaseUrl,
   responseType: 'json',
+  ...options,
 });
 
-export default client;
+export const statefulApiClient = createApiClient({
+  withCredentials: true,
+});
+
+export default createApiClient({
+  baseURL: `${apiBaseUrl}/api`,
+});

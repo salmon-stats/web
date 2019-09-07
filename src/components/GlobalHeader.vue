@@ -98,6 +98,7 @@ a {
 <script>
 import PlayerAvatar from '../components/PlayerAvatar.vue';
 import { Vue, Component } from 'vue-property-decorator';
+import { apiBaseUrl } from '../api-client';
 import { metadataModule as metadata } from '../store/modules/metadata';
 
 @Component({
@@ -107,8 +108,7 @@ import { metadataModule as metadata } from '../store/modules/metadata';
 export default class GlobalHeader extends Vue {
   isBurgerMenuOpen = false;
 
-  // @ts-ignore
-  signInUrl = VUE_APP_API_URL + '/auth/twitter';
+  signInUrl = apiBaseUrl + '/auth/twitter';
 
   get user() {
     return metadata.user;

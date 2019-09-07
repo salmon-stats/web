@@ -66,17 +66,13 @@
 </style>
 
 <script>
-import axios from 'axios';
 import Clipboard from 'clipboard';
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import dragDrop from 'drag-drop';
 
+import { statefulApiClient } from '../api-client';
 import { metadataModule as metadata } from '../store/modules/metadata';
 import RequireSignIn from '../components/RequireSignIn.vue';
-
-const requestOptions = {
-  withCredentials: true,
-};
 
 @Component({
   name: 'SalmonResultUploader',
@@ -145,7 +141,8 @@ export default class SalmonResultUploader extends Vue {
     this.selectedFiles = [];
   }
   onClickGenerateApiToken(event) {
-    axios.get(VUE_APP_API_URL + '/api-token', requestOptions)
+    statefulApiClient
+      .get('/api-token')
       .then((res) => {
         this.apiToken = res.data.api_token;
       });
@@ -165,7 +162,8 @@ export default class SalmonResultUploader extends Vue {
           this.isUploading = true;
           this.uploadLog = [];
 
-          axios.post(VUE_APP_API_URL + '/upload-results', payload, requestOptions)
+          statefulApiClient
+            .post('/upload-results', payload)
             .then((res) => {
               this.uploadLog = res.data;
             })
