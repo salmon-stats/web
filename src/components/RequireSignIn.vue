@@ -20,16 +20,31 @@ import { metadataModule } from '../store/modules/metadata';
   }
 })
 export default class RequireSignIn extends Vue {
+  hasCalledOnAuthenticated = false;
+
   get isSignedIn() {
     return !!metadataModule.user;
   }
 
+  get shouldFireAuthenticated() {
+    return this.isSignedIn && this.onAuthenticated && !this.hasCalledOnAuthenticated;
+  }
+
+  fireOnAuthenticated() {
+    this.hasCalledOnAuthenticated = true;
+    this.onAuthenticated();
+  }
+
+  mounted() {
+    if (this.shouldFireAuthenticated) {
+      this.fireOnAuthenticated();
+    }
+  }
+
   @Watch('isSignedIn')
   onSignInChange() {
-    if (this.isSignedIn && this.onAuthenticated) {
-      this.$nextTick(() => {
-        this.onAuthenticated();
-      });
+    if (this.shouldFireAuthenticated) {
+      this.$nextTick(this.fireOnAuthenticated);
     }
   }
 }
