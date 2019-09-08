@@ -120,9 +120,9 @@ export default class PlayerPageHeader extends Vue {
   user = null;
 
   get twitterProfileUrl() {
-    if (!this.user || !this.user.twitterName) return null;
+    if (!this.user || !this.user.isRegistered) return null;
 
-    return `https://twitter.com/${this.user.twitterName}`;
+    return `https://twitter.com/${this.user.name}`;
   }
   get splatoonStatsUrl() {
     return SPLATOON_STATS_URL + `/players/${this.playerId}`;
