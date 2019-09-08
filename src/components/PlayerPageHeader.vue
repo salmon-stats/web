@@ -1,8 +1,8 @@
 <template>
   <div class="header">
     <div class="user">
-      <router-link class="is-marginless columns" tag="div" :to="`/players/${playerId}`">
-        <template v-if="!user || isLoadingUserData" class="is-marginless columns">
+      <router-link class="is-flex" tag="div" :to="`/players/${playerId}`">
+        <template v-if="!user || isLoadingUserData" class="is-marginless is-flex">
           <div class="avatar">
             <div v-if="isLoadingUserData" class="avatar-placeholder" />
             <player-avatar v-else class="avatar"
@@ -28,7 +28,7 @@
       </router-link>
     </div>
 
-    <div class="navigation is-marginless columns">
+    <div class="navigation is-flex">
       <div>
         <router-link :exact="true" :to="`/players/${playerId}`">Overview</router-link>
         <router-link :to="`/players/${playerId}/results`">Results</router-link>
