@@ -1,5 +1,6 @@
 @import './variables.scss';
 
+$widescreen-enabled: false;
 $fullhd-enabled: false;
 $text-strong: $body-color;
 $link-hover: lighten($link, 10%);
