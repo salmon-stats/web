@@ -1,9 +1,9 @@
 import { Component } from 'vue-property-decorator';
 
 import { extendSalmonResult } from '@/extend-salmon-result';
-import { BossId, PlayerId } from '@/types/salmon-stats';
-import { ExtendedSalmonResult, TotalResult, BossIdKeys, MemberAccount } from '@/types/parsed-salmon-result';
-import { formatScheduleId, formatDateToYmdhm, getTranslationKey, iconUrl } from '@/helper';
+import { BossId, PlayerId, UserData } from '@/types/salmon-stats';
+import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-salmon-result';
+import { formatScheduleId, formatDateToYmdhm, getTranslationKey, iconUrl, parseRawUserData, parseRawSchedule } from '@/helper';
 import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import HazardLevel from '@/components/HazardLevel.vue';
@@ -50,11 +50,7 @@ export default class SalmonResult extends RequireFetchBase {
       });
   }
   public isRegistered(playerId: PlayerId): boolean {
-    return !!this.getAccountByPlayerId(playerId).created_at;
-  }
-  public getPlayerAvatar(playerId: PlayerId): string | undefined {
-    const user = this.getAccountByPlayerId(playerId);
-    return user.twitter_avatar;
+    return this.getAccountByPlayerId(playerId).isRegistered;
   }
   public hasEliminatedEverySpawn(bossId: BossIdKeys): boolean {
     return this.totalBossElimination(bossId) === this.totalBossSpawn(bossId);
@@ -86,9 +82,9 @@ export default class SalmonResult extends RequireFetchBase {
   public toPlayerSummary(playerId: PlayerId) {
     this.$router.push({ name: 'players.summary', params: { playerId } });
   }
-  public getAccountByPlayerId(playerId: PlayerId): MemberAccount {
-    return this.salmonResult!.member_accounts.find((member) =>
-      member && member.player_id === playerId)!;
+  public getAccountByPlayerId(playerId: PlayerId): UserData {
+    return parseRawUserData(this.salmonResult!.member_accounts.find((member) =>
+      member && member.player_id === playerId)!);
   }
   public sum(collection: number[] | object) {
     let numbers: number[];
