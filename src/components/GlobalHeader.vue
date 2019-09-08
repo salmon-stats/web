@@ -24,7 +24,7 @@
     <div class="navbar-menu" :class="isBurgerMenuOpen ? 'is-active' : ''">
       <div class="navbar-start">
         <div class="use-marker navbar-item">
-          <router-link to="/results">Results</router-link>
+          <router-link to="/results" exact>Results</router-link>
         </div>
       </div>
       <div class="navbar-end">

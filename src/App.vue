@@ -3,7 +3,8 @@
     <header>
       <global-header />
     </header>
-    <router-view />
+
+    <router-view class="body" />
 
     <footer>
       <global-footer />
@@ -19,6 +20,10 @@ $footer-height: 5em;
 #app {
   min-height: 100vh;
   padding-bottom: $footer-height;
+}
+
+#app > .body {
+  margin-top: 1em;
 }
 
 footer {

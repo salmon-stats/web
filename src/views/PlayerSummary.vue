@@ -1,17 +1,9 @@
 <template>
   <require-fetch-template>
-    <div v-if="playerSummary">
-      <player-page-header :player-id="playerId" :user="user" />
+    <div v-if="playerSummary" class="player-summary">
+      <player-page-header title="Overview" :player-id="playerId" :user="user" />
 
-      <div>
-        <router-link :to="`/players/${playerId}/results`">Results</router-link>
-      </div>
-
-      <results :raw-results="playerSummary.results" />
-    </div>
-
-    <div>
-      <p><a :href="splatoonStatsUrl">Check {{ playerName }} on Splatoon Stats</a></p>
+      <results class="results" :raw-results="playerSummary.results" />
     </div>
   </require-fetch-template>
 </template>
@@ -23,12 +15,15 @@ import RequireFetchTemplate from '../components/RequireFetchTemplate.vue';
 import RequireFetchBase from '../components/RequireFetchBase.vue';
 import Results from '../components/Results.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
+import { percentage } from '@/helper';
 
 @Component({
   name: 'PlayerSummary',
   components: { PlayerPageHeader, RequireFetchTemplate, Results },
 })
 export default class PlayerSummary extends RequireFetchBase {
+  percentage = percentage;
+
   get apiPath() {
     return `players/${this.$route.params.playerId}`;
   }
@@ -40,9 +35,6 @@ export default class PlayerSummary extends RequireFetchBase {
   }
   get playerName() {
     return this.user ? this.user.name : this.playerId;
-  }
-  get splatoonStatsUrl() {
-    return SPLATOON_STATS_URL + `/players/${this.playerId}`;
   }
   get playerSummary() {
     return state.data;

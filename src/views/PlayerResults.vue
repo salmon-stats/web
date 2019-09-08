@@ -1,7 +1,7 @@
 <template>
   <require-fetch-template>
     <div v-if="playerResults">
-      <player-page-header :player-id="playerId" :user="user" />
+      <player-page-header title="Results" :player-id="playerId" :user="user" />
       <results :results-with-pagination="playerResults"
         :paginator="paginator" />
     </div>
