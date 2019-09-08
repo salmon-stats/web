@@ -11,6 +11,13 @@ export interface Schedule {
   rareWeaponId: null | 20000 | 20010 | 20020 | 20030;
 }
 
+export interface UserData {
+  isRegistered: boolean;
+  playerId: string;
+  name: string;
+  avatar?: string;
+}
+
 export interface User {
   id: number;
   name: string;

@@ -1,4 +1,4 @@
-import { Schedule } from '@/types/salmon-stats';
+import { Schedule, UserData } from '@/types/salmon-stats';
 import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import dayjs, { Dayjs } from 'dayjs';
 
@@ -63,6 +63,15 @@ export const parseRawSchedule = (rawSchedule: any): Schedule => {
     rareWeaponId: rawSchedule.rare_weapon_id,
   };
 };
+
+export const parseRawUserData = (rawUser: any): UserData => {
+  return {
+    isRegistered: !!rawUser.is_registered,
+    playerId: rawUser.player_id,
+    name: rawUser.name,
+    avatar: rawUser.twitter_avatar,
+  };
+}
 
 export const timeDifference = (a: Date | Dayjs, b: Date | Dayjs): string => {
   const diff = Math.abs(dayjs(a).diff(b, 's'));

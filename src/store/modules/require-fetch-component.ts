@@ -32,11 +32,13 @@ class RequireFetchComponent extends VuexModule implements IRequireFetchComponent
       }),
     });
 
-    client
+    return client
       .get(`/api/${path}`)
-      .then((res: any) => {
+      .then((res) => {
         this.SET_DATA(res.data);
         this.SET_LOADING(false);
+
+        return res.data;
       })
       .catch((err: any) => {
         if (!axios.isCancel(err)) {

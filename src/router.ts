@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import LatestResults from './views/LatestResults.vue';
+import PlayerBase from './views/PlayerBase.vue';
 import PlayerSummary from './views/PlayerSummary.vue';
 import PlayerResults from './views/PlayerResults.vue';
 import SalmonResult from './views/SalmonResult.vue';
@@ -36,13 +37,19 @@ export default new Router({
     },
     {
       path: '/players/:playerId([a-f\\d]{16}|@\\w{1,15})',
-      name: 'players.summary',
-      component: PlayerSummary,
-    },
-    {
-      path: '/players/:playerId([a-f\\d]{16})/results',
-      name: 'players.results',
-      component: PlayerResults,
+      component: PlayerBase,
+      children: [
+        {
+          path: 'results',
+          name: 'players.results',
+          component: PlayerResults,
+        },
+        {
+          path: '',
+          name: 'players.summary',
+          component: PlayerSummary,
+        },
+      ],
     },
     {
       path: '/schedules/:scheduleId(\\d{10})',

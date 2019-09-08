@@ -9,7 +9,6 @@
 
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import PlayerPageHeader from '../components/PlayerPageHeader.vue';
 import RequireFetchTemplate from '../components/RequireFetchTemplate.vue';
 import RequireFetchBase from '../components/RequireFetchBase.vue';
 import Results from '../components/Results.vue';
@@ -17,7 +16,7 @@ import { requireFetchComponentModule as state } from '@/store/modules/require-fe
 
 @Component({
   name: 'LatestResults',
-  components: { PlayerPageHeader, RequireFetchTemplate, Results },
+  components: { RequireFetchTemplate, Results },
 })
 export default class LatestResults extends RequireFetchBase {
   get apiPath() {

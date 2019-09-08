@@ -1,19 +1,31 @@
 <template>
   <div class="header">
     <div class="user">
-      <div class="is-marginless columns">
-        <player-avatar :size="72" :user="user" :blockies-seed="playerId" />
-        <router-link class="player-header-title" tag="div" :to="`/players/${playerId}`">
-          <h1 v-if="user">
-            <a>@{{user.name}}</a>
-          </h1>
-          <h1 v-else>
-            <a>{{playerId}}</a>
-          </h1>
-
-          <p>{{ title }}</p>
-        </router-link>
-      </div>
+      <router-link class="is-marginless columns" tag="div" :to="`/players/${playerId}`">
+        <template v-if="!user || isLoadingUserData" class="is-marginless columns">
+          <div class="avatar">
+            <div v-if="isLoadingUserData" class="avatar-placeholder" />
+            <player-avatar v-else class="avatar"
+              :size="72" :blockies-seed="playerId" />
+          </div>
+          <div>
+            <h1>
+              <a>{{ playerId }}</a>
+            </h1>
+            <p>{{ title }}</p>
+          </div>
+        </template>
+        <template v-else>
+          <player-avatar class="avatar"
+            :size="72" :user="user" :blockies-seed="playerId" />
+          <div>
+            <h1>
+              <a>{{ user.isRegistered ? `@${user.name}` : user.name }}</a>
+            </h1>
+            <p>{{ title }}</p>
+          </div>
+        </template>
+      </router-link>
     </div>
 
     <div class="navigation is-marginless columns">
@@ -32,7 +44,7 @@
 <style lang="scss" scoped>
 @import '@/assets/variables.scss';
 
-.player-header-title {
+.avatar+div {
   margin-left: .5em;
 }
 
@@ -45,7 +57,6 @@ h1 {
 }
 
 .header {
-  margin-bottom: 1em;
   width: 100%;
   background-color: darken($background, 10%);
   justify-content: space-between;
@@ -59,6 +70,11 @@ h1 {
   > div {
     width: fit-content
   }
+}
+
+.avatar .avatar-placeholder {
+  width: 72px;
+  height: 72px;
 }
 
 .navigation {
@@ -87,26 +103,34 @@ h1 {
 </style>
 
 <script>
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import PlayerAvatar from '@/components/PlayerAvatar.vue';
 
 @Component({
   name: 'PlayerPageHeader',
   components: { PlayerAvatar },
   props: {
+    isLoadingUserData: Boolean,
     playerId: String,
-    user: Object,
     title: String,
+    userData: Object,
   },
 })
 export default class PlayerPageHeader extends Vue {
-  get twitterProfileUrl() {
-    if (!this.user || !this.user.name) return null;
+  user = null;
 
-    return `https://twitter.com/${this.user.name}`;
+  get twitterProfileUrl() {
+    if (!this.user || !this.user.twitterName) return null;
+
+    return `https://twitter.com/${this.user.twitterName}`;
   }
   get splatoonStatsUrl() {
     return SPLATOON_STATS_URL + `/players/${this.playerId}`;
+  }
+
+  @Watch('userData')
+  onUserDataChange() {
+    this.user = this.userData;
   }
 }
 </script>
