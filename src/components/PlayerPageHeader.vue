@@ -33,7 +33,7 @@
 
       <div  class="is-flex lifetime-stats">
         <div v-if="isLoadingUserData" class="placeholder" />
-        <template v-else>
+        <template v-else-if="user">
           <div>
             <p>Results</p>
             <p>
