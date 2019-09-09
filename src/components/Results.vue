@@ -5,12 +5,11 @@
         <thead>
           <tr>
             <th></th>
-            <th>Schedule</th>
+            <th class="is-hidden-mobile">Schedule</th>
             <th>Date</th>
-            <th>Hazard</th>
-            <th>Golden Eggs</th>
-            <th>Power Eggs</th>
-            <th>Boss Eliminations</th>
+            <th class="is-hidden-mobile">Hazard</th>
+            <th>Eggs</th>
+            <th>Boss</th>
           </tr>
         </thead>
         <tbody>
@@ -23,22 +22,18 @@
               <span class="clear">Clear</span>
             </td>
 
-            <td>
+            <td class="is-hidden-mobile">
               <schedule :date-formatter="dateFormatter" :is-link-disabled="true" :schedule-id="result.schedule_id" />
             </td>
 
             <td>{{ dateFormatter(result.start_at) }}</td>
 
-            <td>
+            <td class="is-hidden-mobile">
               <hazard-level :hazard-level="result.danger_rate" />
             </td>
 
             <td>
-              <span class="golden-egg">{{ result.golden_egg_delivered }}</span>
-            </td>
-
-            <td>
-              <span class="power-egg">{{ result.power_egg_collected }}</span>
+              <span class="golden-egg">{{ result.golden_egg_delivered }}</span>+<span class="power-egg">{{ result.power_egg_collected }}</span>
             </td>
 
             <td>
