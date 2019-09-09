@@ -13,15 +13,12 @@ import RequireFetchBase from '../components/RequireFetchBase.vue';
 import Results from '../components/Results.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { playersModule } from '@/store/modules/players';
-import { percentage } from '@/helper';
 
 @Component({
   name: 'PlayerSummary',
   components: { RequireFetchTemplate, Results },
 })
 export default class PlayerSummary extends RequireFetchBase {
-  percentage = percentage;
-
   get apiPath() {
     return `players/${this.$route.params.playerId}`;
   }

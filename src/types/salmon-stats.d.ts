@@ -16,6 +16,17 @@ export interface UserData {
   playerId: string;
   name: string;
   avatar?: string;
+  results?: {
+    clear: number;
+    fail: number;
+  };
+  total?: {
+    boss_elimination_count: number;
+    death: number;
+    golden_eggs: number;
+    power_eggs: number;
+    rescue: number;
+  };
 }
 
 export interface User {

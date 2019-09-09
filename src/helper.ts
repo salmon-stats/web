@@ -6,6 +6,13 @@ export const iconUrl = (weaponType: string, id: string | number) => {
   return `https://splatoon-stats-api.yuki.games/static/images/${weaponType}/${id}.png`;
 };
 
+/**
+ * @param percentage percentage (0-1)
+ */
+export const percentage = (percentage: number): string => {
+  return Math.round(percentage * 10000) / 100 + '%';
+};
+
 
 /**
  * @param dateString
@@ -70,6 +77,8 @@ export const parseRawUserData = (rawUser: any): UserData => {
     playerId: rawUser.player_id,
     name: rawUser.name,
     avatar: rawUser.twitter_avatar,
+    total: rawUser.total,
+    results: rawUser.results,
   };
 }
 
