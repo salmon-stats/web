@@ -39,6 +39,9 @@ export default class SalmonResult extends RequireFetchBase {
   get scheduleId(): string {
     return formatScheduleId(this.salmonResult!.schedule_id);
   }
+  get totalGoldenEggsAppeared(): number {
+    return this.sum(this.salmonResult!.waves.map((wave) => wave.golden_egg_appearances));
+  }
 
   public specialsUsedInWave(wave: number) {
     return this.salmonResult!.player_results

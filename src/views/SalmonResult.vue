@@ -101,10 +101,11 @@
               <td><!-- {{ salmonResult.total_result.rescue }} --></td>
               <td>{{ salmonResult.total_result.death }}</td>
               <td>
-                {{ salmonResult.boss_elimination_count }}<span class="boss-appearance-count">/{{ salmonResult.boss_appearance_count }}</span>
+                {{ salmonResult.boss_elimination_count }}<span class="total-count">/{{ salmonResult.boss_appearance_count }}</span>
               </td>
               <td>
                 <span class="golden-egg">{{ salmonResult.total_result.golden_eggs }}</span>
+                <span class="total-count">/{{ totalGoldenEggsAppeared }}</span>
                 +
                 <span class="power-egg">{{ salmonResult.total_result.power_eggs }}</span>
               </td>
@@ -137,7 +138,11 @@
               <td class="special-usage" v-for="special in specialsUsedInWave(wave.wave)">
                 <special-usage v-if="special.count" :special-id="special.id" :count="special.count" />
               </td>
-              <td><span class="golden-egg">{{ wave.golden_egg_delivered }}</span>/<span class="golden-egg">{{ wave.golden_egg_quota }}</span></td>
+              <td><span class="golden-egg">
+                {{ wave.golden_egg_delivered }}</span>/<!--
+                --><span class="golden-egg">{{ wave.golden_egg_quota }}</span>
+                <span class="total-count">/{{ wave.golden_egg_appearances }}</span>
+              </td>
               <td class="power-egg">{{ wave.power_egg_collected }}</td>
             </tr>
           </tbody>
@@ -233,9 +238,11 @@ td.main-weapons {
   }
 }
 
-.boss-appearance-count {
+.total-count {
   font-size: 80%;
-  color: darken($body-color, 20%);
+  &:not(.golden-egg) {
+    color: darken($body-color, 20%);
+  }
 }
 
 .table-wrap, table {
