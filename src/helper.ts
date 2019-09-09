@@ -10,7 +10,7 @@ export const iconUrl = (weaponType: string, id: string | number) => {
  * @param percentage percentage (0-1)
  */
 export const percentage = (percentage: number): string => {
-  return Math.round(percentage * 10000) / 100 + '%';
+  return (percentage * 100).toFixed(2) + '%';
 };
 
 
