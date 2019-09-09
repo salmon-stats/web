@@ -16,9 +16,6 @@
             <player-avatar :size="32" :user="user" />
           </router-link>
         </template>
-        <template v-else-if="user">
-          <player-avatar :size="32" :user="user" />
-        </template>
       </div>
     </div>
     <div class="navbar-menu" :class="isBurgerMenuOpen ? 'is-active' : ''">
@@ -34,13 +31,10 @@
           </div>
 
           <div class="navbar-item my-profile is-hidden-touch">
-            <template v-if="user.player_id">
+            <template v-if="hasMyPage">
               <router-link :to="`/players/${user.player_id}`">
                 <player-avatar :size="32" :user="user" />
               </router-link>
-            </template>
-            <template v-else>
-              <player-avatar :size="32" :user="user" />
             </template>
           </div>
         </template>
@@ -50,10 +44,6 @@
           </div>
         </template>
       </div>
-    </div>
-
-    <div v-if="hasSessionExpired">
-      Session has expired.
     </div>
   </nav>
 </template>
@@ -112,9 +102,6 @@ export default class GlobalHeader extends Vue {
 
   get user() {
     return metadata.user;
-  }
-  get hasSessionExpired() {
-    return metadata.hasSessionExpired;
   }
   get hasMyPage() {
     return this.user && this.user.player_id;

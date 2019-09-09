@@ -45,6 +45,7 @@ class Metadata extends VuexModule implements IMetadata {
       .then((data) => {
         if (data.user === null) {
           this.SET_SESSION_EXPIRED_TRUE();
+          this.SET_USER_METADATA(null);
         }
       });
   }
@@ -60,7 +61,7 @@ class Metadata extends VuexModule implements IMetadata {
   }
 
   @Mutation
-  private SET_USER_METADATA(user: any) {
+  private SET_USER_METADATA(user: null | User) {
     this.user = user;
   }
 
