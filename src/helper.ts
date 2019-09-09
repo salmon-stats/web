@@ -13,6 +13,13 @@ export const percentage = (percentage: number): string => {
   return (percentage * 100).toFixed(2) + '%';
 };
 
+/**
+ * @param number
+ * @param digits
+ */
+export const toFixed = (number: number, digits: number): string => {
+  return number.toFixed(digits);
+};
 
 /**
  * @param dateString

@@ -42,9 +42,9 @@
               <span class="fail">{{user.results.fail}}</span>
             </p>
           </div>
-          <div>
+          <div class="is-hidden-mobile">
             <p>Clear rate</p>
-            <p>{{percentage(user.results.clear/(user.results.clear+user.results.fail))}}</p>
+            <p>{{percentage(user.results.clear/totalGames)}}</p>
           </div>
           <div>
             <p title="Rescue/Death">R/D</p>
@@ -58,6 +58,14 @@
               <span class="golden-egg">{{user.total.golden_eggs}}</span>
               -
               <span class="power-egg">{{user.total.power_eggs}}</span>
+            </p>
+          </div>
+          <div>
+            <p>Avg boss</p>
+            <p>
+              <span :title="user.total.boss_elimination_count">
+                {{user.total.boss_elimination_count / totalGames | toFixed(2)}}
+              </span>
             </p>
           </div>
         </template>
@@ -165,11 +173,14 @@ h1 {
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import PlayerAvatar from '@/components/PlayerAvatar.vue';
-import { percentage } from '@/helper';
+import { percentage, toFixed } from '@/helper';
 
 @Component({
   name: 'PlayerPageHeader',
   components: { PlayerAvatar },
+  filters: {
+    toFixed,
+  },
   props: {
     isLoadingUserData: Boolean,
     playerId: String,
@@ -181,6 +192,9 @@ export default class PlayerPageHeader extends Vue {
   percentage = percentage;
   user = null;
 
+  get totalGames() {
+    return this.user.results.clear + this.user.results.fail;
+  }
   get twitterProfileUrl() {
     if (!this.user || !this.user.isRegistered) return null;
 
