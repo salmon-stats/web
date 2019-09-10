@@ -29,6 +29,7 @@ export default class PlayerBase extends Vue {
     return {
       'players.summary': 'Overview',
       'players.results': 'Results',
+      'players.results.latest': 'Latest result',
     }[this.$route.name];
   }
   get playerId() {

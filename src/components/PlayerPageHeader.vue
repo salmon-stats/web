@@ -75,7 +75,8 @@
     <div class="navigation is-flex">
       <div>
         <router-link :exact="true" :to="playerSummary">Overview</router-link>
-        <router-link :to="`/players/${playerId}/results`">Results</router-link>
+        <router-link :exact="true" :class="$route.name === 'players.results' && 'router-link-active'" :to="`/players/${playerId}/results`">Results</router-link>
+        <router-link :exact="true" :to="`/players/${playerId}/results/latest`">Latest Result</router-link>
       </div>
       <div>
         <a v-if="twitterProfileUrl" class="splatoon-stats-link" :href="twitterProfileUrl">Twitter</a>
