@@ -95,3 +95,20 @@ export const timeDifference = (a: Date | Dayjs, b: Date | Dayjs): string => {
     .map(fragment => fragment.toString().padStart(2, '0'))
     .join(':');
 }
+
+export const useMetricPrefix = (n: number, toFixed: number) => {
+  const megaThreshold = 10e6;
+  const mega = 10e6;
+  const kiloThreshold = 10e4;
+  const kilo = 10e3;
+
+  const convert = (m: number, base: number) =>
+    (m / (base ** (Math.log(m) / Math.log(base) | 0))).toFixed(toFixed);
+
+  if (n >= megaThreshold) {
+    return `${convert(n, mega)}M`;
+  } else if (n >= kiloThreshold) {
+    return `${convert(n, kilo)}K`;
+  }
+  return n;
+};

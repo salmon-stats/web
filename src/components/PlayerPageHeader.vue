@@ -48,16 +48,24 @@
           </div>
           <div>
             <p title="Rescue/Death">R/D</p>
-            <p>
+            <p class="is-hidden-mobile">
               {{user.total.rescue}}/{{user.total.death}}
+            </p>
+            <p class="is-hidden-tablet">
+              {{user.total.rescue / user.total.death | toFixed(2)}}
             </p>
           </div>
           <div>
             <p>Total eggs</p>
-            <p>
-              <span class="golden-egg">{{user.total.golden_eggs}}</span>
+            <p class="is-hidden-mobile">
+              <span class="golden-egg" :title="user.total.golden_eggs">{{useMetricPrefix(user.total.golden_eggs, 2)}}</span>
               -
-              <span class="power-egg">{{user.total.power_eggs}}</span>
+              <span class="power-egg" :title="user.total.power_eggs">{{useMetricPrefix(user.total.power_eggs, 2)}}</span>
+            </p>
+            <p class="is-hidden-tablet">
+              <span class="golden-egg">{{useMetricPrefix(user.total.golden_eggs, 2)}}</span>
+              -
+              <span class="power-egg">{{useMetricPrefix(user.total.power_eggs, 2)}}</span>
             </p>
           </div>
           <div>
@@ -177,7 +185,7 @@ h1 {
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import PlayerAvatar from '@/components/PlayerAvatar.vue';
-import { percentage, toFixed } from '@/helper';
+import { percentage, toFixed, useMetricPrefix } from '@/helper';
 
 @Component({
   name: 'PlayerPageHeader',
@@ -194,6 +202,7 @@ import { percentage, toFixed } from '@/helper';
 })
 export default class PlayerPageHeader extends Vue {
   percentage = percentage;
+  useMetricPrefix = useMetricPrefix;
   user = null;
 
   get totalGames() {
