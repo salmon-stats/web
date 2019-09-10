@@ -102,6 +102,6 @@ export default class SalmonResult extends RequireFetchBase {
   }
 
   public mounted() {
-    state.fetch(`results/${this.$route.params.resultId}`);
+    state.fetch(this.$route.path.replace(/^\//, ''));
   }
 }

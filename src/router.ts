@@ -45,6 +45,11 @@ export default new Router({
           component: PlayerResults,
         },
         {
+          path: 'results/:resultId(latest)',
+          name: 'players.results.latest',
+          component: SalmonResult,
+        },
+        {
           path: '',
           name: 'players.summary',
           component: PlayerSummary,
