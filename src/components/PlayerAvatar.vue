@@ -1,7 +1,6 @@
 <template>
-  <img v-if="avatar"
-    :width="size" :height="size" :src="avatar">
-  <blockies v-else
+  <img v-if="avatar" :style="style" :src="avatar">
+  <blockies v-else :style="style"
     :sizePerPixel="blockiesSizePerPixel" :pixels="blockiesPixels" :seed="blockiesSeed || (user && user.player_id)" />
 </template>
 
@@ -35,6 +34,12 @@ export default class PlayerAvatar extends Vue {
   }
   get blockiesSizePerPixel() {
     return this.size / this.blockiesPixels;
+  }
+  get style() {
+    return {
+      height: `${this.size}px`,
+      width: `${this.size}px`,
+    };
   }
 }
 </script>
