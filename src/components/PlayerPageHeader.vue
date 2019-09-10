@@ -73,15 +73,21 @@
     </div>
 
     <div class="navigation is-flex">
-      <div>
-        <router-link :exact="true" :to="playerSummary">Overview</router-link>
-        <router-link :exact="true" :class="$route.name === 'players.results' && 'router-link-active'" :to="`/players/${playerId}/results`">Results</router-link>
-        <router-link :exact="true" :to="`/players/${playerId}/results/latest`">Latest Result</router-link>
-      </div>
-      <div>
-        <a v-if="twitterProfileUrl" class="splatoon-stats-link" :href="twitterProfileUrl">Twitter</a>
-        <a class="splatoon-stats-link" :href="splatoonStatsUrl">Splatoon Stats</a>
-      </div>
+      <router-link :exact="true" :to="playerSummary">
+        Overview
+      </router-link>
+      <router-link :exact="true" :class="$route.name === 'players.results' && 'router-link-active'" :to="`/players/${playerId}/results`">
+        Results
+      </router-link>
+      <router-link :exact="true" :to="`/players/${playerId}/results/latest`">
+        Latest Result
+      </router-link>
+      <a v-if="twitterProfileUrl" class="splatoon-stats" :href="twitterProfileUrl">
+        Twitter
+      </a>
+      <a class="splatoon-stats" :href="splatoonStatsUrl">
+        Splatoon Stats
+      </a>
     </div>
   </div>
 </template>
@@ -148,14 +154,11 @@ h1 {
 
 .navigation {
   background-color: darken($background, 10%);
-  justify-content: space-between;
-
-  > div {
-    display: flex;
-  }
+  overflow-x: auto;
 
   a {
     padding: .5em;
+    white-space: nowrap;
 
     &:hover,
     &.router-link-active {
