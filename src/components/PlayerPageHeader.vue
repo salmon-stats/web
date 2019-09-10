@@ -90,10 +90,10 @@
       <router-link :exact="true" :to="`/players/${playerId}/results/latest`">
         Latest Result
       </router-link>
-      <a v-if="twitterProfileUrl" class="splatoon-stats" :href="twitterProfileUrl">
+      <a v-if="twitterProfileUrl" class="external twitter" :href="twitterProfileUrl">
         Twitter
       </a>
-      <a class="splatoon-stats" :href="splatoonStatsUrl">
+      <a class="external splatoon-stats" :href="splatoonStatsUrl">
         Splatoon Stats
       </a>
     </div>
@@ -167,6 +167,13 @@ h1 {
   a {
     padding: .5em;
     white-space: nowrap;
+
+    &.external {
+      &.twitter { color: $twitter-color; }
+      &.twitter:hover { color: lighten($twitter-color, 10%); }
+      &.splatoon-stats { color: $link; }
+      &.splatoon-stats:hover { color: lighten($link, 10%); }
+    }
 
     &:hover,
     &.router-link-active {
