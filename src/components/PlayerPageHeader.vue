@@ -101,7 +101,8 @@
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/bulma.scss';
+@import '@/assets/variables.scss';
+@import '@/assets/bulma-variables.scss';
 
 .avatar {
   // height: 72px;

@@ -211,9 +211,9 @@
 <script src="./SalmonResult.ts" lang="ts"></script>
 
 <style lang="scss" scoped>
-@import '@/assets/bulma.scss';
-@import '../assets/variables.scss';
-@import '../assets/helper-functions.scss';
+@import '@/assets/variables.scss';
+@import '@/assets/bulma-variables.scss';
+@import '@/assets/helper-functions.scss';
 
 th.player-icon, td.player-icon {
   width: 32px;
