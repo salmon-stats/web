@@ -36,12 +36,21 @@ export default class PlayerBase extends Vue {
     return this.$route.params.playerId;
   }
 
-  mounted() {
+  fetchUserData() {
     this.isLoadingUserData = true;
 
     playersModule.fetchPlayer(this.playerId)
       .then((responseBody) => this.user = responseBody)
       .finally(() => this.isLoadingUserData = false);
+  }
+
+  mounted() {
+    this.fetchUserData();
+  }
+
+  @Watch('playerId')
+  onChangePlayerId() {
+    this.fetchUserData();
   }
 }
 </script>
