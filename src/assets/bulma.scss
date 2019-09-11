@@ -33,3 +33,13 @@ nav.pagination > a[role=button] {
 @import '~bulma/sass/utilities/_all';
 @import '~bulma';
 @import '~buefy/src/scss/buefy';
+
+// https://github.com/jgthms/bulma/issues/1540
+@media screen and (max-width: $tablet - 1) {
+  .columns {
+    margin: 0;
+  }
+  .column {
+    padding: 0;
+  }
+}
