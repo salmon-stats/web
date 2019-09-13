@@ -13,6 +13,10 @@ module.exports = {
 
     plugins.push(
       constantPlugin(
+        'ENV',
+        JSON.stringify(process.env.NODE_ENV),
+      ),
+      constantPlugin(
         'SPLATOON_STATS_URL',
         JSON.stringify('https://splatoon-stats.yuki.games'),
       ),
