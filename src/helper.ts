@@ -31,7 +31,7 @@ export const formatDateInLocalTz = (dateLikeObject: string | number | Date | Day
     return dayjs(dateLikeObject).format(formatter);
   }
 
-  return dayjs(dateLikeObject).utc().format(formatter);
+  return dayjs.utc(dateLikeObject).local().format(formatter);
 };
 
 /**
