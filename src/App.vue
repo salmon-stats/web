@@ -26,6 +26,11 @@ $footer-height: 5em;
   margin-top: 1em;
 }
 
+.has-title[title] {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
 footer {
   display: flex;
   align-items: center;

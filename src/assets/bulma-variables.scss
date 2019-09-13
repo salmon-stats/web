@@ -11,6 +11,9 @@ $gap: 32px;
 $tablet: 769px;
 $desktop: 960px + 2 * $gap;
 
+// Form
+$primary: $link;
+
 // Navbar
 $navbar-height: 2.5rem;
 $navbar-background-color: darken($body-background-color, 5%); // lighten($background, 5%);

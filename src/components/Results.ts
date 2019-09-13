@@ -26,8 +26,29 @@ export default class Results extends Vue {
   rawResults!: any[];
 
   public currentPage = 1;
+  public isTeamView = true;
 
-  private get results(): any[] {
+  public get bossEliminationKey(): string {
+    return this.isTeamView ? 'boss_elimination_count' : 'player_boss_elimination_count';
+  }
+
+  public get bossEliminationDividerKey(): string {
+    return this.isTeamView ? 'boss_appearance_count' : 'boss_elimination_count';
+  }
+
+  public get isGradeColumnVisible(): boolean {
+    return !this.isTeamView && this.isPlayerResults;
+  }
+
+  public get isHazardColumnVisible(): boolean {
+    return !this.isGradeColumnVisible;
+  }
+
+  public get isPlayerResults(): boolean {
+    return this.results.some((result) => !!result.grade_point);
+  }
+
+  public get results(): any[] {
     return this.resultsWithPagination ? this.resultsWithPagination.data
       : this.rawResults;
   }
@@ -38,6 +59,12 @@ export default class Results extends Vue {
     this.$router.push(
       this.paginator(toPage),
     );
+  }
+
+  public profreshionalGradePoint(gradePoint: number): number | null {
+    const profreshionalMinGradePoint = 400;
+    return gradePoint >= profreshionalMinGradePoint ?
+      gradePoint - profreshionalMinGradePoint : null;
   }
 
   public toResultPage(resultId: any) {
