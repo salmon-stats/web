@@ -118,7 +118,7 @@
 h1 {
   font-size: 200%;
   a {
-    color: $body-accent-color;
+    color: $text-strong !important;
   }
 }
 
@@ -154,7 +154,7 @@ h1 {
     }
 
     p:last-child {
-      color: $body-accent-color;
+      color: $text-strong;
       justify-self: end;
       text-align: right;
     }
@@ -179,11 +179,11 @@ h1 {
     &:hover,
     &.router-link-active {
       background-color: darken($background, 5%);
-      color: $body-accent-color;
+      color: $text-strong;
     }
     &:not(.router-link-active) {
       color: $body-color;
-      &:hover { color: $body-accent-color; }
+      &:hover { color: $text-strong; }
     }
     // &:not(:first-child) { margin-left: 1em; }
   }

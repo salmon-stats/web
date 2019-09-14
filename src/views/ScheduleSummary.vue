@@ -1,12 +1,15 @@
 <template>
   <require-fetch-template>
     <template v-if="schedule">
-      <schedule-card :date-formatter="formatDateToYmdhm" :schedule="schedule" />
+      <div class="is-marginless columns schedule-card-container">
+        <schedule-card class="column is-one-third"
+          :is-clickable="false" :date-formatter="formatDateToYmdhm" :schedule="schedule" />
+      </div>
 
       <div v-if="records">
 
         <h2>Results</h2>
-        <results :raw-results="results" />
+        <results :raw-results="results" :show-more-link="showMoreLink" />
 
         <b-tabs v-model="activeTabIndex">
           <b-tab-item label="Golden Eggs" />
@@ -52,6 +55,10 @@
 @import '../assets/variables.scss';
 
 $cell-width: 6em;
+
+.schedule-card-container {
+  margin-bottom: 1em !important;
+}
 
 .table-container {
   overflow-x: auto;

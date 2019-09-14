@@ -22,6 +22,15 @@ export default class ScheduleCard extends Vue {
   @Prop()
   readonly schedule!: Schedule;
 
+  @Prop({ default: true })
+  readonly isClickable!: boolean;
+
+  public get scheduleSummaryRoute() {
+    return {
+      name: 'schedules.summary',
+      params: { scheduleId: this.schedule.scheduleId },
+    };
+  }
   public get startAt() {
     return this.dateFormatter(this.schedule.startAt);
   }

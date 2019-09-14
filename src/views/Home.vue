@@ -1,13 +1,12 @@
 <template>
   <div class="home">
-    <div>
+    <div class="about">
       <p>To upload results to this website, please use <a href="https://github.com/tkgstrator/Salmonia/releases">command-line result uploader (Salmonia)</a>.</p>
+      <p>
+        With contributions from <a href="https://twitter.com/tkgling">@tkgling</a> and <a href="https://twitter.com/barley_ural">@barley_ural</a>,
+        developed &amp; run by <a href="https://twitter.com">@Yukinkling</a>.
+      </p>
     </div>
-
-    <p>
-      With contributions from <a href="https://twitter.com/tkgling">@tkgling</a> and <a href="https://twitter.com/barley_ural">@barley_ural</a>,
-      developed &amp; run by <a href="https://twitter.com">@Yukinkling</a>.
-    </p>
 
     <!-- TODO: Use tab for phones -->
     <div v-if="isSchedulesAvailable" class="columns">
@@ -29,7 +28,7 @@
       </div>
 
       <div class="column">
-        <h2>Future Schedules</h2>
+        <h2>Upcoming Schedules</h2>
         <ul>
           <li v-for="schedule in futureSchedules" :key="schedule.scheduleId">
             <schedule-card difference-to="startAt"
@@ -38,10 +37,32 @@
         </ul>
       </div>
     </div>
-    <div v-else>
+    <div v-else class="is-marginless columns">
       Loading schedule...
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+@import '@/assets/bulma-variables.scss';
+
+h2 {
+  font-weight: bold;
+  margin: 1em 0;
+}
+
+.about {
+  margin-bottom: $column-gap;
+}
+
+.external-links {
+  justify-content: center;
+  align-content: center;
+}
+
+li:not(:last-child) {
+  margin-bottom: 1em;
+}
+</style>
 
 <script src="./Home.ts"></script>

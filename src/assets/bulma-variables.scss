@@ -1,6 +1,9 @@
+@import './variables.scss';
+
 $widescreen-enabled: false;
 $fullhd-enabled: false;
-$text-strong: $body-color;
+$text: $body-color;
+$text-strong: lighten($body-color, 10%);
 $link-hover: lighten($link, 10%);
 
 // These values are same as Bulma's default, however,
@@ -10,6 +13,10 @@ $body-line-height: 1.5;
 $gap: 32px;
 $tablet: 769px;
 $desktop: 960px + 2 * $gap;
+$box-color: lighten($text, 5%);
+$box-accent-color: lighten($text, 15%);
+$box-background-color: darken($background, 5%);
+$column-gap: .75rem;
 
 // Form
 $primary: $link;

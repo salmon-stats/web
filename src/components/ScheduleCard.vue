@@ -1,21 +1,41 @@
 <template>
-  <div>
-    <router-link :to="{ name: 'schedules.summary', params: { scheduleId: schedule.scheduleId } }">
-      {{ startAt }} ~ {{ endAt }}
-    </router-link>
+  <div :class="['box', isClickable && 'clickable']"
+      @click="$router.push(scheduleSummaryRoute)">
+    <strong>
+      <router-link :to="scheduleSummaryRoute">
+        {{ startAt }} ~ {{ endAt }}
+      </router-link>
+    </strong>
 
-    {{ timeDifference }}
+    <small v-if="timeDifference">({{ timeDifference }})</small>
 
-    <div>
+    <div class="weapons">
       <main-weapon v-for="weapon in schedule.weapons" :key="weapon"
         :weapon-id="weapon" :size="32" />
     </div>
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '@/assets/bulma-variables.scss';
+
+.box {
+  padding: .5em .75em;
+}
+
+a {
+  color: $box-accent-color !important;
+}
+
 img {
   width: 32px;
+}
+
+.weapons {
+  margin: .5em 0 0 .5em;
+}
+.weapons img:not(:first-child) {
+  margin-left: .25em;
 }
 </style>
 
