@@ -2,25 +2,27 @@ import { Mutation, Action, VuexModule, getModule, Module } from 'vuex-module-dec
 import store from '@/store/store';
 import apiCleint from '@/api-client';
 
+type StringMap = { [key: string]: string };
+
 export interface IIdKeyMap {
-  boss: object;
-  event: object;
-  fail_reason: object;
-  special: object;
-  stage: object;
-  water_level: object;
-  weapon: object;
+  boss: StringMap;
+  event: StringMap;
+  fail_reason: StringMap;
+  special: StringMap;
+  stage: StringMap;
+  water_level: StringMap;
+  weapon: StringMap;
 }
 
 @Module({ dynamic: true, store, name: 'id-key-map', namespaced: true })
 class IdKeyMap extends VuexModule implements IIdKeyMap {
-  public boss: object = {};
-  public event: object = {};
-  public fail_reason: object = {};
-  public special: object = {};
-  public stage: object = {};
-  public water_level: object = {};
-  public weapon: object = {};
+  public boss: StringMap = {};
+  public event: StringMap = {};
+  public fail_reason: StringMap = {};
+  public special: StringMap = {};
+  public stage: StringMap = {};
+  public water_level: StringMap = {};
+  public weapon: StringMap = {};
 
   get bossIds() {
     return Object.keys(this.boss);
@@ -28,7 +30,7 @@ class IdKeyMap extends VuexModule implements IIdKeyMap {
 
   @Action
   public fetchIdKeyMap() {
-    apiCleint.get('id-key-map')
+    apiCleint.get('/id-key-map')
       .then((res) => {
         this.SET_ID_KEY_MAP(res.data);
       });
