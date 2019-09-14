@@ -1,13 +1,17 @@
 <template>
   <div :class="['box', isClickable && 'clickable']"
       @click="$router.push(scheduleSummaryRoute)">
-    <strong>
-      <router-link :to="scheduleSummaryRoute">
-        {{ startAt }} ~ {{ endAt }}
-      </router-link>
-    </strong>
+    <p>
+      <strong>
+        <router-link :to="scheduleSummaryRoute">
+          {{ startAt }} ~ {{ endAt }}
+        </router-link>
+      </strong>
 
-    <small v-if="timeDifference">({{ timeDifference }})</small>
+      <small v-if="timeDifference">({{ timeDifference }})</small>
+    </p>
+
+    <p><small>{{ $t(`stage.${stageKey(schedule.stageId)}`) }}</small></p>
 
     <div class="weapons">
       <main-weapon v-for="weapon in schedule.weapons" :key="weapon"

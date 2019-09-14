@@ -3,6 +3,7 @@ import dayjs, { Dayjs } from 'dayjs';
 
 import { formatDateToMdhm, timeDifference } from '@/helper';
 import MainWeapon from '@/components/MainWeapon.vue';
+import { idKeyMapModule } from '@/store/modules/id-key-map';
 import { Schedule } from '@/types/salmon-stats';
 
 @Component({
@@ -24,6 +25,10 @@ export default class ScheduleCard extends Vue {
 
   @Prop({ default: true })
   readonly isClickable!: boolean;
+
+  public stageKey(id: number) {
+    return idKeyMapModule.stage[id.toString()];
+  }
 
   public get scheduleSummaryRoute() {
     return {
