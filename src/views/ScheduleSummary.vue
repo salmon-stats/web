@@ -1,11 +1,6 @@
 <template>
   <require-fetch-template>
     <template v-if="schedule">
-      <div class="is-marginless columns schedule-card-container">
-        <schedule-card class="column is-one-third"
-          :is-clickable="false" :date-formatter="formatDateToYmdhm" :schedule="schedule" />
-      </div>
-
       <div v-if="records">
 
         <h2>Results</h2>
@@ -113,6 +108,7 @@ import ScheduleCard from '../components/ScheduleCard.vue';
 import ScheduleRecord from '../components/ScheduleRecord.vue';
 import Results from '../components/Results.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
+import { schedulesModule } from '@/store/modules/schedules';
 import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import { formatDateToYmdhm, getTranslationKey, parseRawSchedule } from '@/helper.ts';
 
@@ -175,13 +171,22 @@ export default class ScheduleRecords extends RequireFetchBase {
     this.$router.push({ name: 'results.summary', params: { resultId } });
   }
 
+  fetch() {
+    state.fetch(this.apiPath)
+      .then((res) => {
+        if (!res) return;
+
+        schedulesModule.setScheduleData(res.schedule);
+      });
+  }
+
   mounted() {
-    state.fetch(this.apiPath);
+    this.fetch();
   }
 
   @Watch('$route')
   onRouteChange() {
-    state.fetch(this.apiPath);
+    this.fetch();
   }
 
   getTranslationKey = getTranslationKey;

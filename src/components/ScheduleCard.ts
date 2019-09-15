@@ -20,7 +20,7 @@ export default class ScheduleCard extends Vue {
   @Prop()
   readonly now!: Dayjs;
 
-  @Prop()
+  @Prop({ required: true })
   readonly schedule!: Schedule;
 
   @Prop({ default: true })

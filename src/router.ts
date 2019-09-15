@@ -7,6 +7,7 @@ import PlayerSummary from './views/PlayerSummary.vue';
 import PlayerResults from './views/PlayerResults.vue';
 import SalmonResult from './views/SalmonResult.vue';
 import SalmonResultUploader from './views/SalmonResultUploader.vue';
+import ScheduleBase from './views/ScheduleBase.vue';
 import ScheduleSummary from './views/ScheduleSummary.vue';
 
 Vue.use(Router);
@@ -58,8 +59,14 @@ export default new Router({
     },
     {
       path: '/schedules/:scheduleId(\\d{10})',
-      name: 'schedules.summary',
-      component: ScheduleSummary,
+      component: ScheduleBase,
+      children: [
+        {
+          path: '',
+          name: 'schedules.summary',
+          component: ScheduleSummary,
+        },
+      ],
     },
     { // Fallback route
       path: '*',
