@@ -17,20 +17,20 @@ export default class PlayerPeers extends Vue {
     return this.schedules.length > 0;
   }
 
-  public get futureSchedules(): null | Schedule[] {
-    return this.schedules.filter((schedule) => this.now.isBefore(schedule.startAt)) || null;
+  public get upcomingSchedules(): Schedule[] {
+    return this.schedules.filter((schedule) => this.now.isBefore(schedule.startAt));
   }
 
-  public get ongoingSchedule(): null | Schedule {
+  public get ongoingSchedule(): Schedule | null {
     return this.schedules.find((schedule) =>
       this.now.isBefore(schedule.endAt) && this.now.isAfter(schedule.startAt)) || null;
   }
 
-  public get pastSchedules(): null | Schedule[] {
+  public get pastSchedules(): Schedule[] {
     return this.schedules
       .filter((schedule) => this.now.isAfter(schedule.endAt))
-      .reverse()
-      || null;
+      .slice()
+      .reverse();
   }
 
   public mounted() {
