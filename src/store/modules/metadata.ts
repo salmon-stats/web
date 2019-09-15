@@ -4,6 +4,7 @@ import store from '@/store/store';
 import { Schedule, User } from '@/types/salmon-stats';
 import { parseRawSchedule } from '@/helper';
 import { statefulApiClient } from '@/api-client';
+import { schedulesModule } from '@/store/modules/schedules';
 
 export interface IMetadata {
   user: null | User;
@@ -28,6 +29,7 @@ class Metadata extends VuexModule implements IMetadata {
         const data = res.data;
         this.SET_USER_METADATA(data.user);
         this.SET_SCHEDULE_METADATA(data.schedules);
+        data.schedules.forEach(schedulesModule.setScheduleData);
         return data;
       })
       .finally(() => {
