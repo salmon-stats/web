@@ -9,6 +9,7 @@ import SalmonResult from './views/SalmonResult.vue';
 import SalmonResultUploader from './views/SalmonResultUploader.vue';
 import ScheduleBase from './views/ScheduleBase.vue';
 import ScheduleSummary from './views/ScheduleSummary.vue';
+import ScheduleResults from './views/ScheduleResults.vue';
 
 Vue.use(Router);
 
@@ -65,6 +66,11 @@ export default new Router({
           path: '',
           name: 'schedules.summary',
           component: ScheduleSummary,
+        },
+        {
+          path: '/schedules/:scheduleId(\\d{10})/results',
+          name: 'schedules.results',
+          component: ScheduleResults,
         },
       ],
     },
