@@ -14,7 +14,7 @@
     <p><small>{{ $t(`stage.${stageKey(schedule.stageId)}`) }}</small></p>
 
     <div class="weapons">
-      <main-weapon v-for="weapon in schedule.weapons" :key="weapon"
+      <main-weapon v-for="(weapon, i) in schedule.weapons" :key="i"
         :weapon-id="weapon" :size="32" />
     </div>
   </div>
