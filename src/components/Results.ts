@@ -45,7 +45,7 @@ export default class Results extends Vue {
   }
 
   public get isPlayerResults(): boolean {
-    return this.results.some((result) => !!result.grade_point);
+    return this.results.some((result) => !!result.power_eggs);
   }
 
   public get results(): any[] {
