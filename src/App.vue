@@ -88,13 +88,13 @@ th, td {
   }
 }
 tbody tr:nth-child(odd) {
-  background-color: lighten(#2c3e50, 2.5%);
+  background-color: $background;
 }
 tbody tr:nth-child(even) {
-  background-color: #2c3e50;
+  background-color: darken($background, 2.5%);
 }
 table.is-hoverable tbody tr:hover {
-  background-color: lighten(#2c3e50, 10%);
+  background-color: lighten($background, 5%);
 }
 
 .clickable {
