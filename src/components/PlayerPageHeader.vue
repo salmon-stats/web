@@ -52,7 +52,7 @@
               {{user.total.rescue}}/{{user.total.death}}
             </p>
             <p class="is-hidden-tablet">
-              {{user.total.rescue / user.total.death | toFixed(2)}}
+              {{user.total.rescue / (user.total.death === 0 ? 1 : user.total.death) | toFixed(2)}}
             </p>
           </div>
           <div>
