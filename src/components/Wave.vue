@@ -11,7 +11,11 @@
       <span class="event">{{ wave.event_id ? translate('event', wave.event_id) : '-' }}</span>
       <div class="special-usages">
         <span class="special-usage" v-for="special in specialsUsedInWave(waveIndex)">
-          <special-usage v-if="special.count" :special-id="special.id" :count="special.count" />
+          <special-usage v-if="special.count"
+            :special-id="special.id"
+            :count="special.count"
+            :hide-count-if-one="true"
+          />
           <span v-else class="filler" />
         </span>
       </div>

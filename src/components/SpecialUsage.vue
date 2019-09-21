@@ -1,7 +1,7 @@
 <template>
   <div>
     <img :src="iconUrl('special', specialId)">
-    <span class="count">{{ count }}</span>
+    <span v-if="!hideCountIfOne || count !== 1" class="count">{{ count }}</span>
   </div>
 </template>
 
@@ -35,6 +35,7 @@ import { iconUrl } from '../helper';
   name: 'SpecialUsage',
   props: {
     specialId: [Number, String],
+    hideCountIfOne: { type: Boolean, default: false },
     count: Number,
   },
 })
