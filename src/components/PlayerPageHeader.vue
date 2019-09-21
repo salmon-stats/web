@@ -153,7 +153,7 @@ h1 {
       margin-left: 1em;
     }
 
-    p:last-child {
+    p:not(:first-child) {
       color: $text-strong;
       justify-self: end;
       text-align: right;
