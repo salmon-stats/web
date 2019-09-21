@@ -4,6 +4,12 @@
     :sizePerPixel="blockiesSizePerPixel" :pixels="blockiesPixels" :seed="blockiesSeed || (user && user.player_id)" />
 </template>
 
+<style scoped>
+img {
+  border-radius: 50%;
+}
+</style>
+
 <script>
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import Blockies from './Blockies.vue';
