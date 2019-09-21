@@ -23,13 +23,13 @@
     <!-- TODO: Use tab for phones -->
     <div v-if="isSchedulesAvailable" class="columns">
       <div class="column">
-        <h2>Last Schedule</h2>
+        <h2 class="has-margin-top">Last Schedule</h2>
         <schedule-card v-if="pastSchedules.length > 0"
           :schedule="pastSchedules[pastSchedules.length - 1]" />
       </div>
 
       <div class="column">
-        <h2>Ongoing Schedule</h2>
+        <h2 class="has-margin-top">Ongoing Schedule</h2>
         <p v-if="!ongoingSchedule">There's no ongoing Salmon Run schedule.</p>
         <schedule-card v-else
           difference-to="endAt"
@@ -38,7 +38,7 @@
       </div>
 
       <div class="column">
-        <h2>Next Schedule</h2>
+        <h2 class="has-margin-top">Next Schedule</h2>
         <ul>
           <schedule-card v-if="upcomingSchedules.length > 0"
             difference-to="startAt"
@@ -55,11 +55,6 @@
 
 <style lang="scss" scoped>
 @import '@/assets/bulma-variables.scss';
-
-h2 {
-  font-weight: bold;
-  margin: 1em 0;
-}
 
 .about {
   margin-bottom: $column-gap;

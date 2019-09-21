@@ -3,7 +3,7 @@ import { Component } from 'vue-property-decorator';
 import { extendSalmonResult } from '@/extend-salmon-result';
 import { BossId, PlayerId, UserData } from '@/types/salmon-stats';
 import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-salmon-result';
-import { formatScheduleId, formatDateToYmdhm, getTranslationKey, iconUrl, parseRawUserData, parseRawSchedule } from '@/helper';
+import { formatScheduleId, formatDateToYmdhm, getTranslationKey, iconUrl, parseRawUserData, sum } from '@/helper';
 import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import HazardLevel from '@/components/HazardLevel.vue';
@@ -11,17 +11,20 @@ import MainWeapon from '@/components/MainWeapon.vue';
 import PlayerAvatar from '@/components/PlayerAvatar.vue';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import Schedule from '@/components/Schedule.vue';
-import SpecialUsage from '@/components/SpecialUsage.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
+import SpecialUsage from '@/components/SpecialUsage.vue';
+import Wave from '@/components/Wave.vue';
+import PlayerScoreMobile from '@/components/PlayerScoreMobile.vue';
 
 @Component({
   name: 'SalmonResult',
-  components: { HazardLevel, MainWeapon, PlayerAvatar, ProportionalBarChart, Schedule, SpecialUsage, RequireFetchTemplate },
+  components: { HazardLevel, MainWeapon, PlayerAvatar, ProportionalBarChart, Schedule, SpecialUsage, RequireFetchTemplate, Wave, PlayerScoreMobile },
 })
 export default class SalmonResult extends RequireFetchBase {
   public formatDate = formatDateToYmdhm;
   public iconUrl = iconUrl;
+  public sum = sum;
 
   get bossIds(): BossIdKeys[] {
     return idKeyMap.bossIds as BossIdKeys[];
@@ -43,15 +46,6 @@ export default class SalmonResult extends RequireFetchBase {
     return this.sum(this.salmonResult!.waves.map((wave) => wave.golden_egg_appearances));
   }
 
-  public specialsUsedInWave(wave: number) {
-    return this.salmonResult!.player_results
-      .map((player) => {
-        return {
-          id: player.special_id,
-          count: player.special_uses[wave - 1].count,
-        };
-      });
-  }
   public isRegistered(playerId: PlayerId): boolean {
     return this.getAccountByPlayerId(playerId).isRegistered;
   }
@@ -88,17 +82,6 @@ export default class SalmonResult extends RequireFetchBase {
   public getAccountByPlayerId(playerId: PlayerId): UserData {
     return parseRawUserData(this.salmonResult!.member_accounts.find((member) =>
       member && member.player_id === playerId)!);
-  }
-  public sum(collection: number[] | object) {
-    let numbers: number[];
-
-    if (!Array.isArray(collection)) {
-      numbers = Object.values(collection);
-    } else {
-      numbers = collection;
-    }
-
-    return numbers.reduce((sum: number, item: number) => sum + item, 0);
   }
 
   public mounted() {

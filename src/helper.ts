@@ -89,6 +89,18 @@ export const parseRawUserData = (rawUser: any): UserData => {
   };
 }
 
+export const sum = (collection: number[] | object) => {
+  let numbers: number[];
+
+  if (!Array.isArray(collection)) {
+    numbers = Object.values(collection);
+  } else {
+    numbers = collection;
+  }
+
+  return numbers.reduce((sum: number, item: number) => sum + item, 0);
+}
+
 export const timeDifference = (a: Date | Dayjs, b: Date | Dayjs): string => {
   const diff = Math.abs(dayjs(a).diff(b, 's'));
   return [Math.floor(diff / 3600), Math.floor((diff % 3600) / 60), (diff % 3600) % 60]

@@ -38,6 +38,7 @@ export default class PlayerAvatar extends Vue {
   get style() {
     return {
       height: `${this.size}px`,
+      minWidth: `${this.size}px`,
       width: `${this.size}px`,
     };
   }

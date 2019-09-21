@@ -17,6 +17,19 @@
 
 $footer-height: 5em;
 
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  color: $text-strong;
+}
+
+h2 {
+  font-size: 120%;
+  margin-bottom: .5em;
+  &.has-margin-top {
+    margin-top: .5em;
+  }
+}
+
 #app {
   min-height: 100vh;
   padding-bottom: $footer-height;
@@ -29,6 +42,14 @@ $footer-height: 5em;
 .has-title[title] {
   text-decoration: underline;
   text-decoration-style: dotted;
+}
+
+
+@media screen and (max-width: $tablet - 1) {
+  #app > .body {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
 }
 
 footer {
@@ -60,8 +81,11 @@ th, td {
 }
 .table-wrap {
   display: inline-block;
-  padding: .25em;
-  background-color: lighten(#2c3e50, 5%);
+  background-color: darken($background, 5%);
+
+  @media screen and (min-width: $tablet) {
+    padding: .25em;
+  }
 }
 tbody tr:nth-child(odd) {
   background-color: lighten(#2c3e50, 2.5%);

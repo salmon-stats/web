@@ -3,8 +3,9 @@
 $widescreen-enabled: false;
 $fullhd-enabled: false;
 $text: $body-color;
-$text-strong: lighten($body-color, 10%);
+$text-strong: lighten($body-color, 15%);
 $link-hover: lighten($link, 10%);
+$box-padding: 1rem;
 
 // These values are same as Bulma's default, however,
 // we need here in order not to load entire Bulma files for these values.
