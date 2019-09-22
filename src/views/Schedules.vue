@@ -36,6 +36,7 @@ import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import ScheduleCard from '@/components/ScheduleCard.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
+import { schedulesModule } from '@/store/modules/schedules';
 import { parseRawSchedule } from '@/helper.ts';
 
 @Component({
@@ -66,14 +67,23 @@ export default class Schedules extends RequireFetchBase {
     };
   }
 
+  fetch() {
+    state.fetch(this.apiPath)
+      .then((res) => {
+        if (!res) return;
+
+        res.data.forEach(schedulesModule.setScheduleData);
+      });
+  }
+
   mounted() {
     this.currentPage = parseInt(this.$route.query.page, 10) || 1;
-    state.fetch(this.apiPath);
+    this.fetch();
   }
 
   @Watch('$route')
   onRouteChange() {
-    state.fetch(this.apiPath);
+    this.fetch();
   }
 }
 </script>
