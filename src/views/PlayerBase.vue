@@ -39,6 +39,17 @@ export default class PlayerBase extends Vue {
   fetchUserData() {
     this.isLoadingUserData = true;
 
+    if (playersModule.players.has(this.playerId)) {
+      this.user = playersModule.players.get(this.playerId);
+
+      if (!this.user.results) {
+        // Make sure metadata with results will be fetched
+        playersModule.players.delete(this.playerId);
+      }
+    } else {
+      this.user = null;
+    }
+
     playersModule.fetchPlayer(this.playerId)
       .then((responseBody) => this.user = responseBody)
       .finally(() => this.isLoadingUserData = false);

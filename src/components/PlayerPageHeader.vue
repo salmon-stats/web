@@ -1,8 +1,20 @@
 <template>
-  <div class="header">
-    <div class="is-marginless columns user">
+  <div class="header is-clipped">
+    <div class="is-marginless columns user is-clipped">
       <router-link class="is-flex" tag="div" :to="`/players/${playerId}`">
-        <template v-if="!user || isLoadingUserData" class="is-marginless is-flex">
+        <template v-if="user" class="is-marginless is-flex">
+          <player-avatar class="avatar"
+            :size="72" :user="user" :blockies-seed="playerId" :key="playerId" />
+          <div>
+            <h1>
+              <a>
+                {{ user.isRegistered ? `@${user.name}` : user.name }}
+              </a>
+            </h1>
+            <p>{{ title }}</p>
+          </div>
+        </template>
+        <template v-else>
           <div class="avatar">
             <div v-if="isLoadingUserData" class="placeholder" />
             <player-avatar v-else class="avatar"
@@ -17,23 +29,10 @@
             <p>{{ title }}</p>
           </div>
         </template>
-        <template v-else>
-          <player-avatar class="avatar"
-            :size="72" :user="user" :blockies-seed="playerId" />
-          <div>
-            <h1>
-              <a>
-                {{ user.isRegistered ? `@${user.name}` : user.name }}
-              </a>
-            </h1>
-            <p>{{ title }}</p>
-          </div>
-        </template>
       </router-link>
 
       <div  class="is-flex lifetime-stats">
-        <div v-if="isLoadingUserData" class="placeholder" />
-        <template v-else-if="user">
+        <template v-if="user && user.results">
           <div>
             <p>Results</p>
             <p>
@@ -77,6 +76,7 @@
             </p>
           </div>
         </template>
+        <div v-else-if="isLoadingUserData" class="placeholder" />
       </div>
     </div>
 
