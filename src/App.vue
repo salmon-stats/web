@@ -44,6 +44,10 @@ h2 {
   text-decoration-style: dotted;
 }
 
+.weak {
+  color: darken($text, 5%);
+}
+
 
 @media screen and (max-width: $tablet - 1) {
   #app > .body {
@@ -85,6 +89,11 @@ th, td {
 
   @media screen and (min-width: $tablet) {
     padding: .25em;
+  }
+  @media screen and (max-width: $tablet - 1) {
+    thead tr {
+      border-bottom: 1px solid darken($background, 7.5%);
+    }
   }
 }
 tbody tr:nth-child(odd) {

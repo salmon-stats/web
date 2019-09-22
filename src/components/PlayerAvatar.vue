@@ -1,7 +1,7 @@
 <template>
   <img v-if="avatar" :style="style" :src="avatar">
   <blockies v-else :style="style"
-    :sizePerPixel="blockiesSizePerPixel" :pixels="blockiesPixels" :seed="blockiesSeed || (user && user.player_id)" />
+    :sizePerPixel="blockiesSizePerPixel" :pixels="blockiesPixels" :seed="blockiesSeed || (user && (user.player_id || user.playerId))" />
 </template>
 
 <style scoped>

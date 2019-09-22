@@ -25,11 +25,12 @@ class Players extends VuexModule implements IPlayers {
 
   @Action
   public async fetchPlayers(playerIds: string[]): Promise<UserData[]> {
-    // TODO: client-side fetching mechanism
+    // TODO: client-side caching mechanism
+    const uniquePlayerIds = Array.from(new Set(playerIds));
 
-    const cachedIds = playerIds.filter((playerId) => this.players.has(playerId));
+    const cachedIds = uniquePlayerIds.filter((playerId) => this.players.has(playerId));
     const cachedUsers: UserData[] = cachedIds.map((playerId) => this.players.get(playerId)!);
-    const uncachedIds = playerIds.filter((playerId) => !this.players.has(playerId));
+    const uncachedIds = uniquePlayerIds.filter((playerId) => !this.players.has(playerId));
     let fetchedUsers: UserData[] = [];
 
     if (uncachedIds.length > 0) {

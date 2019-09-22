@@ -9,46 +9,44 @@
         <thead>
           <tr>
             <th></th>
-            <th class="is-hidden-mobile">Schedule</th>
             <th>Date</th>
-            <th v-if="isHazardColumnVisible">Hazard</th>
-            <th v-if="isGradeColumnVisible"><span class="has-title" title="Profreshional">Grade</span></th>
             <th>Eggs</th>
             <th>Boss</th>
+            <th class="is-hidden-mobile">Members</th>
           </tr>
         </thead>
         <tbody>
           <tr class="clickable" @click="toResultPage(result.id)"
             v-for="result in results" :key="result.id">
-            <td v-if="result.fail_reason_id">
-              <span class="fail">Fail</span>
-              <span class="is-hidden-mobile"> ({{result.clear_waves}}/3)</span>
-            </td>
-            <td v-else>
-              <span class="clear">Clear</span>
-            </td>
+            <td>
+              <p v-if="result.fail_reason_id">
+                <span class="fail">Fail</span>
+                <span class="is-hidden-mobile"> ({{result.clear_waves}}/3)</span>
+              </p>
+              <p v-else class="clear">Clear</p>
 
-            <td class="is-hidden-mobile">
-              <schedule :date-formatter="dateFormatter" :is-link-disabled="true" :schedule-id="result.schedule_id" />
-            </td>
-
-            <td>{{ dateFormatter(result.start_at) }}</td>
-
-            <td v-if="isHazardColumnVisible">
-              <hazard-level :hazard-level="result.danger_rate" />
-            </td>
-
-            <td v-if="isGradeColumnVisible">
-              {{ profreshionalGradePoint(result.grade_point) }}
+              <p>
+                <small class="weak">
+                  <hazard-level v-if="isTeamView" :hazard-level="result.danger_rate" />
+                  <span v-else-if="result.grade_point < 400">-</span>
+                  <span v-else>{{ profreshionalGradePoint(result.grade_point) }}</span>
+                </small>
+              </p>
             </td>
 
             <td>
-              <p v-if="isTeamView">
-                <span class="golden-egg">{{ result.golden_egg_delivered }}</span>+<span class="power-egg">{{ result.power_egg_collected }}</span>
-              </p>
-              <p v-else>
-                <span class="golden-egg">{{ result.golden_eggs }}</span>+<span class="power-egg">{{ result.power_eggs }}</span>
-              </p>
+              <p>{{ dateFormatter(result.start_at) }}</p>
+            </td>
+
+            <td class="eggs">
+              <div v-if="isTeamView">
+                <img src="@/assets/golden-egg.png"><span class="golden-egg">{{ result.golden_egg_delivered }}</span>
+                <img src="@/assets/power-egg.png"><span class="power-egg">{{ result.power_egg_collected }}</span>
+              </div>
+              <div v-else>
+                <img src="@/assets/golden-egg.png"><span class="golden-egg">{{ result.golden_eggs }}</span>
+                <img src="@/assets/power-egg.png"><span class="power-egg">{{ result.power_eggs }}</span>
+              </div>
             </td>
 
             <td>
@@ -61,6 +59,17 @@
                   :fill-remainder="true"
                   :value="result[bossEliminationKey]" :max="result[bossEliminationDividerKey]" />
               </p>
+            </td>
+
+            <td class="members is-hidden-mobile">
+              <template v-if="membersData(result.members).length > 0">
+                <router-link v-for="member in membersData(result.members)" :key="member.playerId"
+                  @click.stop.native
+                  :to="`/players/${member.playerId}`
+                ">
+                  <player-avatar class="avatar" :size="member.isRegistered ? 32 : 24" :user="member" />
+                </router-link>
+              </template>
             </td>
          </tr>
         </tbody>
@@ -84,5 +93,23 @@
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.eggs div {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+
+  img {
+    justify-self: center;
+    width: auto;
+    height: 16px;
+  }
+}
+
+.avatar {
+  margin-left: .25em;
+}
+</style>
 
 <script src="./Results.ts"></script>

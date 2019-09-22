@@ -1,13 +1,16 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 import HazardLevel from '@/components/HazardLevel.vue';
+import PlayerAvatar from '../components/PlayerAvatar.vue';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
-import Schedule from '@/components/Schedule.vue';
 import { formatDateToMdhm } from '@/helper';
+import { playersModule } from '@/store/modules/players';
+import { UserData, User } from '@/types/salmon-stats';
+import { metadataModule } from '@/store/modules/metadata';
 
 @Component({
   name: 'Results',
-  components: { HazardLevel, ProportionalBarChart, Schedule },
+  components: { HazardLevel, PlayerAvatar, ProportionalBarChart },
 })
 export default class Results extends Vue {
   @Prop({ default: formatDateToMdhm, type: Function })
@@ -25,6 +28,7 @@ export default class Results extends Vue {
   @Prop()
   rawResults!: any[];
 
+  private playersMetadata: Map<string, UserData> = new Map();
   public currentPage = 1;
   public isTeamView = true;
 
@@ -36,14 +40,6 @@ export default class Results extends Vue {
     return this.isTeamView ? 'boss_appearance_count' : 'boss_elimination_count';
   }
 
-  public get isGradeColumnVisible(): boolean {
-    return !this.isTeamView && this.isPlayerResults;
-  }
-
-  public get isHazardColumnVisible(): boolean {
-    return !this.isGradeColumnVisible;
-  }
-
   public get isPlayerResults(): boolean {
     return this.results.some((result) => !!result.power_eggs);
   }
@@ -51,6 +47,39 @@ export default class Results extends Vue {
   public get results(): any[] {
     return this.resultsWithPagination ? this.resultsWithPagination.data
       : this.rawResults;
+  }
+
+  public membersData(ids: string | string[]): UserData[] {
+    const playerIds = typeof ids === 'string' ? JSON.parse(ids) as string[] : ids;
+
+    const players = playerIds
+      .map((playerId) => this.playersMetadata.get(playerId))
+      .filter((user) => user !== undefined) as UserData[];
+
+    const isMyself = (user: string | User | UserData): boolean => {
+      const isUser = (item: any): item is User => 'player_id' in item;
+      const isUserData = (item: any): item is UserData => 'playerId' in item;
+
+      if (!metadataModule.user) {
+        return false;
+      }
+
+      if (typeof user === 'string') {
+        return metadataModule.user.player_id === user;
+      } else if (isUser(user)) {
+        return metadataModule.user.player_id === user.player_id;
+      } else if (isUserData(user)) {
+        return metadataModule.user.player_id === user.playerId;
+      }
+
+      return false;
+    };
+
+    return players.sort((a, b) =>
+      (b.isRegistered ? 1 : 0) - (a.isRegistered ? 1 : 0) ||
+      (isMyself(b) ? 1 : 0) - (isMyself(a) ? 1 : 0) ||
+      a.playerId.localeCompare(b.playerId)
+    );
   }
 
   public paginate(toPage: number) {
@@ -73,5 +102,22 @@ export default class Results extends Vue {
 
   public mounted() {
     this.currentPage = parseInt(this.$route.query.page as string, 10) || 1;
+
+    const members = this.results
+      .flatMap((result) => {
+        if (typeof result.members === 'string') {
+          return JSON.parse(result.members);
+        }
+        return result.members;
+      });
+
+    playersModule.fetchPlayers(members)
+      .then((players) => {
+        players.forEach((player) => {
+          this.playersMetadata.set(player.playerId, player);
+        });
+
+        this.playersMetadata = new Map(this.playersMetadata);
+      });
   }
 }
