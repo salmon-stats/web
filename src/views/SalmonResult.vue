@@ -69,9 +69,8 @@
                     :count="sum(p.special_uses.map(special => special.count))" />
                 </td>
                 <td class="main-weapons">
-                  <span class="weapon-icon main" v-for="(w, i) in p.weapons" :key="i">
-                    <main-weapon :weapon-id="w.weapon_id" />
-                  </span>
+                  <main-weapon v-for="(w, i) in p.weapons" :key="i"
+                    :weapon-id="w.weapon_id" />
                 </td>
                 <td>
                   <p><span :class="hasMost('rescue', p.rescue) ? 'has-most' : ''">{{ p.rescue }}</span></p>
@@ -226,6 +225,7 @@
 
 th.player-icon, td.player-icon {
   width: 32px;
+  img, canvas { display: flex; }
 }
 td.player-name {
   width: 11em;
@@ -235,15 +235,47 @@ td.special-usage {
 }
 td.main-weapons {
   width: 112px; // magic number
-}
-@media (max-width: $desktop - 1) {
-  th.boss-name {
-    width: 32px;
+  height: calc(32px + .75em); // magic number
+  display: flex;
+  align-items: center;
+  img {
+    height: 32px;
   }
 }
-@media (min-width: $desktop) {
-  th.boss-name.total span {
-    margin-left: 32px;
+
+.bosses {
+  thead {
+    .clickable {
+      display: flex;
+      justify-content: center;
+      padding-bottom: .375em !important;
+      img, canvas { display: flex; }
+    }
+  }
+  tbody tr {
+    th, td {
+      padding-top: .375em !important;
+      padding-bottom: .375em !important;
+    }
+  }
+  tfoot tr {
+    th, td { padding-bottom: .375em !important; }
+  }
+}
+
+th.boss-name {
+  @media (max-width: $desktop - 1) {
+    width: 32px;
+    img { display: flex; }
+  }
+  @media (min-width: $desktop) {
+    display: flex;
+    align-items: center;
+
+    &.total {
+      display: table-cell;
+      span { margin-left: 32px; }
+    }
   }
 }
 
