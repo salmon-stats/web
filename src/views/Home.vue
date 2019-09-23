@@ -25,7 +25,7 @@
       <div class="column">
         <h2 class="has-margin-top">Last Schedule</h2>
         <schedule-card v-if="pastSchedules.length > 0"
-          :schedule="pastSchedules[pastSchedules.length - 1]" />
+          :schedule="pastSchedules[0]" />
       </div>
 
       <div class="column">
