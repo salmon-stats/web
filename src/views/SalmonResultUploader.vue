@@ -2,15 +2,15 @@
   <div class="salmon-result-uploader">
     <require-sign-in message="to upload results">
       <div>
-        <h1>Generate API token</h1>
-        <p><button @click="onClickGenerateApiToken">Generate API token</button></p>
+        <h1>Get API token</h1>
+        <p><button @click="onClickGenerateApiToken">{{ regenerateToken ? 'Regenerate' : 'Get' }} API token</button></p>
         <p>
           <input type="text" :value="apiToken" disabled>
           <button ref="copyToClipboard" :disabled="apiToken === ''">Copy to clipboard</button>
+          <p><label><input type="checkbox" v-model="regenerateToken" :value="true">Regenerate API token</label></p>
         </p>
-        <p>
-          Note: Every time you press 'Generate API token' button,
-          new API token will be generated and existing token will be invalidated.
+        <p v-if="regenerateToken">
+          Note: Existing API token will be invalidated.
         </p>
       </div>
 
@@ -85,6 +85,7 @@ export default class SalmonResultUploader extends Vue {
   removeListner = null;
   selectedFiles = [];
   uploadLog = [];
+  regenerateToken = false;
 
   get isBrowserUploadEnabled() {
     return IS_BROWSER_UPLOAD_ENABLED;
@@ -142,7 +143,9 @@ export default class SalmonResultUploader extends Vue {
   }
   onClickGenerateApiToken(event) {
     statefulApiClient
-      .get('/api-token')
+      .get('/api-token', {
+        params: { regenerate: this.regenerateToken },
+      })
       .then((res) => {
         this.apiToken = res.data.api_token;
       });
