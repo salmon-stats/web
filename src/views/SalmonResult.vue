@@ -145,16 +145,19 @@
 
         <section class="bosses column is-8-desktop">
           <h2>Boss Eliminations</h2>
-          <div class="table-wrap boss-eliminations">
+          <div class="box table-wrap boss-eliminations">
             <table class="is-hoverable">
               <thead>
-                <th class="boss-name"></th>
-                <th v-for="pid in salmonResult.members" :key="pid">
-                  <div class="clickable" @click="toPlayerSummary(pid)">
-                    <player-avatar :user="getAccountByPlayerId(pid)"
-                      :size="32" :blockiesSeed="pid" />
-                  </div>
-                </th>
+                <tr>
+                  <th class="boss-name"></th>
+                  <th v-for="pid in salmonResult.members" :key="pid">
+                    <div class="clickable" @click="toPlayerSummary(pid)">
+                      <player-avatar :user="getAccountByPlayerId(pid)"
+                        :size="32" :blockiesSeed="pid" />
+                    </div>
+                  </th>
+                  <th></th>
+                </tr>
               </thead>
               <tbody>
                 <tr :class="hasEliminatedEverySpawn(bossId) ? 'has-eliminated-every-spawn' : null" v-for="bossId in appearedBossIds" :key="bossId">

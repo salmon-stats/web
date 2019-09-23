@@ -80,7 +80,7 @@ th, td {
     padding: .125em .5em !important;
   }
   td {
-    padding: .375em .5em !important;
+    padding: .25em .5em !important;
   }
 }
 .table-wrap {
@@ -91,6 +91,7 @@ th, td {
     padding: .25em;
   }
   @media screen and (max-width: $tablet - 1) {
+    &.box { padding: .25em 0; }
     thead tr {
       border-bottom: 1px solid darken($background, 7.5%);
     }
