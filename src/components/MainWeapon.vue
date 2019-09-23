@@ -1,5 +1,5 @@
 <template>
-  <img :src="iconUrl('weapon', weaponId)">
+  <img :src="iconUrl('weapon', weaponId)" :style="{ height: `${size}px`, width: `${size}px` }">
 </template>
 
 <script>
@@ -9,6 +9,7 @@ import { iconUrl } from '../helper';
 @Component({
   name: 'MainWeapon',
   props: {
+    size: Number,
     weaponId: [Number, String],
   },
 })

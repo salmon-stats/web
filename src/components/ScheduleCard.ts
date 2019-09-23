@@ -26,6 +26,9 @@ export default class ScheduleCard extends Vue {
   @Prop({ default: true })
   readonly isClickable!: boolean;
 
+  @Prop({ default: false })
+  readonly isCompact!: boolean;
+
   public stageKey(id: number) {
     return idKeyMapModule.stage[id.toString()];
   }

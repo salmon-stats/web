@@ -1,16 +1,16 @@
 import { Component } from 'vue-property-decorator';
 
 import { extendSalmonResult } from '@/extend-salmon-result';
-import { BossId, PlayerId, UserData } from '@/types/salmon-stats';
+import { BossId, PlayerId, Schedule, UserData } from '@/types/salmon-stats';
 import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-salmon-result';
-import { formatScheduleId, formatDateToYmdhm, getTranslationKey, iconUrl, parseRawUserData, sum } from '@/helper';
+import { formatScheduleId, formatDateToMdhm, getTranslationKey, iconUrl, parseRawUserData, sum, parseRawSchedule } from '@/helper';
 import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import HazardLevel from '@/components/HazardLevel.vue';
 import MainWeapon from '@/components/MainWeapon.vue';
 import PlayerAvatar from '@/components/PlayerAvatar.vue';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
-import Schedule from '@/components/Schedule.vue';
+import ScheduleCard from '@/components/ScheduleCard.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import SpecialUsage from '@/components/SpecialUsage.vue';
@@ -19,10 +19,10 @@ import PlayerScoreMobile from '@/components/PlayerScoreMobile.vue';
 
 @Component({
   name: 'SalmonResult',
-  components: { HazardLevel, MainWeapon, PlayerAvatar, ProportionalBarChart, Schedule, SpecialUsage, RequireFetchTemplate, Wave, PlayerScoreMobile },
+  components: { HazardLevel, MainWeapon, PlayerAvatar, ProportionalBarChart, ScheduleCard, SpecialUsage, RequireFetchTemplate, Wave, PlayerScoreMobile },
 })
 export default class SalmonResult extends RequireFetchBase {
-  public formatDate = formatDateToYmdhm;
+  public formatDate = formatDateToMdhm;
   public iconUrl = iconUrl;
   public sum = sum;
 
@@ -44,6 +44,9 @@ export default class SalmonResult extends RequireFetchBase {
   }
   get totalGoldenEggsAppeared(): number {
     return this.sum(this.salmonResult!.waves.map((wave) => wave.golden_egg_appearances));
+  }
+  get parsedSchedule(): Schedule {
+    return parseRawSchedule(this.salmonResult!.schedule);
   }
 
   public isRegistered(playerId: PlayerId): boolean {

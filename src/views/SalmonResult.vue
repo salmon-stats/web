@@ -1,27 +1,28 @@
 <template>
   <require-fetch-template>
     <div v-if="salmonResult">
-      <h2>Overview</h2>
-      <p>Schedule: <schedule :date-formatter="formatDate" :schedule-id="salmonResult.schedule_id" /></p>
-      <p>Start: {{ formatDate(salmonResult.start_at) }}</p>
-      <p>Result:
-        <template v-if="salmonResult.fail_reason_id">
-          <span class="fail">Fail</span>
-          ({{ translate('fail_reason', salmonResult.fail_reason_id) }} in wave {{ failedWave }})
-        </template>
-        <span v-else class="clear">Clear</span>
-      </p>
-      <p>Hazard level: <hazard-level :hazard-level="salmonResult.danger_rate" /></p>
-      <p>Weapons:
-        <span v-for="weaponId in salmonResult.schedule.weapons">
-          <main-weapon :weapon-id="weaponId" />
-        </span>
-        <span v-if="salmonResult.schedule.weapons.some(id => id === -1) && salmonResult.schedule.rare_weapon_id !== null">
-          Rare:
-          <main-weapon :weapon-id="salmonResult.schedule.rare_weapon_id" />
-        </span>
-      </p>
-      <p>Stage: {{ translate('stage', salmonResult.schedule.stage_id) }}</p>
+      <section class="overview">
+        <div class="columns">
+          <div class="column is-6">
+            <schedule-card :schedule="parsedSchedule" :is-compact="true">
+              <div class="inner-schedule-card">
+                <span>Result:</span>
+                <span v-if="salmonResult.fail_reason_id">
+                  <span class="fail">Fail</span>
+                  ({{ translate('fail_reason', salmonResult.fail_reason_id) }} in wave {{ failedWave }})
+                </span>
+                <span v-else class="clear">Clear</span>
+
+                <span>Start:</span>
+                <span>{{ formatDate(salmonResult.start_at) }}</span>
+
+                <span>Hazard level:</span>
+                <hazard-level :hazard-level="salmonResult.danger_rate" />
+              </div>
+            </schedule-card>
+          </div>
+        </div>
+      </section>
 
       <section class="scores">
         <h2>Scores</h2>
@@ -240,6 +241,13 @@ td.main-weapons {
   th.boss-name.total span {
     margin-left: 32px;
   }
+}
+
+.inner-schedule-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  span:nth-child(odd) { text-align: right; }
+  span:nth-child(even) { margin-left: .5em; }
 }
 
 .total-count {
