@@ -92,9 +92,8 @@ th, td {
   }
   @media screen and (max-width: $tablet - 1) {
     &.box { padding: .25em 0; }
-    thead tr {
-      border-bottom: 1px solid darken($background, 7.5%);
-    }
+    thead tr { border-bottom: 1px solid darken($background, 7.5%); }
+    tfoot tr { border-top: 1px solid darken($background, 7.5%); }
   }
 }
 tbody tr:nth-child(odd) {

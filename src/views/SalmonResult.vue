@@ -38,7 +38,7 @@
         </div>
 
         <!-- For tablets, desktop computers -->
-        <div class="is-hidden-mobile table-wrap">
+        <div class="is-hidden-mobile box table-wrap">
           <table class="is-hoverable">
             <thead>
               <tr>
@@ -108,6 +108,8 @@
                   </p>
                 </td>
               </tr>
+            </tbody>
+            <tfoot>
               <tr>
                 <td></td>
                 <td></td>
@@ -126,7 +128,7 @@
                   <span class="power-egg">{{ salmonResult.total_result.power_eggs }}</span>
                 </td>
               </tr>
-            </tbody>
+            </tfoot>
           </table>
         </div>
       </section>
@@ -180,6 +182,8 @@
                       :max="totalBossSpawn(bossId)" />
                   </td>
                 </tr>
+              </tbody>
+              <tfoot>
                 <tr :class="['total', appearedBossIds.every(hasEliminatedEverySpawn) ? 'has-eliminated-every-spawn' : null]">
                   <th class="boss-name total">
                     <span>Total</span>
@@ -200,7 +204,7 @@
                       :max="salmonResult.boss_appearance_count" />
                   </td>
                 </tr>
-              </tbody>
+              </tfoot>
             </table>
           </div>
         </section>
