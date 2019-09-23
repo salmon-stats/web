@@ -3,7 +3,7 @@
     <require-sign-in message="to upload results">
       <div>
         <h1>Get API token</h1>
-        <p><button @click="onClickGenerateApiToken">{{ regenerateToken ? 'Regenerate' : 'Get' }} API token</button></p>
+        <p><button @click="onClickGenerateApiToken" :disabled="isRequestingApiToken || (!regenerateToken && apiToken !== '')">{{ regenerateToken ? 'Regenerate' : 'Get' }} API token</button></p>
         <p>
           <input type="text" :value="apiToken" disabled>
           <button ref="copyToClipboard" :disabled="apiToken === ''">Copy to clipboard</button>
@@ -82,6 +82,7 @@ export default class SalmonResultUploader extends Vue {
   apiToken = '';
   clipboard = null;
   isUploading = false;
+  isRequestingApiToken = false;
   removeListner = null;
   selectedFiles = [];
   uploadLog = [];
@@ -142,13 +143,16 @@ export default class SalmonResultUploader extends Vue {
     this.selectedFiles = [];
   }
   onClickGenerateApiToken(event) {
+    this.isRequestingApiToken = true;
+
     statefulApiClient
       .get('/api-token', {
         params: { regenerate: this.regenerateToken },
       })
       .then((res) => {
         this.apiToken = res.data.api_token;
-      });
+      })
+      .finally(() => { this.isRequestingApiToken = false; });
   }
   uploadResults() {
     let filesProcessed = 0;
