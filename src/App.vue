@@ -51,6 +51,12 @@ h2 {
 
 @media screen and (max-width: $tablet - 1) {
   #app > .body {
+    padding-left: .75em;
+    padding-right: .75em;
+  }
+}
+@media screen and (min-width: $tablet) and (max-width: $desktop - 1) {
+  #app > .body {
     padding-left: 1em;
     padding-right: 1em;
   }
