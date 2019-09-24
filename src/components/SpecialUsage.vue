@@ -1,19 +1,15 @@
 <template>
-  <div>
-    <img :src="iconUrl('special', specialId)">
-    <span v-if="!hideCountIfOne || count !== 1" class="count">{{ count }}</span>
+  <div :style="{ width: `${size}px`, height: `${size}px` }">
+    <img :style="{ width: `${size}px`, height: `${size}px` }" :src="iconUrl('special', specialId)">
+    <span v-if="count !== undefined && (!hideCountIfOne || count !== 1)" class="count">{{ count }}</span>
   </div>
 </template>
 
 <style lang="scss" scoped>
 div {
-  width: 32px;
-  height: 32px;
   position: relative;
 }
 img {
-  width: 32px;
-  height: 32px;
   position: static;
 }
 .count {
@@ -36,6 +32,7 @@ import { iconUrl } from '../helper';
   props: {
     specialId: [Number, String],
     hideCountIfOne: { type: Boolean, default: false },
+    size: { type: Number, default: 32 },
     count: Number,
   },
 })

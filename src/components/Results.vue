@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="this.isPlayerResults" class="field">
+    <div v-if="isPlayerResults" class="field">
       <b-switch v-model="isTeamView">Team</b-switch>
     </div>
 
@@ -11,8 +11,10 @@
             <th></th>
             <th>Date</th>
             <th>Eggs</th>
-            <th>Boss</th>
+            <th v-if="isPlayerResults">Weapons</th>
+            <th :class="isPlayerResults ? 'is-hidden-mobile' : ''">Boss</th>
             <th class="is-hidden-mobile">Members</th>
+            <!-- TODO: show members -->
           </tr>
         </thead>
         <tbody>
@@ -28,6 +30,7 @@
               <p>
                 <small class="weak">
                   <hazard-level v-if="isTeamView" :hazard-level="result.danger_rate" />
+                  <!-- todo: support grades other than profreshional -->
                   <span v-else-if="result.grade_point < 400">-</span>
                   <span v-else>{{ profreshionalGradePoint(result.grade_point) }}</span>
                 </small>
@@ -35,7 +38,8 @@
             </td>
 
             <td>
-              <p>{{ dateFormatter(result.start_at) }}</p>
+              <p class="is-hidden-tablet start-date">{{ dateFormatterShort(result.start_at) }}</p>
+              <p class="is-hidden-mobile start-date">{{ dateFormatter(result.start_at) }}</p>
             </td>
 
             <td class="eggs">
@@ -49,7 +53,28 @@
               </div>
             </td>
 
-            <td>
+            <td v-if="isPlayerResults">
+              <div class="weapons is-hidden-tablet">
+                <template v-if="isTeamView">
+                  <special-usage class="special-weapon" :special-id="result.special_id" :size="32" />
+                </template>
+                <template v-else>
+                  <main-weapon v-for="(weapon, i) in result.weapons" :key="i"
+                    class="main-weapon"
+                    :weapon-id="weapon.weapon_id"
+                    :size="21" />
+                </template>
+              </div>
+              <div class="weapons is-hidden-mobile">
+                <special-usage class="special-weapon" :special-id="result.special_id" :size="32" />
+                <main-weapon v-for="(weapon, i) in result.weapons" :key="i"
+                  class="main-weapon"
+                  :weapon-id="weapon.weapon_id"
+                  :size="24" />
+              </div>
+            </td>
+
+            <td :class="isPlayerResults ? 'is-hidden-mobile' : ''">
               <p>
                 {{ result[bossEliminationKey] }}/{{ result[bossEliminationDividerKey] }}
               </p>
@@ -95,6 +120,8 @@
 </template>
 
 <style lang="scss" scoped>
+@import '@/assets/bulma-variables.scss';
+
 .eggs div {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -109,6 +136,24 @@
 
 .avatar {
   margin-left: .25em;
+}
+
+.start-date {
+  white-space: nowrap;
+}
+
+.weapons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  &.is-hidden-tablet {
+    .special-weapon { flex: 0 1 100%; }
+  }
+
+  .main-weapon {
+    margin-left: .25em;
+  }
 }
 </style>
 

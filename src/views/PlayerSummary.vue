@@ -1,7 +1,9 @@
 <template>
   <require-fetch-template>
-    <div v-if="playerSummary" class="player-summary">
-      <results class="results" :raw-results="playerSummary.results" />
+    <div class="columns">
+      <div v-if="playerSummary" class="column is-8-desktop player-summary">
+        <results class="results" :raw-results="playerSummary.results" />
+      </div>
     </div>
   </require-fetch-template>
 </template>

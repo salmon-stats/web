@@ -3,14 +3,16 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import HazardLevel from '@/components/HazardLevel.vue';
 import PlayerAvatar from '../components/PlayerAvatar.vue';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
-import { formatDateToMdhm } from '@/helper';
+import SpecialUsage from '@/components/SpecialUsage.vue';
+import MainWeapon from '@/components/MainWeapon.vue';
+import { formatDateToMdhm, formatDateInLocalTz } from '@/helper';
 import { playersModule } from '@/store/modules/players';
 import { UserData, User } from '@/types/salmon-stats';
 import { metadataModule } from '@/store/modules/metadata';
 
 @Component({
   name: 'Results',
-  components: { HazardLevel, PlayerAvatar, ProportionalBarChart },
+  components: { HazardLevel, MainWeapon, PlayerAvatar, ProportionalBarChart, SpecialUsage },
 })
 export default class Results extends Vue {
   @Prop({ default: formatDateToMdhm, type: Function })
@@ -47,6 +49,10 @@ export default class Results extends Vue {
   public get results(): any[] {
     return this.resultsWithPagination ? this.resultsWithPagination.data
       : this.rawResults;
+  }
+
+  public dateFormatterShort(date: string): string {
+    return formatDateInLocalTz(date, 'DD HH:mm');
   }
 
   public membersData(ids: string | string[]): UserData[] {
