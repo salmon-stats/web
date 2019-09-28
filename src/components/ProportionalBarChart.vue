@@ -89,4 +89,22 @@ span {
     @include gradientBackground($player-4);
   }
 }
+
+.rescue-death {
+  .chart-body {
+    @include gradientBackground($rescue);
+  }
+  .remainder-filler {
+    @include gradientBackground($death);
+  }
+}
+
+.win-loss {
+  .chart-body {
+    @include gradientBackground($win);
+  }
+  .remainder-filler {
+    @include gradientBackground($loss);
+  }
+}
 </style>

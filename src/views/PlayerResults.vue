@@ -13,7 +13,6 @@ import RequireFetchTemplate from '../components/RequireFetchTemplate.vue';
 import RequireFetchBase from '../components/RequireFetchBase.vue';
 import Results from '../components/Results.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
-// import Pagination from ;
 
 @Component({
   name: 'PlayerResults',
@@ -25,12 +24,6 @@ export default class PlayerResults extends RequireFetchBase {
   }
   get playerId() {
     return this.$route.params.playerId;
-  }
-  get user() {
-    return this.playerResults && this.playerResults.user ? this.playerResults.user : null;
-  }
-  get playerName() {
-    return this.user ? this.user.name : this.playerId;
   }
   get playerResults() {
     return state.data;

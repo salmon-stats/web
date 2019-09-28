@@ -128,10 +128,10 @@ table.is-hoverable tbody tr:hover {
 }
 
 .clear {
-  color: greenyellow;
+  color: $win;
 }
 .fail {
-  color: orange;
+  color: $loss;
 }
 </style>
 
