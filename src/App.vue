@@ -39,6 +39,10 @@ h2 {
   margin-top: 1em;
 }
 
+.is-fullwidth {
+  width: 100%;
+}
+
 .has-title[title] {
   text-decoration: underline;
   text-decoration-style: dotted;

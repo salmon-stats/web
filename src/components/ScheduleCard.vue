@@ -1,6 +1,6 @@
 <template>
   <div :class="['box', isClickable && 'clickable', isCompact && 'is-compact']"
-      @click="$router.push(scheduleSummaryRoute)">
+      @click="$router.push(linkTo ? linkTo : scheduleSummaryRoute)">
     <div>
       <p class="schedule-date">
         <strong>

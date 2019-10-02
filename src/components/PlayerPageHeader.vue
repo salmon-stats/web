@@ -87,7 +87,7 @@
       <router-link :exact="true" :class="$route.name === 'players.results' && 'router-link-active'" :to="`/players/${playerId}/results`">
         Results
       </router-link>
-      <router-link :exact="true" :to="`/players/${playerId}/schedules`">
+      <router-link :to="`/players/${playerId}/schedules`">
         Shifts
       </router-link>
       <router-link :exact="true" :to="`/players/${playerId}/results/latest`">

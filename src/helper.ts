@@ -8,9 +8,12 @@ export const iconUrl = (weaponType: string, id: string | number) => {
 
 /**
  * @param percentage percentage (0-1)
+ * @param digits
  */
-export const percentage = (percentage: number): string => {
-  return (percentage * 100).toFixed(2) + '%';
+export const percentage = (percentage: number, digits: number = 2): string => {
+  if (percentage === 0 || percentage === 1) digits = 0;
+
+  return (percentage * 100).toFixed(digits) + '%';
 };
 
 /**

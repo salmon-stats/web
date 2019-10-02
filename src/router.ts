@@ -4,6 +4,7 @@ import Home from './views/Home.vue';
 import LatestResults from './views/LatestResults.vue';
 import PlayerBase from './views/PlayerBase.vue';
 import PlayerShifts from './views/PlayerShifts.vue';
+import PlayerShiftSummary from './views/PlayerShiftSummary.vue';
 import PlayerSummary from './views/PlayerSummary.vue';
 import PlayerResults from './views/PlayerResults.vue';
 import SalmonResult from './views/SalmonResult.vue';
@@ -57,6 +58,11 @@ export default new Router({
           path: 'schedules',
           name: 'players.schedules',
           component: PlayerShifts,
+        },
+        {
+          path: 'schedules/:scheduleId(\\d{10})',
+          name: 'players.schedules.summary',
+          component: PlayerShiftSummary,
         },
         {
           path: '',
