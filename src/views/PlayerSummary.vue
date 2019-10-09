@@ -22,7 +22,7 @@ import { playersModule } from '@/store/modules/players';
 })
 export default class PlayerSummary extends RequireFetchBase {
   get apiPath() {
-    return `players/${this.$route.params.playerId}`;
+    return `players/${this.playerId}`;
   }
   get playerId() {
     return this.$route.params.playerId;

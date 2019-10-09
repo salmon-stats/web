@@ -9,94 +9,107 @@
         <thead>
           <tr>
             <th></th>
-            <th>Date</th>
+            <th class="is-hidden-mobile">Date</th>
             <th>Eggs</th>
             <th v-if="isPlayerResults">Weapons</th>
-            <th :class="isPlayerResults ? 'is-hidden-mobile' : ''">Boss</th>
-            <th class="is-hidden-mobile">Members</th>
+            <th class="is-hidden-mobile">Boss</th>
+            <th>Members</th>
             <!-- TODO: show members -->
           </tr>
         </thead>
         <tbody>
-          <tr class="clickable" @click="toResultPage(result.id)"
-            v-for="result in results" :key="result.id">
-            <td>
-              <p v-if="result.fail_reason_id">
-                <span class="fail">Fail</span>
-                <span class="is-hidden-mobile"> ({{result.clear_waves}}/3)</span>
-              </p>
-              <p v-else class="clear">Clear</p>
+          <template v-for="result in results">
+            <tr v-if="isInStartDateOrder && shouldShowScheduleHeading(result.schedule_id)" :key="result.schedule_id"
+              class="schedule clickable"
+              @click="$router.push({ name: 'schedules.summary', params: { scheduleId: formatScheduleId(result.schedule_id) } })">
+              <td colspan="100"><strong><schedule :schedule-id="result.schedule_id" /></strong></td>
+            </tr>
 
-              <p>
-                <small class="weak">
-                  <hazard-level v-if="isTeamView" :hazard-level="result.danger_rate" />
-                  <!-- todo: support grades other than profreshional -->
-                  <span v-else-if="result.grade_point < 400">-</span>
-                  <span v-else>{{ profreshionalGradePoint(result.grade_point) }}</span>
-                </small>
-              </p>
-            </td>
+            <tr class="clickable" @click="toResultPage(result.id)"
+              :key="result.id">
+              <td>
+                <p v-if="result.fail_reason_id">
+                  <span class="fail">Fail</span>
+                  <span class="is-hidden-mobile"> ({{result.clear_waves}}/3)</span>
+                </p>
+                <p v-else class="clear">Clear</p>
 
-            <td>
-              <p class="is-hidden-tablet start-date">{{ dateFormatterShort(result.start_at) }}</p>
-              <p class="is-hidden-mobile start-date">{{ dateFormatter(result.start_at) }}</p>
-            </td>
+                <p>
+                  <small class="weak">
+                    <hazard-level v-if="isTeamView" :hazard-level="result.danger_rate" />
+                    <!-- todo: support grades other than profreshional -->
+                    <span v-else-if="result.grade_point < 400">-</span>
+                    <span v-else>{{ profreshionalGradePoint(result.grade_point) }}</span>
+                  </small>
+                </p>
+              </td>
 
-            <td class="eggs">
-              <div v-if="isTeamView">
-                <img src="@/assets/golden-egg.png"><span class="golden-egg">{{ result.golden_egg_delivered }}</span>
-                <img src="@/assets/power-egg.png"><span class="power-egg">{{ result.power_egg_collected }}</span>
-              </div>
-              <div v-else>
-                <img src="@/assets/golden-egg.png"><span class="golden-egg">{{ result.golden_eggs }}</span>
-                <img src="@/assets/power-egg.png"><span class="power-egg">{{ result.power_eggs }}</span>
-              </div>
-            </td>
+              <td class="is-hidden-mobile">
+                <p class="is-hidden-tablet start-date">{{ dateFormatterShort(result.start_at) }}</p>
+                <p class="is-hidden-mobile start-date">{{ dateFormatter(result.start_at) }}</p>
+              </td>
 
-            <td v-if="isPlayerResults">
-              <div class="weapons is-hidden-tablet">
-                <template v-if="isTeamView">
+              <td class="eggs">
+                <div v-if="isTeamView">
+                  <img src="@/assets/golden-egg.png"><span class="golden-egg">{{ result.golden_egg_delivered }}</span>
+                  <img src="@/assets/power-egg.png"><span class="power-egg">{{ result.power_egg_collected }}</span>
+                </div>
+                <div v-else>
+                  <img src="@/assets/golden-egg.png"><span class="golden-egg">{{ result.golden_eggs }}</span>
+                  <img src="@/assets/power-egg.png"><span class="power-egg">{{ result.power_eggs }}</span>
+                </div>
+              </td>
+
+              <td v-if="isPlayerResults">
+                <div class="weapons is-hidden-tablet">
+                  <template v-if="isTeamView">
+                    <special-usage class="special-weapon" :special-id="result.special_id" :size="32" />
+                  </template>
+                  <template v-else>
+                    <main-weapon v-for="(weapon, i) in result.weapons" :key="i"
+                      class="main-weapon"
+                      :weapon-id="weapon.weapon_id"
+                      :size="21" />
+                  </template>
+                </div>
+                <div class="weapons is-hidden-mobile">
                   <special-usage class="special-weapon" :special-id="result.special_id" :size="32" />
-                </template>
-                <template v-else>
                   <main-weapon v-for="(weapon, i) in result.weapons" :key="i"
                     class="main-weapon"
                     :weapon-id="weapon.weapon_id"
-                    :size="21" />
+                    :size="24" />
+                </div>
+              </td>
+
+              <td class="is-hidden-mobile">
+                <p>
+                  {{ result[bossEliminationKey] }}/{{ result[bossEliminationDividerKey] }}
+                </p>
+
+                <p class="proportional-bar-chart-container">
+                  <proportional-bar-chart chart-key="boss-kill"
+                    :fill-remainder="true"
+                    :value="result[bossEliminationKey]" :max="result[bossEliminationDividerKey]" />
+                </p>
+              </td>
+
+              <td class="members">
+                <template v-if="membersData(result.members).length > 0">
+                  <router-link v-for="member in membersData(result.members)" :key="member.playerId"
+                    @click.stop.native
+                    :to="`/players/${member.playerId}`
+                  ">
+                    <span class="is-hidden-mobile">
+                      <player-avatar class="avatar" :size="member.isRegistered ? 32 : 24" :user="member" />
+                    </span>
+                    <span class="is-hidden-tablet">
+                      <player-avatar class="avatar" :size="member.isRegistered ? 24 : 18" :user="member" />
+                    </span>
+                  </router-link>
                 </template>
-              </div>
-              <div class="weapons is-hidden-mobile">
-                <special-usage class="special-weapon" :special-id="result.special_id" :size="32" />
-                <main-weapon v-for="(weapon, i) in result.weapons" :key="i"
-                  class="main-weapon"
-                  :weapon-id="weapon.weapon_id"
-                  :size="24" />
-              </div>
-            </td>
-
-            <td :class="isPlayerResults ? 'is-hidden-mobile' : ''">
-              <p>
-                {{ result[bossEliminationKey] }}/{{ result[bossEliminationDividerKey] }}
-              </p>
-
-              <p class="proportional-bar-chart-container">
-                <proportional-bar-chart chart-key="boss-kill"
-                  :fill-remainder="true"
-                  :value="result[bossEliminationKey]" :max="result[bossEliminationDividerKey]" />
-              </p>
-            </td>
-
-            <td class="members is-hidden-mobile">
-              <template v-if="membersData(result.members).length > 0">
-                <router-link v-for="member in membersData(result.members)" :key="member.playerId"
-                  @click.stop.native
-                  :to="`/players/${member.playerId}`
-                ">
-                  <player-avatar class="avatar" :size="member.isRegistered ? 32 : 24" :user="member" />
-                </router-link>
-              </template>
-            </td>
-         </tr>
+              </td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
@@ -154,6 +167,10 @@
   .main-weapon {
     margin-left: .25em;
   }
+}
+
+.schedule {
+  height: $body-size * $body-line-height * 1.5;
 }
 </style>
 

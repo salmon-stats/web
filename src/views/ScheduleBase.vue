@@ -20,12 +20,11 @@
 import { mapState } from 'vuex';
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { schedulesModule } from '@/store/modules/schedules';
-import Schedule from '@/components/Schedule.vue';
 import ScheduleCard from '@/components/ScheduleCard.vue';
 
 @Component({
   name: 'ScheduleBase',
-  components: { Schedule, ScheduleCard },
+  components: { ScheduleCard },
   computed: {
     ...mapState('schedulesMetadata', {
       schedules: state => state.schedules,

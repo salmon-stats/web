@@ -2,6 +2,7 @@
   <require-fetch-template>
     <div v-if="latestResults">
       <results :results-with-pagination="latestResults"
+        :is-in-start-date-order="false"
         :paginator="paginator" />
     </div>
   </require-fetch-template>
