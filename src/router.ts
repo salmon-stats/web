@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import LatestResults from './views/LatestResults.vue';
 import PlayerBase from './views/PlayerBase.vue';
+import PlayerSearch from './views/PlayerSearch.vue';
 import PlayerShifts from './views/PlayerShifts.vue';
 import PlayerShiftSummary from './views/PlayerShiftSummary.vue';
 import PlayerSummary from './views/PlayerSummary.vue';
@@ -39,6 +40,11 @@ export default new Router({
       path: '/upload',
       name: 'upload',
       component: SalmonResultUploader,
+    },
+    {
+      path: '/players/search',
+      name: 'players.search',
+      component: PlayerSearch,
     },
     {
       path: '/players/:playerId([a-f\\d]{16}|@\\w{1,15})',

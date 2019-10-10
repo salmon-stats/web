@@ -6,6 +6,11 @@ $text: $body-color;
 $text-strong: lighten($body-color, 15%);
 $link-hover: lighten($link, 10%);
 $box-padding: 1rem;
+$label-color: $text-strong;
+$input-color: $text;
+$input-focus-color: lighten($input-color, 10%);
+$input-background-color: $background;
+$input-border-color: lighten($input-background-color, 10%);
 
 // These values are same as Bulma's default, however,
 // we need here in order not to load entire Bulma files for these values.

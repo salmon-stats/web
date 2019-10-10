@@ -26,6 +26,9 @@
         <div class="use-marker navbar-item">
           <router-link to="/schedules" :class="$route.name === 'schedules' && 'router-link-active'" exact>Schedules</router-link>
         </div>
+        <div class="use-marker navbar-item">
+          <router-link to="/players/search" :class="$route.name === 'players.search' && 'router-link-active'" exact>Search</router-link>
+        </div>
       </div>
       <div class="navbar-end">
         <template v-if="user">
