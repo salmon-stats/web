@@ -2,6 +2,7 @@
   <require-fetch-template>
     <div v-if="scheduleResults">
       <results :results-with-pagination="scheduleResults"
+        :hide-schedule-heading="true"
         :paginator="paginator" />
     </div>
   </require-fetch-template>

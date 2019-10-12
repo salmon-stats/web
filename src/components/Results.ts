@@ -111,6 +111,22 @@ export default class Results extends Vue {
       gradePoint - profreshionalMinGradePoint : null;
   }
 
+  public scheduleRouter(scheduleId: string) {
+    const isPlayerPage = this.$route.name!.indexOf('players.') !== -1;
+    const params: any = {
+      scheduleId: formatScheduleId(scheduleId),
+    };
+
+    if (isPlayerPage) {
+      params.playerId = this.$route.params.playerId;
+    }
+
+    return {
+      name:  isPlayerPage ? 'players.schedules.summary' : 'schedules.summary',
+      params,
+    };
+  }
+
   public shouldShowScheduleHeading(scheduleId: string) {
     // This is not good because v-if condition shouldn't have side-effects
 
