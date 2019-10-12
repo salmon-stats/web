@@ -29,6 +29,7 @@ export default class PlayerBase extends Vue {
     return {
       'players.schedules': 'Shifts',
       'players.schedules.summary': 'Shift summary',
+      'players.schedules.results': 'Shift results',
       'players.summary': 'Overview',
       'players.results': 'Results',
       'players.results.latest': 'Latest result',

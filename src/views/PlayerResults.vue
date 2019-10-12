@@ -20,6 +20,10 @@ import { requireFetchComponentModule as state } from '@/store/modules/require-fe
 })
 export default class PlayerResults extends RequireFetchBase {
   get apiPath() {
+    if (this.$route.params.scheduleId) {
+      return `players/${this.playerId}/schedules/${this.$route.params.scheduleId}/results?page=${this.$route.query.page || 1}`;
+    }
+
     return `players/${this.playerId}/results?page=${this.$route.query.page || 1}`;
   }
   get playerId() {

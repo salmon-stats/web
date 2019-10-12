@@ -71,6 +71,11 @@ export default new Router({
           component: PlayerShiftSummary,
         },
         {
+          path: 'schedules/:scheduleId(\\d{10})/results',
+          name: 'players.schedules.results',
+          component: PlayerResults,
+        },
+        {
           path: '',
           name: 'players.summary',
           component: PlayerSummary,

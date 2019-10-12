@@ -2,48 +2,50 @@
   <require-fetch-template>
     <schedule-card v-if="schedule" :schedule="schedule" />
 
-    <div v-if="shiftSummary" class="columns reverse-row-order">
-      <div class="column is-9">
-        <shift-details
-          :is-detail="true"
-          :normalize-failed-game="normalizeFailedGame"
-          :player-name="player && player.name"
-          :shift-summaries="[{
-            isGlobal: false,
-            ...summary,
-            rescue: summary.player_rescue,
-            death: summary.player_death,
-          },
-          {
-            isGlobal: true,
-            ...shiftSummary.global,
-            rescue: shiftSummary.global.rescue,
-          }]"
-        />
+    <template v-if="shiftSummary">
+      <div class="columns reverse-row-order">
+        <div class="column is-9">
+          <shift-details
+            :is-detail="true"
+            :normalize-failed-game="normalizeFailedGame"
+            :player-name="player && player.name"
+            :shift-summaries="[{
+              isGlobal: false,
+              ...summary,
+              rescue: summary.player_rescue,
+              death: summary.player_death,
+            },
+            {
+              isGlobal: true,
+              ...shiftSummary.global,
+              rescue: shiftSummary.global.rescue,
+            }]"
+          />
+        </div>
+
+        <section class="column is-3">
+          <h2>Main weapons</h2>
+          <div class="table-wrap box is-fullwidth">
+            <table class="is-hoverable is-fullwidth">
+              <tbody>
+                <tr v-for="weapon in shiftSummary.weapons" :key="weapon.weapon_id">
+                  <td><main-weapon :weapon-id="weapon.weapon_id" :size="32" /></td>
+                  <td>{{ weapon.count }} <small class="weak">({{ weapon.count / (summary.clear_waves + summary.games - summary.clear_games) | percentage }})</small></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
       </div>
 
-      <section class="column is-3">
-        <h2>Main weapons</h2>
-        <div class="table-wrap box is-fullwidth">
-          <table class="is-hoverable is-fullwidth">
-            <tbody>
-              <tr v-for="weapon in shiftSummary.weapons" :key="weapon.weapon_id">
-                <td><main-weapon :weapon-id="weapon.weapon_id" :size="32" /></td>
-                <td>{{ weapon.count }} <small class="weak">({{ weapon.count / (summary.clear_waves + summary.games - summary.clear_games) | percentage }})</small></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <section>
+        <h2>Results</h2>
+        <results
+          :hide-schedule-heading="true"
+          :raw-results="shiftSummary.results"
+          :show-more-link="showMoreLink" />
       </section>
-    </div>
-
-    <section>
-      <h2>Results</h2>
-      <results
-        :hide-schedule-heading="true"
-        :raw-results="shiftSummary.results"
-        :show-more-link="showMoreLink" />
-    </section>
+    </template>
   </require-fetch-template>
 </template>
 
