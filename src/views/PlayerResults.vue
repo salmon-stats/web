@@ -35,7 +35,7 @@ export default class PlayerResults extends RequireFetchBase {
 
   paginator(toPage) {
     return {
-      name: 'players.results',
+      name: this.$route.name,
       params: { playerId: this.playerId },
       query: { page: toPage },
     };

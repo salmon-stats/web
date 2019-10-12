@@ -62,7 +62,7 @@ export default class Schedules extends RequireFetchBase {
 
   paginator(toPage) {
     return {
-      name: 'schedules',
+      name: this.$route.name,
       query: { page: toPage },
     };
   }

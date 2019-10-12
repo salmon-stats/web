@@ -70,7 +70,7 @@ export default class PlayerShifts extends RequireFetchBase {
 
   paginator(toPage) {
     return {
-      name: 'players.schedules',
+      name: this.$route.name,
       params: { playerId: this.playerId },
       query: { page: toPage },
     };

@@ -29,7 +29,7 @@ export default class LatestResults extends RequireFetchBase {
 
   paginator(toPage) {
     return {
-      name: 'results',
+      name: this.$route.name,
       query: { page: toPage },
     };
   }
