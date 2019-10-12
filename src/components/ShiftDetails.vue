@@ -160,6 +160,8 @@
 
 h2 {
   margin-left: 1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
 
