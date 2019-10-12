@@ -19,7 +19,7 @@
         </thead>
         <tbody>
           <template v-for="result in results">
-            <tr v-if="isInStartDateOrder && shouldShowScheduleHeading(result.schedule_id)" :key="result.schedule_id"
+            <tr v-if="!hideScheduleHeading && isInStartDateOrder && shouldShowScheduleHeading(result.schedule_id)" :key="result.schedule_id"
               class="schedule clickable"
               @click="$router.push({ name: 'schedules.summary', params: { scheduleId: formatScheduleId(result.schedule_id) } })">
               <td colspan="100"><strong><schedule :schedule-id="result.schedule_id" /></strong></td>

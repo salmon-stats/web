@@ -34,6 +34,9 @@ export default class Results extends Vue {
   @Prop({ default: true })
   isInStartDateOrder!: boolean;
 
+  @Prop({ default: false })
+  hideScheduleHeading!: boolean;
+
   private playersMetadata: Map<string, UserData> = new Map();
   private scheduleIdHeadings = new Set<String>();
   public currentPage = 1;

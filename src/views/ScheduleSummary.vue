@@ -4,7 +4,10 @@
       <div v-if="records">
 
         <h2>Results</h2>
-        <results :raw-results="results" :show-more-link="showMoreLink" />
+        <results
+          :hide-schedule-heading="true"
+          :raw-results="results"
+          :show-more-link="showMoreLink" />
 
         <b-tabs v-model="activeTabIndex">
           <b-tab-item label="Golden Eggs" />

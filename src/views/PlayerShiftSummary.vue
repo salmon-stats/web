@@ -36,6 +36,14 @@
         </div>
       </section>
     </div>
+
+    <section>
+      <h2>Results</h2>
+      <results
+        :hide-schedule-heading="true"
+        :raw-results="shiftSummary.results"
+        :show-more-link="showMoreLink" />
+    </section>
   </require-fetch-template>
 </template>
 
@@ -50,6 +58,7 @@ import MainWeapon from '@/components/MainWeapon';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import RequireFetchTemplate from '../components/RequireFetchTemplate.vue';
 import RequireFetchBase from '../components/RequireFetchBase.vue';
+import Results from '../components/Results.vue';
 import ScheduleCard from '@/components/ScheduleCard';
 import ShiftDetails from '@/components/ShiftDetails';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
@@ -59,7 +68,7 @@ import { parseRawSchedule, percentage, toFixed } from '@/helper';
 
 @Component({
   name: 'PlayerShifts',
-  components: { MainWeapon, ProportionalBarChart, RequireFetchTemplate, ScheduleCard, ShiftDetails },
+  components: { MainWeapon, ProportionalBarChart, RequireFetchTemplate, ScheduleCard, ShiftDetails, Results },
   filters: { percentage, toFixed },
 })
 export default class PlayerShifts extends RequireFetchBase {
@@ -78,6 +87,12 @@ export default class PlayerShifts extends RequireFetchBase {
   }
   get shiftSummary() {
     return state.data;
+  }
+  get showMoreLink() {
+    return {
+      name: 'players.schedules.results',
+      params: { scheduleId: this.scheduleId },
+    };
   }
   get summary() {
     const summary = state.data.summary;
