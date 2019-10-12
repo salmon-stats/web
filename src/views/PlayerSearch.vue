@@ -8,6 +8,7 @@
         type="search"
         :maxlength="maxLength"
         :disabled="isSearching"
+        @keypress.enter.native="search"
         />
       <p class="control">
         <b-button @click="search" :disabled="isSearching" class="button is-primary">Search</b-button>
