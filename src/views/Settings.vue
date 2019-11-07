@@ -4,7 +4,7 @@
       <div>
         <h1>API token</h1>
         <b-field>
-          <b-button class="is-primary" @click="onClickGenerateApiToken" :disabled="isRequestingApiToken || (!regenerateToken && apiToken !== '')">
+          <b-button class="is-primary" @click="onClickGenerateApiToken" :disabled="isRequesting || (!regenerateToken && apiToken !== '')">
             {{ regenerateToken ? 'Regenerate' : 'Get' }} API token
           </b-button>
         </b-field>
@@ -18,6 +18,29 @@
         <p v-if="regenerateToken">
           Note: Existing API token will be invalidated.
         </p>
+      </div>
+
+      <div>
+        <h1>Privacy</h1>
+        <b-field
+          horizontal
+          label="Display Name"
+          message="If you leave this field blank, your Twitter screen name will be used."
+        >
+          <b-input
+            type="text"
+            custom-class="is-small"
+            maxlength="10"
+            style="width: 10em"
+            v-model="displayName"
+          />
+        </b-field>
+        <b-field label="Avatar" horizontal>
+          <b-checkbox v-model="useTwitterAvatar">Use Twitter avatar</b-checkbox>
+        </b-field>
+        <b-field horizontal>
+          <b-button class="is-primary" @click="onClickUpdatePrivacySettings" :disabled="isRequesting">Update privacy settings</b-button>
+        </b-field>
       </div>
 
       <div v-if="isBrowserUploadEnabled">
@@ -93,11 +116,13 @@ import RequireSignIn from '../components/RequireSignIn.vue';
 export default class SalmonResultUploader extends Vue {
   apiToken = '';
   clipboard = null;
+  displayName = '';
   isUploading = false;
-  isRequestingApiToken = false;
+  isRequesting = false;
   removeListner = null;
   selectedFiles = [];
   uploadLog = [];
+  useTwitterAvatar = true;
   regenerateToken = false;
 
   get isBrowserUploadEnabled() {
@@ -105,6 +130,14 @@ export default class SalmonResultUploader extends Vue {
   }
 
   onAuthenticated() {
+    if (metadata.user.is_custom_name) {
+      this.displayName = metadata.user.name;
+    }
+
+    if (!metadata.user.twitter_avatar) {
+      this.useTwitterAvatar = false;
+    }
+
     if (this.clipboard === null && this.$refs.copyToClipboard !== undefined) {
       this.clipboard = new Clipboard(this.$refs.copyToClipboard, {
         text: (trigger) => this.apiToken,
@@ -155,7 +188,7 @@ export default class SalmonResultUploader extends Vue {
     this.selectedFiles = [];
   }
   onClickGenerateApiToken(event) {
-    this.isRequestingApiToken = true;
+    this.isRequesting = true;
 
     statefulApiClient
       .get('/api-token', {
@@ -164,8 +197,22 @@ export default class SalmonResultUploader extends Vue {
       .then((res) => {
         this.apiToken = res.data.api_token;
       })
-      .finally(() => { this.isRequestingApiToken = false; });
+      .finally(() => { this.isRequesting = false; });
   }
+  onClickUpdatePrivacySettings() {
+    this.isRequesting = true;
+
+    statefulApiClient
+      .post('/settings/privacy', {
+        display_name: this.displayName,
+        show_twitter_avatar: this.useTwitterAvatar,
+      })
+      .then((res) => {
+        metadata.SET_USER_METADATA(res.data);
+      })
+      .finally(() => { this.isRequesting = false; });
+  }
+
   uploadResults() {
     let filesProcessed = 0;
     const payload = { results: [] };

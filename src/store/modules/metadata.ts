@@ -63,7 +63,7 @@ class Metadata extends VuexModule implements IMetadata {
   }
 
   @Mutation
-  private SET_USER_METADATA(user: null | User) {
+  public SET_USER_METADATA(user: null | User) {
     this.user = user;
   }
 
