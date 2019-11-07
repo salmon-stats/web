@@ -33,7 +33,7 @@
       <div class="navbar-end">
         <template v-if="user">
           <div class="use-marker navbar-item is-hidden-touch">
-            <router-link to="/upload">Upload</router-link>
+            <router-link to="/settings">Settings</router-link>
           </div>
 
           <div class="navbar-item my-profile is-hidden-touch">

@@ -9,11 +9,11 @@ import PlayerShiftSummary from './views/PlayerShiftSummary.vue';
 import PlayerSummary from './views/PlayerSummary.vue';
 import PlayerResults from './views/PlayerResults.vue';
 import SalmonResult from './views/SalmonResult.vue';
-import SalmonResultUploader from './views/SalmonResultUploader.vue';
 import Schedules from './views/Schedules.vue';
 import ScheduleBase from './views/ScheduleBase.vue';
 import ScheduleSummary from './views/ScheduleSummary.vue';
 import ScheduleResults from './views/ScheduleResults.vue';
+import Settings from './views/Settings.vue';
 
 Vue.use(Router);
 
@@ -38,8 +38,12 @@ export default new Router({
     },
     {
       path: '/upload',
-      name: 'upload',
-      component: SalmonResultUploader,
+      redirect: 'settings',
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: Settings,
     },
     {
       path: '/players/search',
