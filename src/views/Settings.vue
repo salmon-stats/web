@@ -2,13 +2,19 @@
   <div class="salmon-result-uploader">
     <require-sign-in message="to upload results">
       <div>
-        <h1>Get API token</h1>
-        <p><button @click="onClickGenerateApiToken" :disabled="isRequestingApiToken || (!regenerateToken && apiToken !== '')">{{ regenerateToken ? 'Regenerate' : 'Get' }} API token</button></p>
-        <p>
-          <input type="text" :value="apiToken" disabled>
-          <button ref="copyToClipboard" :disabled="apiToken === ''">Copy to clipboard</button>
-          <p><label><input type="checkbox" v-model="regenerateToken" :value="true">Regenerate API token</label></p>
-        </p>
+        <h1>API token</h1>
+        <b-field>
+          <b-button class="is-primary" @click="onClickGenerateApiToken" :disabled="isRequestingApiToken || (!regenerateToken && apiToken !== '')">
+            {{ regenerateToken ? 'Regenerate' : 'Get' }} API token
+          </b-button>
+        </b-field>
+        <b-field>
+          <b-input custom-class="is-small" type="text" :value="apiToken" disabled />
+          <button class="button is-success is-small" ref="copyToClipboard" :disabled="apiToken === ''">Copy to clipboard</button>
+        </b-field>
+        <div>
+          <b-checkbox v-model="regenerateToken" :value="true">Regenerate API token</b-checkbox>
+        </div>
         <p v-if="regenerateToken">
           Note: Existing API token will be invalidated.
         </p>
@@ -52,6 +58,12 @@
 </template>
 
 <style scoped>
+h1 {
+  font-size: 120%;
+  margin-top: 1em;
+  margin-bottom: .5em;
+}
+
 #file-selector {
   display: none;
 }
