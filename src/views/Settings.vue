@@ -41,6 +41,7 @@
         <b-field horizontal>
           <b-button class="is-primary" @click="onClickUpdatePrivacySettings" :disabled="isRequesting">Update privacy settings</b-button>
         </b-field>
+        <p>Your Twitter profile is <strong>{{ isTwitterProfilePublic ? 'Public' : 'Private' }}</strong>.</p>
       </div>
 
       <div v-if="isBrowserUploadEnabled">
@@ -127,6 +128,9 @@ export default class SalmonResultUploader extends Vue {
 
   get isBrowserUploadEnabled() {
     return IS_BROWSER_UPLOAD_ENABLED;
+  }
+  get isTwitterProfilePublic() {
+    return this.displayName === '' && this.useTwitterAvatar;
   }
 
   onAuthenticated() {

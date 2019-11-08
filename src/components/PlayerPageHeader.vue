@@ -220,7 +220,7 @@ export default class PlayerPageHeader extends Vue {
     return this.user.results.clear + this.user.results.fail;
   }
   get twitterProfileUrl() {
-    if (!this.user || !this.user.isRegistered) return null;
+    if (!this.user || !this.user.isRegistered || this.user.isCustomName || !this.user.avatar) return null;
 
     return `https://twitter.com/${this.user.name}`;
   }
