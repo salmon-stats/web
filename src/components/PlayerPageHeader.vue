@@ -8,7 +8,7 @@
           <div>
             <h1>
               <a>
-                {{ user.isRegistered ? `@${user.name}` : user.name }}
+                {{ user.isRegistered && !user.isCustomName ? `@${user.name}` : user.name }}
               </a>
             </h1>
             <p>{{ title }}</p>

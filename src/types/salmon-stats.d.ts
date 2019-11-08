@@ -13,6 +13,7 @@ export interface Schedule {
 
 export interface UserData {
   isRegistered: boolean;
+  isCustomName: boolean;
   playerId: string;
   name: string;
   avatar?: string;

@@ -84,6 +84,7 @@ export const parseRawSchedule = (rawSchedule: any): Schedule => {
 export const parseRawUserData = (rawUser: any): UserData => {
   return {
     isRegistered: !!(rawUser.is_registered || rawUser.created_at),
+    isCustomName: !!rawUser.is_custom_name,
     playerId: rawUser.player_id,
     name: rawUser.name,
     avatar: rawUser.twitter_avatar,
