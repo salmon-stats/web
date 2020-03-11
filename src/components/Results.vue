@@ -5,6 +5,10 @@
     </div>
 
     <div class="table-wrap is-fullwidth">
+      <results-filter-controller>
+        <results-filter :value.sync="filters" />
+      </results-filter-controller>
+
       <table class="is-hoverable is-fullwidth">
         <thead>
           <tr>

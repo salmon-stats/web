@@ -96,15 +96,16 @@ interface JobResult {
   is_clear?: boolean; // optional: same as !!failure_wave
 }
 
+export type EventKey = 'cohock-charge' |
+  'fog' |
+  'griller' |
+  'rush' |
+  'the-mothership' |
+  'goldie-seeking' |
+  'water-levels';
+
 interface EventType {
-  key:
-    'cohock-charge' |
-    'fog' |
-    'griller' |
-    'rush' |
-    'the-mothership' |
-    'goldie-seeking' |
-    'water-levels';
+  key: EventKey;
   name?: string; // optional: unnecessary
 }
 
