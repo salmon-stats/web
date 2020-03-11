@@ -3,12 +3,14 @@ import axios, { AxiosRequestConfig } from 'axios';
 // @ts-ignore
 export const apiBaseUrl = VUE_APP_API_URL;
 
-export const createApiClient = (options = {}) => {
-  const client = axios.create({
+export const createApiClient = (options: AxiosRequestConfig = {}) => {
+  const conf: AxiosRequestConfig = {
     baseURL: apiBaseUrl,
     responseType: 'json',
     ...options,
-  });
+  };
+
+  const client = axios.create(conf);
 
   // @ts-ignore
   if (ENV === 'development') {
@@ -21,9 +23,12 @@ export const createApiClient = (options = {}) => {
   return client;
 }
 
-export const statefulApiClient = createApiClient({
+export const createStatefulApiClient = (options: AxiosRequestConfig = {}) => createApiClient({
+  ...options,
   withCredentials: true,
 });
+
+export const statefulApiClient = createStatefulApiClient();
 
 export default createApiClient({
   baseURL: `${apiBaseUrl}/api`,
