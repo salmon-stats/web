@@ -41,6 +41,10 @@ export default class ResultsFilterController extends Vue {
 
   private toggleVisibility(): void {
     this.isFilterVisible = !this.isFilterVisible;
+
+    if (!this.isFilterVisible) {
+      this.$emit('close');
+    }
   }
 }
 </script>

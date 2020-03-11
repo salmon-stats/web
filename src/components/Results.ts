@@ -39,6 +39,7 @@ export default class Results extends Vue {
   @Prop({ default: false })
   hideScheduleHeading!: boolean;
 
+  private createResultFilter = createResultFilter;
   private filters: ResultsFilter = createResultFilter();
   private playersMetadata: Map<string, UserData> = new Map();
   private scheduleIdHeadings = new Set<String>();
