@@ -1,0 +1,46 @@
+@import './variables.scss';
+
+$widescreen-enabled: false;
+$fullhd-enabled: false;
+$text: $body-color;
+$text-strong: lighten($text, 15%);
+$link-hover: lighten($link, 10%);
+$box-padding: 1rem;
+$label-color: $text-strong;
+$input-color: $text;
+$input-focus-color: lighten($input-color, 10%);
+$input-hover-color: lighten($text, 7.5%);
+$input-background-color: $background;
+$input-border-color: lighten($input-background-color, 10%);
+
+// These values are same as Bulma's default, however,
+// we need here in order not to load entire Bulma files for these values.
+$body-size: 16px;
+$body-line-height: 1.5;
+$gap: 32px;
+$tablet: 769px;
+$desktop: 960px + 2 * $gap;
+$box-color: lighten($text, 5%);
+$box-accent-color: lighten($text, 15%);
+$box-background-color: darken($background, 5%);
+$column-gap: .75rem;
+
+// Form
+$primary: $link;
+
+// Navbar
+$navbar-height: 2.5rem;
+$navbar-background-color: darken($body-background-color, 5%); // Note this color is also used at `<meta name="theme-color">`
+$navbar-item-color: white;
+$navbar-item-hover-color: $navbar-item-color;
+$navbar-item-hover-background-color: $navbar-background-color;
+$navbar-item-active-color: white;
+$navbar-item-img-max-height: initial;
+$navbar-item-active-background-color: $navbar-item-hover-background-color; // lighten($navbar-background-color, 5%);
+
+$navbar-dropdown-radius: 0;
+$navbar-dropdown-background-color: lighten($navbar-background-color, 5%);
+$navbar-dropdown-item-hover-color: $navbar-item-hover-color;
+$navbar-dropdown-item-hover-background-color: lighten($navbar-dropdown-background-color, 10%);
+$navbar-dropdown-item-active-color: $navbar-item-active-color;
+$navbar-dropdown-item-active-background-color: $navbar-dropdown-item-hover-background-color;
