@@ -6,7 +6,7 @@ import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import Schedule from '@/components/Schedule.vue';
 import SpecialUsage from '@/components/SpecialUsage.vue';
 import MainWeapon from '@/components/MainWeapon.vue';
-import ResultsFilterComponent, { createResultFilter } from '@/components/ResultsFilter.vue';
+import ResultsFilterComponent, { createResultFilter, filterToRequestParams } from '@/components/ResultsFilter.vue';
 import ResultsFilterController from '@/components/ResultsFilterController.vue';
 import { formatDateToMdhm, formatDateInLocalTz, formatScheduleId } from '@/helper';
 import { playersModule } from '@/store/modules/players';
@@ -22,7 +22,7 @@ export default class Results extends Vue {
   dateFormatter!: Function;
 
   @Prop()
-  paginator?: (toPage: number) => Object;
+  paginator?: (toPage: number, filters?: Object) => Object;
 
   @Prop({ default: '' })
   showMoreLink!: string;
@@ -126,9 +126,19 @@ export default class Results extends Vue {
     }
 
     return {
-      name:  isPlayerPage ? 'players.schedules.summary' : 'schedules.summary',
+      name: isPlayerPage ? 'players.schedules.summary' : 'schedules.summary',
       params,
     };
+  }
+
+  public search() {
+    if (!this.paginator) return;
+
+    const filters = filterToRequestParams(this.filters);
+
+    this.$router.push(
+      this.paginator(1, filters),
+    );
   }
 
   public shouldShowScheduleHeading(scheduleId: string) {

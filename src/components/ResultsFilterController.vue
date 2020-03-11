@@ -5,7 +5,7 @@
 
       <div class="is-open has-text-centered">
         <button class="button to-close" @click="toggleVisibility">{{ isFilterVisible ? 'Close' : 'Open' }} filters</button>
-        <button class="button is-success">Search with filters</button>
+        <button class="button is-success" @click="$emit('search')">Search with filters</button>
       </div>
     </template>
     <div v-else class="visibility-button to-open has-text-centered">

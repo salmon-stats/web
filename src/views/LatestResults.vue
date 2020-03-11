@@ -10,10 +10,28 @@
 
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import RequireFetchTemplate from '../components/RequireFetchTemplate.vue';
-import RequireFetchBase from '../components/RequireFetchBase.vue';
-import Results from '../components/Results.vue';
+import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
+import RequireFetchBase from '@/components/RequireFetchBase.vue';
+import Results from '@/components/Results.vue';
+import { mapQueryParamsToApiPath } from '@/helper';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
+
+const paginatorWithFilters = (route, page, filters) => {
+  const toRoute = {
+    name: route.name,
+    query: {
+      page,
+    },
+  };
+
+  if (filters) {
+    toRoute.query.filters = JSON.stringify(filters);
+  } else if (route.query.filters) {
+    toRoute.query.filters = route.query.filters;
+  }
+
+  return toRoute;
+};
 
 @Component({
   name: 'LatestResults',
@@ -21,17 +39,14 @@ import { requireFetchComponentModule as state } from '@/store/modules/require-fe
 })
 export default class LatestResults extends RequireFetchBase {
   get apiPath() {
-    return `results?page=${this.$route.query.page || 1}`;
+    return mapQueryParamsToApiPath('results', this.$route.query);
   }
   get latestResults() {
     return state.data;
   }
 
-  paginator(toPage) {
-    return {
-      name: this.$route.name,
-      query: { page: toPage },
-    };
+  paginator(...args) {
+    return paginatorWithFilters(this.$route, ...args);
   }
 
   mounted() {

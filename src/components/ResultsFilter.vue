@@ -19,7 +19,7 @@
       <div class="column is-4">
         <form-field label="Min">
           <div class="control">
-            <input v-model.number="filter.golden_egg.min" type="number" min="0" step="1" class="input">
+            <input v-model.number="filter.golden_egg.min" type="number" min="0" :max="filter.golden_egg.max" step="1" class="input">
           </div>
         </form-field>
       </div>
@@ -27,7 +27,26 @@
       <div class="column is-4">
         <form-field label="Max">
           <div class="control">
-            <input v-model.number="filter.golden_egg.max" type="number" min="0" step="1" class="input">
+            <input v-model.number="filter.golden_egg.max" type="number" :min="filter.golden_egg.min || 0" step="1" class="input">
+          </div>
+        </form-field>
+      </div>
+    </div>
+
+    <h2><img src="@/assets/power-egg.png">Power eggs</h2>
+    <div class="columns">
+      <div class="column is-4">
+        <form-field label="Min">
+          <div class="control">
+            <input v-model.number="filter.power_egg.min" type="number" min="0" :max="filter.power_egg.max" step="1" class="input">
+          </div>
+        </form-field>
+      </div>
+
+      <div class="column is-4">
+        <form-field label="Max">
+          <div class="control">
+            <input v-model.number="filter.power_egg.max" type="number" :min="filter.power_egg.min || 0" step="1" class="input">
           </div>
         </form-field>
       </div>
@@ -56,6 +75,36 @@ export const createResultFilter = (): ResultsFilter => ({
   events: [],
   weapons: [],
 });
+
+export const filterToRequestParams = (filters: ResultsFilter) => {
+  const params = {
+    min_golden_egg: filters.golden_egg.min,
+    max_golden_egg: filters.golden_egg.max,
+    min_power_egg: filters.power_egg.min,
+    max_power_egg: filters.power_egg.max,
+    events: filters.events,
+    weapons: filters.weapons,
+    is_cleared: filters.is_cleared,
+    special: filters.special,
+  };
+
+  type RequestParamKey = keyof typeof params;
+
+  (Object.keys(params) as RequestParamKey[])
+    // Filters keys to remove
+    .filter((key) => {
+      if (params[key] === undefined || params[key] === null) {
+        return true;
+      } else if (Array.isArray(params[key])) {
+        return (params[key] as any[]).length === 0;
+      }
+
+      return false;
+    })
+    .forEach((key) => delete params[key]);
+
+  return Object.keys(params).length === 0 ? undefined : params;
+};
 
 @Component({
   name: 'results-filter',

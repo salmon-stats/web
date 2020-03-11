@@ -5,7 +5,7 @@
     </div>
 
     <div class="table-wrap is-fullwidth">
-      <results-filter-controller @close="filters = createResultFilter()">
+      <results-filter-controller @close="filters = createResultFilter()" @search="search">
         <results-filter :value.sync="filters" />
       </results-filter-controller>
 
