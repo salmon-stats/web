@@ -106,6 +106,24 @@ export const filterToRequestParams = (filters: ResultsFilter) => {
   return Object.keys(params).length === 0 ? undefined : params;
 };
 
+export const restoreFilters = (serialziedFilters: string): ResultsFilter => {
+  const defaultFilter = createResultFilter();
+
+  try {
+    const filter = JSON.parse(serialziedFilters);
+
+    defaultFilter.is_cleared = typeof filter.is_cleared === 'boolean' ? filter.is_cleared : defaultFilter.is_cleared;
+    defaultFilter.golden_egg.min = filter.min_golden_egg || defaultFilter.golden_egg.min;
+    defaultFilter.golden_egg.max = filter.max_golden_egg || defaultFilter.golden_egg.max;
+    defaultFilter.power_egg.min = filter.min_power_egg || defaultFilter.power_egg.min;
+    defaultFilter.power_egg.max = filter.max_power_egg || defaultFilter.power_egg.max;
+
+    return defaultFilter;
+  } catch (_) {
+    return defaultFilter;
+  }
+};
+
 @Component({
   name: 'results-filter',
   components: { FormField },

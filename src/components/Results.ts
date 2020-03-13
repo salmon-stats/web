@@ -6,7 +6,7 @@ import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import Schedule from '@/components/Schedule.vue';
 import SpecialUsage from '@/components/SpecialUsage.vue';
 import MainWeapon from '@/components/MainWeapon.vue';
-import ResultsFilterComponent, { createResultFilter, filterToRequestParams } from '@/components/ResultsFilter.vue';
+import ResultsFilterComponent, { createResultFilter, filterToRequestParams, restoreFilters } from '@/components/ResultsFilter.vue';
 import ResultsFilterController from '@/components/ResultsFilterController.vue';
 import { formatDateToMdhm, formatDateInLocalTz, formatScheduleId } from '@/helper';
 import { playersModule } from '@/store/modules/players';
@@ -39,8 +39,8 @@ export default class Results extends Vue {
   @Prop({ default: false })
   hideScheduleHeading!: boolean;
 
-  private createResultFilter = createResultFilter;
   private filters: ResultsFilter = createResultFilter();
+  private createResultFilter = createResultFilter;
   private playersMetadata: Map<string, UserData> = new Map();
   private scheduleIdHeadings = new Set<String>();
   private currentPage = 1;
@@ -158,6 +158,7 @@ export default class Results extends Vue {
 
   public mounted() {
     this.currentPage = parseInt(this.$route.query.page as string, 10) || 1;
+    this.filters = restoreFilters(this.$route.query.filters as string);
 
     const members = this.results
       .flatMap((result) => {
