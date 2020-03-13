@@ -10,10 +10,12 @@
 
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import RequireFetchTemplate from '../components/RequireFetchTemplate.vue';
-import RequireFetchBase from '../components/RequireFetchBase.vue';
-import Results from '../components/Results.vue';
+import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
+import RequireFetchBase from '@/components/RequireFetchBase.vue';
+import Results from '@/components/Results.vue';
+import { paginatorWithFilters } from '@/components/ResultsFilter.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
+import { mapQueryParamsToApiPath } from '@/helper';
 
 @Component({
   name: 'ScheduleResults',
@@ -24,7 +26,7 @@ export default class ScheduleResults extends RequireFetchBase {
     return this.$route.params.scheduleId;
   }
   get apiPath() {
-    return `schedules/${this.scheduleId}/results?page=${this.$route.query.page || 1}`;
+    return mapQueryParamsToApiPath(`schedules/${this.scheduleId}/results`, this.$route.query);
   }
   get scheduleResults() {
     if (!state.data || !('results' in state.data)) return;
@@ -32,11 +34,8 @@ export default class ScheduleResults extends RequireFetchBase {
     return state.data.results;
   }
 
-  paginator(toPage) {
-    return {
-      name: this.$route.name,
-      query: { page: toPage },
-    };
+  paginator(...args) {
+    return paginatorWithFilters(this.$route, ...args);
   }
 
   mounted() {
