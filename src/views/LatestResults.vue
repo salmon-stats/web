@@ -10,29 +10,12 @@
 
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
+import { mapQueryParamsToApiPath } from '@/helper';
+import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import Results from '@/components/Results.vue';
-import { mapQueryParamsToApiPath } from '@/helper';
-import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
-
-const paginatorWithFilters = (route, page, filters) => {
-  const toRoute = {
-    name: route.name,
-    query: {
-      page,
-    },
-  };
-
-  if (filters) {
-    toRoute.query.filters = JSON.stringify(filters);
-  } else if (filters !== null && route.query.filters) {
-    // null filter means reset.
-    toRoute.query.filters = route.query.filters;
-  }
-
-  return toRoute;
-};
+import { paginatorWithFilters } from '@/components/ResultsFilter.vue'
 
 @Component({
   name: 'LatestResults',

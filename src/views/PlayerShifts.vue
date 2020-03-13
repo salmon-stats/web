@@ -28,12 +28,12 @@
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
-import RequireFetchTemplate from '../components/RequireFetchTemplate.vue';
-import RequireFetchBase from '../components/RequireFetchBase.vue';
-import ScheduleCard from '@/components/ScheduleCard';
-import ShiftSummary from '@/components/ShiftSummary';
+import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
+import RequireFetchBase from '@/components/RequireFetchBase.vue';
+import ScheduleCard from '@/components/ScheduleCard.vue';
+import ShiftSummary from '@/components/ShiftSummary.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
-import { formatScheduleId, parseRawSchedule, percentage, toFixed } from '@/helper';
+import { formatScheduleId, parseRawSchedule, percentage, toFixed, mapQueryParamsToApiPath } from '@/helper';
 
 @Component({
   name: 'PlayerShifts',
@@ -45,7 +45,7 @@ export default class PlayerShifts extends RequireFetchBase {
   formatScheduleId = formatScheduleId;
 
   get apiPath() {
-    return `players/${this.playerId}/schedules?page=${this.$route.query.page || 1}`;
+    return mapQueryParamsToApiPath(`players/${this.playerId}/schedules`, this.$route.query);
   }
   get playerId() {
     return this.$route.params.playerId;

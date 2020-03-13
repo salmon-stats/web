@@ -63,6 +63,7 @@ img {
 
 <script lang="ts">
 import { Vue, Component, PropSync, Prop } from 'vue-property-decorator';
+import { Route } from 'vue-router';
 
 import FormField from '@/components/FormField.vue';
 import { FilterType, ResultsFilter } from '@/types/salmon-stats';
@@ -104,6 +105,26 @@ export const filterToRequestParams = (filters: ResultsFilter) => {
     .forEach((key) => delete params[key]);
 
   return Object.keys(params).length === 0 ? null : params;
+};
+
+export const paginatorWithFilters = (route: Route, page: number, filters?: ResultsFilter | null) => {
+  const query: { page: number, playerId?: number, filters?: any } = {
+    page,
+  };
+
+  const toRoute = {
+    name: route.name,
+    query,
+  };
+
+  if (filters) {
+    toRoute.query.filters = JSON.stringify(filters);
+  } else if (filters !== null && route.query.filters) {
+    // null filter means reset.
+    toRoute.query.filters = route.query.filters;
+  }
+
+  return toRoute;
 };
 
 export const restoreFilters = (serialziedFilters: string): ResultsFilter => {

@@ -37,7 +37,8 @@ import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import ScheduleCard from '@/components/ScheduleCard.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { schedulesModule } from '@/store/modules/schedules';
-import { parseRawSchedule } from '@/helper.ts';
+import { parseRawSchedule, mapQueryParamsToApiPath } from '@/helper.ts';
+import { paginatorWithFilters } from '@/components/ResultsFilter.vue';
 
 @Component({
   name: 'Schedules',
@@ -47,7 +48,7 @@ export default class Schedules extends RequireFetchBase {
   currentPage = 1;
 
   get apiPath() {
-    return `schedules?page=${this.$route.query.page || 1}`;
+    return mapQueryParamsToApiPath('schedules', this.$route.query);
   }
   get state() {
     return state.data;
@@ -60,11 +61,8 @@ export default class Schedules extends RequireFetchBase {
     this.$router.push(this.paginator(toPage));
   }
 
-  paginator(toPage) {
-    return {
-      name: this.$route.name,
-      query: { page: toPage },
-    };
+  paginator(...args) {
+    return paginatorWithFilters(this.$route, ...args);
   }
 
   fetch() {

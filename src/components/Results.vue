@@ -5,7 +5,7 @@
     </div>
 
     <div class="table-wrap is-fullwidth">
-      <results-filter-controller @clear="filters = createResultFilter()" @search="search">
+      <results-filter-controller v-if="paginator" @clear="filters = createResultFilter()" @search="search">
         <results-filter :value.sync="filters" />
       </results-filter-controller>
 
