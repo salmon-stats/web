@@ -22,7 +22,7 @@ export default class Results extends Vue {
   dateFormatter!: Function;
 
   @Prop()
-  paginator?: (toPage: number, filters?: Object) => Object;
+  paginator?: (toPage: number, filters?: Object|null) => Object;
 
   @Prop({ default: '' })
   showMoreLink!: string;

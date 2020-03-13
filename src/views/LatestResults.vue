@@ -26,7 +26,8 @@ const paginatorWithFilters = (route, page, filters) => {
 
   if (filters) {
     toRoute.query.filters = JSON.stringify(filters);
-  } else if (route.query.filters) {
+  } else if (filters !== null && route.query.filters) {
+    // null filter means reset.
     toRoute.query.filters = route.query.filters;
   }
 

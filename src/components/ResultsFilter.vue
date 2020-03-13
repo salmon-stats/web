@@ -93,7 +93,7 @@ export const filterToRequestParams = (filters: ResultsFilter) => {
   (Object.keys(params) as RequestParamKey[])
     // Filters keys to remove
     .filter((key) => {
-      if (params[key] === undefined || params[key] === null) {
+      if (params[key] === undefined || params[key] === null || params[key] === '') {
         return true;
       } else if (Array.isArray(params[key])) {
         return (params[key] as any[]).length === 0;
@@ -103,7 +103,7 @@ export const filterToRequestParams = (filters: ResultsFilter) => {
     })
     .forEach((key) => delete params[key]);
 
-  return Object.keys(params).length === 0 ? undefined : params;
+  return Object.keys(params).length === 0 ? null : params;
 };
 
 export const restoreFilters = (serialziedFilters: string): ResultsFilter => {
