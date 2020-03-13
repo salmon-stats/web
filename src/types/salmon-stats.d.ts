@@ -43,8 +43,9 @@ export interface User {
 }
 
 interface MinMax {
-  min?: number;
-  max?: number;
+  // https://github.com/vuejs/vue/issues/7136
+  min?: number | string;
+  max?: number | string;
 }
 
 interface ResultsFilter {

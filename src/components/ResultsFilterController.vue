@@ -3,9 +3,12 @@
     <template v-if="isFilterVisible">
       <slot />
 
-      <div class="is-open has-text-centered">
-        <button class="button to-close" @click="toggleVisibility">{{ isFilterVisible ? 'Close' : 'Open' }} filters</button>
-        <button class="button is-success" @click="$emit('search')">Search with filters</button>
+      <div class="is-flex">
+        <button class="button" @click="toggleVisibility">{{ isFilterVisible ? 'Close' : 'Open' }} filters</button>
+        <div>
+          <button class="button is-danger" @click="$emit('clear')">Clear</button>
+          <button class="button is-success" @click="$emit('search')">Apply</button>
+        </div>
       </div>
     </template>
     <div v-else class="visibility-button to-open has-text-centered">
@@ -26,8 +29,13 @@
     margin-bottom: 1em;
   }
 
-  .to-close {
-    margin-right: 1em;
+  .is-flex {
+    margin-top: 1em;
+    justify-content: space-between;
+  }
+
+  button:not(:first-child) {
+    margin-left: 1em;
   }
 }
 </style>
