@@ -52,6 +52,10 @@ h2 {
   color: darken($text, 5%);
 }
 
+// TODO: Figure out how to configure select option color. https://bulma.io/documentation/form/select/
+.select select option:not(:active) {
+  color: darken($text, 5%) !important;
+}
 
 @media screen and (max-width: $tablet - 1) {
   #app > .body {

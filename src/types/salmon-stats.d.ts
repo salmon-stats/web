@@ -1,3 +1,5 @@
+import { EventKey } from '@/types/salmon-result';
+
 export type PlayerId = string;
 export type BossId = string | number;
 export type BossIdKeys = '3' | '6' | '9' | '12' | '13' | '14' | '15' | '16' | '21';
@@ -39,3 +41,22 @@ export interface User {
   twitter_avatar: null | string;
   twitter_id: string;
 }
+
+interface MinMax {
+  // https://github.com/vuejs/vue/issues/7136
+  min?: number | string;
+  max?: number | string;
+}
+
+interface ResultsFilter {
+  golden_egg: MinMax;
+  power_egg: MinMax;
+
+  events: EventKey[];
+  weapons: number[];
+
+  is_cleared?: boolean;
+  special?: number;
+}
+
+export type FilterType = keyof ResultsFilter;

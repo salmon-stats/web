@@ -6,6 +6,27 @@ export const iconUrl = (weaponType: string, id: string | number) => {
   return `https://splatoon-stats-api.yuki.games/static/images/${weaponType}/${id}.png`;
 };
 
+type QueryParams = {
+  page?: number;
+  filters?: string;
+}
+
+export const mapQueryParamsToApiPath = (endpoint: string, { page, filters }: QueryParams = {}) : string => {
+  const parsedFilters = filters ? JSON.parse(filters) as { [key: string]: any } : {};
+
+  const queryString = Object.entries(parsedFilters)
+    .map(([key, value]) => {
+      if (Array.isArray(value)) {
+        value = (value as any[]).join(',');
+      }
+
+      return `${key}=${encodeURIComponent(value)}`
+    })
+    .join('&');
+
+  return `${endpoint}?page=${page || 1}&${queryString}`;
+};
+
 /**
  * @param percentage percentage (0-1)
  * @param digits

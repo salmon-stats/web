@@ -6,21 +6,23 @@ import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import Schedule from '@/components/Schedule.vue';
 import SpecialUsage from '@/components/SpecialUsage.vue';
 import MainWeapon from '@/components/MainWeapon.vue';
+import ResultsFilterComponent, { createResultFilter, filterToRequestParams, restoreFilters } from '@/components/ResultsFilter.vue';
+import ResultsFilterController from '@/components/ResultsFilterController.vue';
 import { formatDateToMdhm, formatDateInLocalTz, formatScheduleId } from '@/helper';
 import { playersModule } from '@/store/modules/players';
-import { UserData, User } from '@/types/salmon-stats';
+import { UserData, User, ResultsFilter } from '@/types/salmon-stats';
 import { metadataModule } from '@/store/modules/metadata';
 
 @Component({
   name: 'Results',
-  components: { HazardLevel, MainWeapon, PlayerAvatar, ProportionalBarChart, Schedule, SpecialUsage },
+  components: { HazardLevel, MainWeapon, PlayerAvatar, ProportionalBarChart, 'results-filter': ResultsFilterComponent, ResultsFilterController, Schedule, SpecialUsage },
 })
 export default class Results extends Vue {
   @Prop({ default: formatDateToMdhm, type: Function })
   dateFormatter!: Function;
 
   @Prop()
-  paginator?: (toPage: number) => Object;
+  paginator?: (toPage: number, filters?: Object|null) => Object;
 
   @Prop({ default: '' })
   showMoreLink!: string;
@@ -37,11 +39,13 @@ export default class Results extends Vue {
   @Prop({ default: false })
   hideScheduleHeading!: boolean;
 
+  private filters: ResultsFilter = createResultFilter();
+  private createResultFilter = createResultFilter;
   private playersMetadata: Map<string, UserData> = new Map();
   private scheduleIdHeadings = new Set<String>();
-  public currentPage = 1;
-  public isTeamView = true;
-  public formatScheduleId = formatScheduleId;
+  private currentPage = 1;
+  private isTeamView = true;
+  private formatScheduleId = formatScheduleId;
 
   public get bossEliminationKey(): string {
     return this.isTeamView ? 'boss_elimination_count' : 'player_boss_elimination_count';
@@ -122,9 +126,19 @@ export default class Results extends Vue {
     }
 
     return {
-      name:  isPlayerPage ? 'players.schedules.summary' : 'schedules.summary',
+      name: isPlayerPage ? 'players.schedules.summary' : 'schedules.summary',
       params,
     };
+  }
+
+  public search() {
+    if (!this.paginator) return;
+
+    const filters = filterToRequestParams(this.filters);
+
+    this.$router.push(
+      this.paginator(1, filters),
+    );
   }
 
   public shouldShowScheduleHeading(scheduleId: string) {
@@ -144,6 +158,7 @@ export default class Results extends Vue {
 
   public mounted() {
     this.currentPage = parseInt(this.$route.query.page as string, 10) || 1;
+    this.filters = restoreFilters(this.$route.query.filters as string);
 
     const members = this.results
       .flatMap((result) => {
