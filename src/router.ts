@@ -82,7 +82,8 @@ export default new Router({
         {
           path: '',
           name: 'players.summary',
-          component: PlayerSummary,
+          // component: PlayerSummary,
+          component: PlayerResults,
         },
       ],
     },

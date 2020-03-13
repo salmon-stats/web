@@ -81,9 +81,11 @@
     </div>
 
     <div class="navigation is-flex">
+      <!--
       <router-link :exact="true" :to="playerSummary">
         Overview
       </router-link>
+      -->
       <router-link :exact="true" :class="$route.name === 'players.results' && 'router-link-active'" :to="`/players/${playerId}/results`">
         Results
       </router-link>
