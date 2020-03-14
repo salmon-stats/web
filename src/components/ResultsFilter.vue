@@ -1,18 +1,28 @@
 <template>
   <div>
-    <template v-if="isFilterAvailable('is_cleared')" class="columns">
-      <div class="column is-4">
-        <form-field label="Result">
-          <div class="select is-fullwidth">
-            <select v-model="filter.is_cleared">
-              <option :value="undefined">-</option>
-              <option :value="true">Clear</option>
-              <option :value="false">Fail</option>
-            </select>
-          </div>
-        </form-field>
-      </div>
-    </template>
+    <div class="columns">
+      <template v-if="isFilterAvailable('is_cleared')" class="columns">
+        <div class="column is-4">
+          <form-field label="Result">
+            <div class="select is-fullwidth">
+              <select v-model="filter.is_cleared">
+                <option :value="undefined">-</option>
+                <option :value="true">Clear</option>
+                <option :value="false">Fail</option>
+              </select>
+            </div>
+          </form-field>
+        </div>
+      </template>
+
+      <template v-if="isFilterAvailable('is_cleared')" class="columns">
+        <div class="column is-4">
+          <form-field label="Weapons">
+            <weapon-picker :value.sync="filter.weapons" />
+          </form-field>
+        </div>
+      </template>
+    </div>
 
     <template v-if="isFilterAvailable('golden_egg')">
       <h2><img src="@/assets/golden-egg.png">Golden eggs</h2>
@@ -75,8 +85,6 @@
         </div>
       </div>
     </template>
-
-    <!-- <h2>Weapons</h2> -->
   </div>
 </template>
 
@@ -97,6 +105,7 @@ import { idKeyMapModule } from '@/store/modules/id-key-map';
 import { translate } from '@/helper';
 
 import FormField from '@/components/FormField.vue';
+import WeaponPicker from '@/components/WeaponPicker.vue';
 
 const allAvailableFilters: FilterType[] = ['is_cleared', 'golden_egg', 'power_egg', 'events', 'stages', 'weapons', 'special'];
 
@@ -178,6 +187,8 @@ export const restoreFilters = (serialziedFilters: string): ResultsFilter => {
     defaultFilter.golden_egg.max = filter.max_golden_egg || defaultFilter.golden_egg.max;
     defaultFilter.power_egg.min = filter.min_power_egg || defaultFilter.power_egg.min;
     defaultFilter.power_egg.max = filter.max_power_egg || defaultFilter.power_egg.max;
+    defaultFilter.stages = filter.stages ? filter.stages : defaultFilter.stages;
+    defaultFilter.weapons = filter.weapons ? filter.weapons : defaultFilter.weapons;
 
     return defaultFilter;
   } catch (_) {
@@ -187,7 +198,7 @@ export const restoreFilters = (serialziedFilters: string): ResultsFilter => {
 
 @Component({
   name: 'results-filter',
-  components: { FormField },
+  components: { FormField, WeaponPicker },
   computed: mapGetters('id-key-map', ['stageIds']),
   methods: { translate },
 })
