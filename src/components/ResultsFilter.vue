@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="columns">
+    <template v-if="isFieldAvailable('is_cleared')" class="columns">
       <div class="column is-4">
-        <form-field v-if="isFieldAvailable('is_cleared')" label="Result">
+        <form-field label="Result">
           <div class="select is-fullwidth">
             <select v-model="filter.is_cleared">
               <option :value="undefined">-</option>
@@ -12,63 +12,70 @@
           </div>
         </form-field>
       </div>
-    </div>
+    </template>
 
-    <h2><img src="@/assets/golden-egg.png">Golden eggs</h2>
-    <div class="columns">
-      <div class="column is-4">
-        <form-field label="Min">
-          <div class="control">
-            <input v-model.number="filter.golden_egg.min" type="number" min="0" :max="filter.golden_egg.max" step="1" class="input">
-          </div>
-        </form-field>
-      </div>
+    <template v-if="isFieldAvailable('golden_egg')">
+      <h2><img src="@/assets/golden-egg.png">Golden eggs</h2>
+      <div class="columns">
+        <div class="column is-4">
+          <form-field label="Min">
+            <div class="control">
+              <input v-model.number="filter.golden_egg.min" type="number" min="0" :max="filter.golden_egg.max" step="1" class="input">
+            </div>
+          </form-field>
+        </div>
 
-      <div class="column is-4">
-        <form-field label="Max">
-          <div class="control">
-            <input v-model.number="filter.golden_egg.max" type="number" :min="filter.golden_egg.min || 0" step="1" class="input">
-          </div>
-        </form-field>
+        <div class="column is-4">
+          <form-field label="Max">
+            <div class="control">
+              <input v-model.number="filter.golden_egg.max" type="number" :min="filter.golden_egg.min || 0" step="1" class="input">
+            </div>
+          </form-field>
+        </div>
       </div>
-    </div>
+    </template>
 
-    <h2><img src="@/assets/power-egg.png">Power eggs</h2>
-    <div class="columns">
-      <div class="column is-4">
-        <form-field label="Min">
-          <div class="control">
-            <input v-model.number="filter.power_egg.min" type="number" min="0" :max="filter.power_egg.max" step="1" class="input">
-          </div>
-        </form-field>
-      </div>
+    <template v-if="isFieldAvailable('power_egg')">
+      <h2><img src="@/assets/power-egg.png">Power eggs</h2>
+      <div class="columns">
+        <div class="column is-4">
+          <form-field label="Min">
+            <div class="control">
+              <input v-model.number="filter.power_egg.min" type="number" min="0" :max="filter.power_egg.max" step="1" class="input">
+            </div>
+          </form-field>
+        </div>
 
-      <div class="column is-4">
-        <form-field label="Max">
-          <div class="control">
-            <input v-model.number="filter.power_egg.max" type="number" :min="filter.power_egg.min || 0" step="1" class="input">
-          </div>
-        </form-field>
+        <div class="column is-4">
+          <form-field label="Max">
+            <div class="control">
+              <input v-model.number="filter.power_egg.max" type="number" :min="filter.power_egg.min || 0" step="1" class="input">
+            </div>
+          </form-field>
+        </div>
       </div>
-    </div>
+    </template>
 
-    <h2>Stages</h2>
-    <div class="columns">
-      <div class="column is-4">
-        <form-field>
-          <div class="select is-fullwidth is-multiple">
-            <select v-model="filter.stages" multiple>
-              <option
-                v-for="stageId in stageIds" :key="stageId"
-                :value="stageId"
-              >
-                {{ translate('stage', stageId) }}
-              </option>
-            </select>
-          </div>
-        </form-field>
+    <template v-if="isFieldAvailable('stages')">
+      <h2>Stages</h2>
+      <div class="columns">
+        <div class="column is-4">
+          <form-field>
+            <div class="select is-fullwidth is-multiple">
+              <select v-model="filter.stages" multiple>
+                <option
+                  v-for="stageId in stageIds" :key="stageId"
+                  :value="stageId"
+                >
+                  {{ translate('stage', stageId) }}
+                </option>
+              </select>
+            </div>
+          </form-field>
+        </div>
       </div>
-    </div>
+    </template>
+
   </div>
 </template>
 
@@ -90,7 +97,7 @@ import { translate } from '@/helper';
 
 import FormField from '@/components/FormField.vue';
 
-const availableFields: FilterType[] = ['is_cleared', 'golden_egg', 'power_egg', 'events', 'weapons', 'special'];
+const availableFields: FilterType[] = ['is_cleared', 'golden_egg', 'power_egg', 'events', 'stages', 'weapons', 'special'];
 
 export const createResultFilter = (): ResultsFilter => ({
   golden_egg: {},
