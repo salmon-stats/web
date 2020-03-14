@@ -11,20 +11,60 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
+type ChartKey =
+  'rescue' |
+  'death' |
+  'boss-kill' |
+  'golden-egg' |
+  'power-egg' |
+  'player-1' |
+  'player-2' |
+  'player-3' |
+  'player-4' |
+  'rescue-death' |
+  'win-loss';
+
+const chartKeys: ChartKey[] = [
+  'rescue',
+  'death',
+  'boss-kill',
+  'golden-egg',
+  'power-egg',
+  'player-1',
+  'player-2',
+  'player-3',
+  'player-4',
+  'rescue-death',
+  'win-loss',
+];
+
 @Component({
   name: 'ProportionalBarChart',
 })
 export default class ProportionalBarChart extends Vue {
-  @Prop({ required: true })
-  public chartKey!: string;
+  @Prop({
+    type: String,
+    required: true,
+    validator: (key: string) => (chartKeys as string[]).includes(key),
+  })
+  public chartKey!: ChartKey;
 
-  @Prop({ required: true })
+  @Prop({
+    type: Number,
+    required: true,
+  })
   public value!: number;
 
-  @Prop({ required: true })
+  @Prop({
+    type: Number,
+    required: true,
+  })
   public max!: number;
 
-  @Prop({ default: false })
+  @Prop({
+    type: Boolean,
+    default: false,
+  })
   public fillRemainder!: boolean;
 
   get width(): string {
