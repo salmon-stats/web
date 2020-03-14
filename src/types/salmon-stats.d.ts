@@ -53,6 +53,7 @@ interface ResultsFilter {
   power_egg: MinMax;
 
   events: EventKey[];
+  stages: number[];
   weapons: number[];
 
   is_cleared?: boolean;

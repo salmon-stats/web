@@ -3,7 +3,9 @@
     <div v-if="scheduleResults">
       <results :results-with-pagination="scheduleResults"
         :hide-schedule-heading="true"
-        :paginator="paginator" />
+        :paginator="paginator"
+        :available-filters="fieldsWithout('stages')"
+      />
     </div>
   </require-fetch-template>
 </template>
@@ -13,13 +15,14 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import Results from '@/components/Results.vue';
-import { paginatorWithFilters } from '@/components/ResultsFilter.vue';
+import { fieldsWithout, paginatorWithFilters } from '@/components/ResultsFilter.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { mapQueryParamsToApiPath } from '@/helper';
 
 @Component({
   name: 'ScheduleResults',
   components: { RequireFetchTemplate, Results },
+  methods: { fieldsWithout },
 })
 export default class ScheduleResults extends RequireFetchBase {
   get scheduleId() {

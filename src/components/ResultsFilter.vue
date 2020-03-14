@@ -1,56 +1,90 @@
 <template>
   <div>
     <div class="columns">
-      <div class="column is-4">
-        <form-field v-if="isFieldAvailable('is_cleared')" label="Result">
-          <div class="select is-fullwidth">
-            <select v-model="filter.is_cleared">
-              <option :value="undefined">-</option>
-              <option :value="true">Clear</option>
-              <option :value="false">Fail</option>
-            </select>
-          </div>
-        </form-field>
-      </div>
+      <template v-if="isFilterAvailable('is_cleared')" class="columns">
+        <div class="column is-4">
+          <form-field label="Result">
+            <div class="select is-fullwidth">
+              <select v-model="filter.is_cleared">
+                <option :value="undefined">-</option>
+                <option :value="true">Clear</option>
+                <option :value="false">Fail</option>
+              </select>
+            </div>
+          </form-field>
+        </div>
+      </template>
+
+      <template v-if="isFilterAvailable('is_cleared')" class="columns">
+        <div class="column is-4">
+          <form-field label="Weapons">
+            <weapon-picker :value.sync="filter.weapons" />
+          </form-field>
+        </div>
+      </template>
     </div>
 
-    <h2><img src="@/assets/golden-egg.png">Golden eggs</h2>
-    <div class="columns">
-      <div class="column is-4">
-        <form-field label="Min">
-          <div class="control">
-            <input v-model.number="filter.golden_egg.min" type="number" min="0" :max="filter.golden_egg.max" step="1" class="input">
-          </div>
-        </form-field>
-      </div>
+    <template v-if="isFilterAvailable('golden_egg')">
+      <h2><img src="@/assets/golden-egg.png">Golden eggs</h2>
+      <div class="columns">
+        <div class="column is-4">
+          <form-field label="Min">
+            <div class="control">
+              <input v-model.number="filter.golden_egg.min" type="number" min="0" :max="filter.golden_egg.max" step="1" class="input">
+            </div>
+          </form-field>
+        </div>
 
-      <div class="column is-4">
-        <form-field label="Max">
-          <div class="control">
-            <input v-model.number="filter.golden_egg.max" type="number" :min="filter.golden_egg.min || 0" step="1" class="input">
-          </div>
-        </form-field>
+        <div class="column is-4">
+          <form-field label="Max">
+            <div class="control">
+              <input v-model.number="filter.golden_egg.max" type="number" :min="filter.golden_egg.min || 0" step="1" class="input">
+            </div>
+          </form-field>
+        </div>
       </div>
-    </div>
+    </template>
 
-    <h2><img src="@/assets/power-egg.png">Power eggs</h2>
-    <div class="columns">
-      <div class="column is-4">
-        <form-field label="Min">
-          <div class="control">
-            <input v-model.number="filter.power_egg.min" type="number" min="0" :max="filter.power_egg.max" step="1" class="input">
-          </div>
-        </form-field>
-      </div>
+    <template v-if="isFilterAvailable('power_egg')">
+      <h2><img src="@/assets/power-egg.png">Power eggs</h2>
+      <div class="columns">
+        <div class="column is-4">
+          <form-field label="Min">
+            <div class="control">
+              <input v-model.number="filter.power_egg.min" type="number" min="0" :max="filter.power_egg.max" step="1" class="input">
+            </div>
+          </form-field>
+        </div>
 
-      <div class="column is-4">
-        <form-field label="Max">
-          <div class="control">
-            <input v-model.number="filter.power_egg.max" type="number" :min="filter.power_egg.min || 0" step="1" class="input">
-          </div>
-        </form-field>
+        <div class="column is-4">
+          <form-field label="Max">
+            <div class="control">
+              <input v-model.number="filter.power_egg.max" type="number" :min="filter.power_egg.min || 0" step="1" class="input">
+            </div>
+          </form-field>
+        </div>
       </div>
-    </div>
+    </template>
+
+    <template v-if="isFilterAvailable('stages')">
+      <h2>Stages</h2>
+      <div class="columns">
+        <div class="column is-4">
+          <form-field>
+            <div class="select is-fullwidth is-multiple">
+              <select v-model="filter.stages" multiple>
+                <option
+                  v-for="stageId in stageIds" :key="stageId"
+                  :value="stageId"
+                >
+                  {{ translate('stage', stageId) }}
+                </option>
+              </select>
+            </div>
+          </form-field>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -64,15 +98,29 @@ img {
 <script lang="ts">
 import { Vue, Component, PropSync, Prop } from 'vue-property-decorator';
 import { Route } from 'vue-router';
+import { mapGetters } from 'vuex';
+
+import { FilterType, ResultsFilter } from '@/types/salmon-stats';
+import { idKeyMapModule } from '@/store/modules/id-key-map';
+import { translate } from '@/helper';
 
 import FormField from '@/components/FormField.vue';
-import { FilterType, ResultsFilter } from '@/types/salmon-stats';
+import WeaponPicker from '@/components/WeaponPicker.vue';
 
-const availableFields: FilterType[] = ['is_cleared', 'golden_egg', 'power_egg', 'events', 'weapons', 'special'];
+const allAvailableFilters: FilterType[] = ['is_cleared', 'golden_egg', 'power_egg', 'events', 'stages', 'weapons', 'special'];
+
+export const fieldsWithout = (fieldsToIgnore: FilterType | FilterType[]): FilterType[] => {
+  if (!Array.isArray(fieldsToIgnore)) {
+    fieldsToIgnore = [fieldsToIgnore];
+  }
+
+  return allAvailableFilters.filter((field) => !fieldsToIgnore.includes(field));
+};
 
 export const createResultFilter = (): ResultsFilter => ({
   golden_egg: {},
   power_egg: {},
+  stages: [],
   events: [],
   weapons: [],
 });
@@ -87,6 +135,7 @@ export const filterToRequestParams = (filters: ResultsFilter) => {
     weapons: filters.weapons,
     is_cleared: filters.is_cleared,
     special: filters.special,
+    stages: filters.stages,
   };
 
   type RequestParamKey = keyof typeof params;
@@ -138,6 +187,8 @@ export const restoreFilters = (serialziedFilters: string): ResultsFilter => {
     defaultFilter.golden_egg.max = filter.max_golden_egg || defaultFilter.golden_egg.max;
     defaultFilter.power_egg.min = filter.min_power_egg || defaultFilter.power_egg.min;
     defaultFilter.power_egg.max = filter.max_power_egg || defaultFilter.power_egg.max;
+    defaultFilter.stages = filter.stages ? filter.stages : defaultFilter.stages;
+    defaultFilter.weapons = filter.weapons ? filter.weapons : defaultFilter.weapons;
 
     return defaultFilter;
   } catch (_) {
@@ -147,7 +198,9 @@ export const restoreFilters = (serialziedFilters: string): ResultsFilter => {
 
 @Component({
   name: 'results-filter',
-  components: { FormField },
+  components: { FormField, WeaponPicker },
+  computed: mapGetters('id-key-map', ['stageIds']),
+  methods: { translate },
 })
 export default class ResultsFilterComponent extends Vue {
   @PropSync('value', {
@@ -158,14 +211,14 @@ export default class ResultsFilterComponent extends Vue {
 
   @Prop({
     type: Array,
-    default: () => availableFields,
-    // validator: (fields: string[]) => fields.every((availableFields as string[]).includes),
-    validator: (fields: string[]) => fields.every((field) => (availableFields as string[]).includes(field)),
+    default: () => allAvailableFilters,
+    // validator: (fields: string[]) => fields.every((allAvailableFilters as string[]).includes),
+    validator: (fields: string[]) => fields.every((field) => (allAvailableFilters as string[]).includes(field)),
   })
-  private readonly availableFields!: FilterType[];
+  private readonly availableFilters!: FilterType[];
 
-  private isFieldAvailable(key: FilterType): boolean {
-    return this.availableFields.includes(key);
+  private isFilterAvailable(key: FilterType): boolean {
+    return this.availableFilters.includes(key);
   }
 }
 </script>
