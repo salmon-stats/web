@@ -124,6 +124,18 @@ table.is-hoverable tbody tr:hover {
   cursor: pointer;
 }
 
+.weapon-image-container {
+  display: flex;
+  align-content: center;
+}
+
+.proportional-bar-chart-container {
+  height: 12px;
+  &.egg-collection:first-child {
+    margin-bottom: 2px;
+  }
+}
+
 .golden-egg {
   color: $golden-egg;
 }

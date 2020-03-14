@@ -321,13 +321,6 @@ li {
   }
 }
 
-.proportional-bar-chart-container {
-  height: 12px;
-  &.egg-collection:first-child {
-    margin-bottom: 2px;
-  }
-}
-
 .boss-eliminations {
   th {
     font-weight: normal;
