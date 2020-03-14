@@ -1,6 +1,7 @@
 import { Schedule, UserData } from '@/types/salmon-stats';
-import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
+import { IIdKeyMap, idKeyMapModule as idKeyMap, idKeyMapModule } from '@/store/modules/id-key-map';
 import dayjs, { Dayjs } from 'dayjs';
+import { i18n } from './i18n-setup';
 
 export const iconUrl = (weaponType: string, id: string | number) => {
   return `https://splatoon-stats-api.yuki.games/static/images/${weaponType}/${id}.png`;
@@ -87,6 +88,10 @@ export const getTranslationKey = (key: keyof IIdKeyMap, id: string | number) => 
 
 export const isMaxHazard = (hazardLevel: any): boolean =>
   parseInt(hazardLevel, 10) === 200;
+
+export const translate = (key: keyof IIdKeyMap, id: number|string) => {
+  return i18n.t(getTranslationKey(key, id));
+};
 
 export const parseRawSchedule = (rawSchedule: any): Schedule => {
   const startAt = dayjs.utc(rawSchedule.schedule_id);

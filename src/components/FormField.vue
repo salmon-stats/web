@@ -1,6 +1,6 @@
 <template>
   <div class="field is-horizontal">
-    <div class="field-label is-normal">
+    <div v-if="label" class="field-label is-normal">
       <label class="label">{{ label }}</label>
     </div>
     <div class="field-body">
@@ -18,8 +18,7 @@ import { Vue, Component, PropSync, Prop } from 'vue-property-decorator';
 export default class FormField extends Vue {
   @Prop({
     type: String,
-    required: true,
   })
-  label!: string;
+  label?: string;
 }
 </script>

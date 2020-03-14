@@ -51,6 +51,24 @@
         </form-field>
       </div>
     </div>
+
+    <h2>Stages</h2>
+    <div class="columns">
+      <div class="column is-4">
+        <form-field>
+          <div class="select is-fullwidth is-multiple">
+            <select v-model="filter.stages" multiple>
+              <option
+                v-for="stageId in stageIds" :key="stageId"
+                :value="stageId"
+              >
+                {{ translate('stage', stageId) }}
+              </option>
+            </select>
+          </div>
+        </form-field>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -64,15 +82,20 @@ img {
 <script lang="ts">
 import { Vue, Component, PropSync, Prop } from 'vue-property-decorator';
 import { Route } from 'vue-router';
+import { mapGetters } from 'vuex';
+
+import { FilterType, ResultsFilter } from '@/types/salmon-stats';
+import { idKeyMapModule } from '@/store/modules/id-key-map';
+import { translate } from '@/helper';
 
 import FormField from '@/components/FormField.vue';
-import { FilterType, ResultsFilter } from '@/types/salmon-stats';
 
 const availableFields: FilterType[] = ['is_cleared', 'golden_egg', 'power_egg', 'events', 'weapons', 'special'];
 
 export const createResultFilter = (): ResultsFilter => ({
   golden_egg: {},
   power_egg: {},
+  stages: [],
   events: [],
   weapons: [],
 });
@@ -87,6 +110,7 @@ export const filterToRequestParams = (filters: ResultsFilter) => {
     weapons: filters.weapons,
     is_cleared: filters.is_cleared,
     special: filters.special,
+    stages: filters.stages,
   };
 
   type RequestParamKey = keyof typeof params;
@@ -148,6 +172,8 @@ export const restoreFilters = (serialziedFilters: string): ResultsFilter => {
 @Component({
   name: 'results-filter',
   components: { FormField },
+  computed: mapGetters('id-key-map', ['stageIds']),
+  methods: { translate },
 })
 export default class ResultsFilterComponent extends Vue {
   @PropSync('value', {

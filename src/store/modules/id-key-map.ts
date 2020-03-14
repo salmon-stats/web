@@ -14,6 +14,8 @@ export interface IIdKeyMap {
   weapon: StringMap;
 }
 
+const keysAsNumber = (map: StringMap): number[] => Object.keys(map).map(Number);
+
 @Module({ dynamic: true, store, name: 'id-key-map', namespaced: true })
 class IdKeyMap extends VuexModule implements IIdKeyMap {
   public boss: StringMap = {};
@@ -24,8 +26,12 @@ class IdKeyMap extends VuexModule implements IIdKeyMap {
   public water_level: StringMap = {};
   public weapon: StringMap = {};
 
-  get bossIds() {
+  get bossIds(): string[] {
     return Object.keys(this.boss);
+  }
+
+  get stageIds(): number[] {
+    return keysAsNumber(this.stage);
   }
 
   @Action
