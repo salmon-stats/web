@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="isFieldAvailable('is_cleared')" class="columns">
+    <template v-if="isFilterAvailable('is_cleared')" class="columns">
       <div class="column is-4">
         <form-field label="Result">
           <div class="select is-fullwidth">
@@ -14,7 +14,7 @@
       </div>
     </template>
 
-    <template v-if="isFieldAvailable('golden_egg')">
+    <template v-if="isFilterAvailable('golden_egg')">
       <h2><img src="@/assets/golden-egg.png">Golden eggs</h2>
       <div class="columns">
         <div class="column is-4">
@@ -35,7 +35,7 @@
       </div>
     </template>
 
-    <template v-if="isFieldAvailable('power_egg')">
+    <template v-if="isFilterAvailable('power_egg')">
       <h2><img src="@/assets/power-egg.png">Power eggs</h2>
       <div class="columns">
         <div class="column is-4">
@@ -56,7 +56,7 @@
       </div>
     </template>
 
-    <template v-if="isFieldAvailable('stages')">
+    <template v-if="isFilterAvailable('stages')">
       <h2>Stages</h2>
       <div class="columns">
         <div class="column is-4">
@@ -76,6 +76,7 @@
       </div>
     </template>
 
+    <!-- <h2>Weapons</h2> -->
   </div>
 </template>
 
@@ -97,7 +98,15 @@ import { translate } from '@/helper';
 
 import FormField from '@/components/FormField.vue';
 
-const availableFields: FilterType[] = ['is_cleared', 'golden_egg', 'power_egg', 'events', 'stages', 'weapons', 'special'];
+const allAvailableFilters: FilterType[] = ['is_cleared', 'golden_egg', 'power_egg', 'events', 'stages', 'weapons', 'special'];
+
+export const fieldsWithout = (fieldsToIgnore: FilterType | FilterType[]): FilterType[] => {
+  if (!Array.isArray(fieldsToIgnore)) {
+    fieldsToIgnore = [fieldsToIgnore];
+  }
+
+  return allAvailableFilters.filter((field) => !fieldsToIgnore.includes(field));
+};
 
 export const createResultFilter = (): ResultsFilter => ({
   golden_egg: {},
@@ -191,14 +200,14 @@ export default class ResultsFilterComponent extends Vue {
 
   @Prop({
     type: Array,
-    default: () => availableFields,
-    // validator: (fields: string[]) => fields.every((availableFields as string[]).includes),
-    validator: (fields: string[]) => fields.every((field) => (availableFields as string[]).includes(field)),
+    default: () => allAvailableFilters,
+    // validator: (fields: string[]) => fields.every((allAvailableFilters as string[]).includes),
+    validator: (fields: string[]) => fields.every((field) => (allAvailableFilters as string[]).includes(field)),
   })
-  private readonly availableFields!: FilterType[];
+  private readonly availableFilters!: FilterType[];
 
-  private isFieldAvailable(key: FilterType): boolean {
-    return this.availableFields.includes(key);
+  private isFilterAvailable(key: FilterType): boolean {
+    return this.availableFilters.includes(key);
   }
 }
 </script>
