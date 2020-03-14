@@ -1,9 +1,12 @@
 <template>
   <require-fetch-template>
     <div v-if="latestResults">
-      <results :results-with-pagination="latestResults"
+      <results
+        :results-with-pagination="latestResults"
         :is-in-start-date-order="false"
-        :paginator="paginator" />
+        :paginator="paginator"
+        :available-filters="fieldsWithout('weapons')"
+      />
     </div>
   </require-fetch-template>
 </template>
@@ -16,10 +19,12 @@ import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import Results from '@/components/Results.vue';
 import { paginatorWithFilters } from '@/components/ResultsFilter.vue'
+import { fieldsWithout } from '@/components/ResultsFilter.vue';
 
 @Component({
   name: 'LatestResults',
   components: { RequireFetchTemplate, Results },
+  methods: { fieldsWithout },
 })
 export default class LatestResults extends RequireFetchBase {
   get apiPath() {

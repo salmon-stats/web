@@ -15,7 +15,7 @@
         </div>
       </template>
 
-      <template v-if="isFilterAvailable('is_cleared')" class="columns">
+      <template v-if="isFilterAvailable('weapons')" class="columns">
         <div class="column is-4">
           <form-field label="Weapons">
             <weapon-picker :value.sync="filter.weapons" />

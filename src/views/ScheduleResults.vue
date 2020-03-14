@@ -4,7 +4,7 @@
       <results :results-with-pagination="scheduleResults"
         :hide-schedule-heading="true"
         :paginator="paginator"
-        :available-filters="fieldsWithout('stages')"
+        :available-filters="fieldsWithout(['stages', 'weapons'])"
       />
     </div>
   </require-fetch-template>
