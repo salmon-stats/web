@@ -38,7 +38,7 @@
 
           <div class="navbar-item my-profile is-hidden-touch">
             <template v-if="hasMyPage">
-              <router-link :to="`/players/${user.player_id}`">
+              <router-link :to="`/players/${myPlayerId}`">
                 <player-avatar :size="32" :user="user" />
               </router-link>
             </template>
