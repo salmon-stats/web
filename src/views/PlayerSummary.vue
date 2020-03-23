@@ -11,7 +11,13 @@
         <div class="table-wrap is-fullwidth">
           <table class="is-fullwidth">
             <tbody>
-              <tr v-show="i < 10 || isWeaponTableExpanded" v-for="(weapon, i) in playerSummary.weapons" :key="weapon.weapon_id">
+              <tr
+                @click="toResultsFilteredByWeapon(weapon.weapon_id)"
+                class="clickable"
+                v-show="i < 10 || isWeaponTableExpanded"
+                v-for="(weapon, i) in playerSummary.weapons"
+                :key="weapon.weapon_id"
+              >
                 <td>
                   <div class="weapon-image-container">
                     <weapon-image :id="weapon.weapon_id" />
@@ -71,6 +77,12 @@ export default class PlayerSummary extends RequireFetchBase {
 
   toResultPage(resultId) {
     this.$router.push({ name: 'results.summary', params: { resultId } });
+  }
+  toResultsFilteredByWeapon(weaponId) {
+    this.$router.push({
+      name: 'players.results',
+      query: { filters: JSON.stringify({ weapons: [weaponId] }) },
+    });
   }
   mounted() {
     state.fetch(this.apiPath);
