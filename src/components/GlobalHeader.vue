@@ -12,7 +12,7 @@
 
       <div class="is-hidden-desktop my-profile">
         <template v-if="hasMyPage">
-          <router-link class="my" :to="`/players/${user.player_id}`">
+          <router-link class="my" :to="`/players/${myPlayerId}`">
             <player-avatar :size="32" :user="user" />
           </router-link>
         </template>
@@ -96,10 +96,12 @@ import PlayerAvatar from '../components/PlayerAvatar.vue';
 import { Vue, Component } from 'vue-property-decorator';
 import { apiBaseUrl } from '../api-client';
 import { metadataModule as metadata } from '../store/modules/metadata';
+import { mapGetters } from 'vuex';
 
 @Component({
   components: { PlayerAvatar },
   name: 'GlobalHeader',
+  computed: mapGetters('metadata', ['myPlayerId']),
 })
 export default class GlobalHeader extends Vue {
   isBurgerMenuOpen = false;
@@ -110,7 +112,7 @@ export default class GlobalHeader extends Vue {
     return metadata.user;
   }
   get hasMyPage() {
-    return this.user && this.user.player_id;
+    return this.user && this.myPlayerId;
   }
 
   toggleBurgerMenu() {

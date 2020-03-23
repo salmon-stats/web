@@ -19,6 +19,11 @@ class Metadata extends VuexModule implements IMetadata {
   public schedules: null | Schedule[] = null;
   public hasSessionExpired = false;
   public lastFetchedTime = 0;
+  public currentUser = 0;
+
+  public get myPlayerId(): string | null {
+    return this.user ? this.user.accounts[this.currentUser].player_id : null;
+  }
 
   @Action
   public fetchMetadata() {

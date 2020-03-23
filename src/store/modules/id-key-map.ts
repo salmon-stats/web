@@ -34,6 +34,11 @@ class IdKeyMap extends VuexModule implements IIdKeyMap {
     return keysAsNumber(this.stage);
   }
 
+  get weaponIds(): number[] {
+    const isPositiveOrZero = (n: number): boolean => n >= 0;
+    return keysAsNumber(this.weapon).filter(isPositiveOrZero);
+  }
+
   @Action
   public fetchIdKeyMap() {
     apiCleint.get('/id-key-map')

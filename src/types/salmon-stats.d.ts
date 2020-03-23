@@ -32,12 +32,18 @@ export interface UserData {
   };
 }
 
+interface Account {
+  user_id: number;
+  player_id: string;
+  is_primary: boolean;
+}
+
 export interface User {
   id: number;
   is_custom_name: boolean;
   is_registered: boolean;
   name: string;
-  player_id: PlayerId;
+  accounts: Account[];
   twitter_avatar: null | string;
   twitter_id: string;
 }
