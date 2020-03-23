@@ -82,7 +82,6 @@ export default class Results extends Vue {
       .filter((user) => user !== undefined) as UserData[];
 
     const isMyself = (user: string | User | UserData): boolean => {
-      const isUser = (item: any): item is User => 'player_id' in item;
       const isUserData = (item: any): item is UserData => 'playerId' in item;
 
       if (!metadataModule.user) {
@@ -90,11 +89,9 @@ export default class Results extends Vue {
       }
 
       if (typeof user === 'string') {
-        return metadataModule.user.player_id === user;
-      } else if (isUser(user)) {
-        return metadataModule.user.player_id === user.player_id;
+        return metadataModule.myPlayerId === user;
       } else if (isUserData(user)) {
-        return metadataModule.user.player_id === user.playerId;
+        return metadataModule.myPlayerId === user.playerId;
       }
 
       return false;
