@@ -29,7 +29,7 @@
             <table class="is-hoverable is-fullwidth">
               <tbody>
                 <tr v-for="weapon in shiftSummary.weapons" :key="weapon.weapon_id">
-                  <td><main-weapon :weapon-id="weapon.weapon_id" :size="32" /></td>
+                  <td><main-weapon :weapon-id="weapon.weapon_id" /></td>
                   <td>{{ weapon.count }} <small class="weak">({{ weapon.count / (summary.clear_waves + summary.games - summary.clear_games) | percentage }})</small></td>
                 </tr>
               </tbody>

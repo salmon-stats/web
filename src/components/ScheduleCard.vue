@@ -16,7 +16,7 @@
 
       <div class="weapons">
         <main-weapon v-for="(weapon, i) in schedule.weapons" :key="i"
-          :weapon-id="weapon" :size="32" />
+          :weapon-id="weapon" />
       </div>
     </div>
 

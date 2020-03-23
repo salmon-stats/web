@@ -15,10 +15,10 @@
         </div>
 
         <div class="weapon-icon-container" v-for="weaponId in weapons" :key="weaponId" @click="toggleSelection(weaponId)">
-          <img
+          <main-weapon
+            :weapon-id="weaponId"
             :class="['weapon-icon', selectedWeapons.includes(weaponId) ? 'is-selected' : '']"
-            :src="iconUrl('weapon', weaponId)"
-          >
+          />
           <span v-if="counts[weaponId]" class="count">{{ counts[weaponId] }}</span>
         </div>
       </div>
@@ -68,11 +68,11 @@ img {
 <script lang="ts">
 import { Vue, Component, Prop, Watch, PropSync } from 'vue-property-decorator';
 import { mapState } from 'vuex';
-import { iconUrl } from '@/helper';
 import { idKeyMapModule } from '@/store/modules/id-key-map';
+import MainWeapon from '@/components/MainWeapon.vue';
 
 @Component({
-  methods: { iconUrl },
+  components: { MainWeapon },
 })
 export default class WeaponPicker extends Vue {
   get allWeapons(): number[] {

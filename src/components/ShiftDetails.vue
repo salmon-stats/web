@@ -116,7 +116,6 @@
 
     <template v-for="bossId in bossIds">
       <span class="leading" :key="`${bossId}-leading`">
-        <!-- <img :src="iconUrl('salmon-boss', bossId)"> -->
         {{ $t(getTranslationKey('boss', bossId)) }}
       </span>
       <div :key="`${bossId}-player`">
@@ -170,7 +169,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import ScheduleCard from '@/components/ScheduleCard';
 import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
-import { getTranslationKey, iconUrl, percentage, toFixed } from '@/helper';
+import { getTranslationKey, percentage, toFixed } from '@/helper';
 
 @Component({
   name: 'ShiftDetails',
@@ -180,12 +179,10 @@ import { getTranslationKey, iconUrl, percentage, toFixed } from '@/helper';
     normalizeFailedGame: Boolean,
     playerName: String,
     shiftSummaries: Array,
-  }
+  },
+  methods: { getTranslationKey },
 })
 export default class ShiftDetails extends Vue {
-  getTranslationKey = getTranslationKey;
-  iconUrl = iconUrl;
-
   isTeamView = false;
 
   get bossIds() {

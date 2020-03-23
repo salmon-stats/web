@@ -20,7 +20,7 @@
               >
                 <td>
                   <div class="weapon-image-container">
-                    <weapon-image :id="weapon.weapon_id" />
+                    <main-weapon :weapon-id="weapon.weapon_id" />
                   </div>
                 </td>
                 <td class="is-fullwidth">
@@ -52,14 +52,14 @@ import ProportionalBarChart from '@/components/ProportionalBarChart';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import Results from '@/components/Results.vue';
-import WeaponImage from '@/components/WeaponImage.vue';
+import MainWeapon from '@/components/MainWeapon.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { isGrizzcoWeapon } from '@/helper';
 import { playersModule } from '@/store/modules/players';
 
 @Component({
   name: 'PlayerSummary',
-  components: { ProportionalBarChart, RequireFetchTemplate, Results, WeaponImage },
+  components: { ProportionalBarChart, RequireFetchTemplate, Results, MainWeapon },
   methods: { isGrizzcoWeapon },
 })
 export default class PlayerSummary extends RequireFetchBase {
