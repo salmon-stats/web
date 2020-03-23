@@ -1,11 +1,11 @@
 <template>
   <require-fetch-template>
     <div class="columns">
-      <div v-if="playerSummary" class="column is-8 player-summary">
+      <div v-if="playerSummary" class="column is-9 player-summary">
         <results class="results" :raw-results="playerSummary.results" />
       </div>
 
-      <div v-if="playerSummary" class="weapons column is-4">
+      <div v-if="playerSummary" class="weapons column is-3">
         <h2>Weapons</h2>
 
         <div class="table-wrap is-fullwidth">
@@ -23,7 +23,7 @@
                   </p>
                   <p class="proportional-bar-chart-container">
                     <proportional-bar-chart
-                      chart-key="rescue"
+                      :chart-key="isGrizzcoWeapon(weapon.weapon_id) ? 'golden-egg' : 'rescue'"
                       :value="weapon.count"
                       :max="playerSummary.weapons[0].count"
                     />
@@ -48,11 +48,13 @@ import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import Results from '@/components/Results.vue';
 import WeaponImage from '@/components/WeaponImage.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
+import { isGrizzcoWeapon } from '@/helper';
 import { playersModule } from '@/store/modules/players';
 
 @Component({
   name: 'PlayerSummary',
-  components: { ProportionalBarChart, RequireFetchTemplate, Results, WeaponImage }
+  components: { ProportionalBarChart, RequireFetchTemplate, Results, WeaponImage },
+  methods: { isGrizzcoWeapon },
 })
 export default class PlayerSummary extends RequireFetchBase {
   isWeaponTableExpanded = false;

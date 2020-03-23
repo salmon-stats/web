@@ -7,6 +7,8 @@ export const iconUrl = (weaponType: string, id: string | number) => {
   return `https://splatoon-stats-api.yuki.games/static/images/${weaponType}/${id}.png`;
 };
 
+export const isGrizzcoWeapon = (weaponId: number): boolean => weaponId >= 20000;
+
 type QueryParams = {
   page?: number;
   filters?: string;
