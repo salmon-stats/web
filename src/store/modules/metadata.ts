@@ -22,7 +22,7 @@ class Metadata extends VuexModule implements IMetadata {
   public currentUser = 0;
 
   public get myPlayerId(): string | null {
-    return this.user ? this.user.accounts[this.currentUser].player_id : null;
+    return (this.user && this.user.accounts.length > 0) ? this.user.accounts[this.currentUser].player_id : null;
   }
 
   @Action
