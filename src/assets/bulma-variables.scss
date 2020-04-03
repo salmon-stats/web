@@ -29,6 +29,10 @@ $column-gap: .75rem;
 // Form
 $primary: $link;
 
+// Dropdown menu
+$dropdown-content-background-color: lighten($body-background-color, 10%);
+$dropdown-item-color: $text;
+
 // Navbar
 $navbar-height: 2.5rem;
 $navbar-background-color: darken($body-background-color, 5%); // Note this color is also used at `<meta name="theme-color">`

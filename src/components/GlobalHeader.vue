@@ -12,9 +12,7 @@
 
       <div class="is-hidden-desktop my-profile">
         <template v-if="hasMyPage">
-          <router-link class="my" :to="`/players/${myPlayerId}`">
-            <player-avatar :size="32" :user="user" />
-          </router-link>
+          <account-switcher v-if="hasMyPage" :user="user" />
         </template>
       </div>
     </div>
@@ -37,11 +35,7 @@
           </div>
 
           <div class="navbar-item my-profile is-hidden-touch">
-            <template v-if="hasMyPage">
-              <router-link :to="`/players/${myPlayerId}`">
-                <player-avatar :size="32" :user="user" />
-              </router-link>
-            </template>
+            <account-switcher v-if="hasMyPage" :user="user" />
           </div>
         </template>
         <template v-else>
@@ -92,14 +86,14 @@ a {
 </style>
 
 <script>
-import PlayerAvatar from '../components/PlayerAvatar.vue';
 import { Vue, Component } from 'vue-property-decorator';
 import { apiBaseUrl } from '../api-client';
 import { metadataModule as metadata } from '../store/modules/metadata';
 import { mapGetters } from 'vuex';
+import AccountSwitcher from '@/components/AccountSwitcher.vue';
 
 @Component({
-  components: { PlayerAvatar },
+  components: { AccountSwitcher },
   name: 'GlobalHeader',
   computed: mapGetters('metadata', ['myPlayerId']),
 })
