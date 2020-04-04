@@ -259,10 +259,12 @@ export default class ResultsFilterComponent extends Vue {
     return this.availableFilters.includes(key);
   }
 
-  @Watch('filter.sortBy')
-  private onChangeSortBy(_: any, oldValue: boolean): void {
+  @Watch('filter.sort_by')
+  private onChangeSortBy(newValue: boolean, oldValue: boolean): void {
     if (!oldValue) {
-      this.filter.sortByOrder = 'desc';
+      this.filter.sort_by_order = 'desc';
+    } else if (!newValue) {
+      this.filter.sort_by_order = undefined;
     }
   }
 }
