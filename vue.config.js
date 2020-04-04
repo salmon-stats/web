@@ -52,4 +52,7 @@ module.exports = {
 
     return { plugins };
   },
+  devServer: {
+    host: '0.0.0.0',
+  },
 };
