@@ -36,7 +36,7 @@ export default class PlayerResults extends RequireFetchBase {
   }
 
   paginator(...args) {
-    return paginatorWithFilters(this.$route, ...args, { playerId: this.playerId });
+    return paginatorWithFilters(this.$route, ...args);
   }
 
   mounted() {
