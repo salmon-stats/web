@@ -64,6 +64,9 @@ interface ResultsFilter {
 
   is_cleared?: boolean;
   special?: number;
+
+  sortBy?: 'golden_egg_delivered' | 'power_egg_collected';
+  sortByOrder?: 'asc' | 'desc';
 }
 
 export type FilterType = keyof ResultsFilter;
