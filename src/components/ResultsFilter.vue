@@ -85,6 +85,36 @@
         </div>
       </div>
     </template>
+
+    <template v-if="isFilterAvailable('power_egg')">
+      <h2>Sort</h2>
+      <div class="columns">
+        <div class="column is-4">
+          <form-field label="By">
+            <div class="select is-fullwidth">
+              <select v-model="filter.sortBy">
+                <option :value="undefined">-</option>
+                <option value="golden_egg_delivered">Golden eggs</option>
+                <option value="power_egg_collected">Power eggs</option>
+              </select>
+            </div>
+          </form-field>
+        </div>
+        <div class="column is-4">
+          <form-field label="Order">
+            <div class="select is-fullwidth">
+              <select v-model="filter.sortByOrder" :disabled="!filter.sortBy">
+                <template v-if="filter.sortBy">
+                  <option value="asc">Ascending</option>
+                  <option value="desc">Descending</option>
+                </template>
+                <option v-else :value="undefined">-</option>
+              </select>
+            </div>
+          </form-field>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -96,7 +126,7 @@ img {
 </style>
 
 <script lang="ts">
-import { Vue, Component, PropSync, Prop } from 'vue-property-decorator';
+import { Vue, Component, PropSync, Prop, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import { mapGetters } from 'vuex';
 
@@ -123,6 +153,8 @@ export const createResultFilter = (): ResultsFilter => ({
   stages: [],
   events: [],
   weapons: [],
+  sortBy: undefined,
+  sortByOrder: undefined,
 });
 
 export const filterToRequestParams = (filters: ResultsFilter) => {
@@ -136,6 +168,8 @@ export const filterToRequestParams = (filters: ResultsFilter) => {
     is_cleared: filters.is_cleared,
     special: filters.special,
     stages: filters.stages,
+    sort_by: filters.sortBy,
+    sort_by_order: filters.sortByOrder,
   };
 
   type RequestParamKey = keyof typeof params;
@@ -189,6 +223,8 @@ export const restoreFilters = (serialziedFilters: string): ResultsFilter => {
     defaultFilter.power_egg.max = filter.max_power_egg || defaultFilter.power_egg.max;
     defaultFilter.stages = filter.stages ? filter.stages : defaultFilter.stages;
     defaultFilter.weapons = filter.weapons ? filter.weapons : defaultFilter.weapons;
+    defaultFilter.sortBy = filter.sort_by ? filter.sort_by : defaultFilter.sortBy;
+    defaultFilter.sortByOrder = filter.sort_by_order ? filter.sort_by_order : defaultFilter.sortByOrder;
 
     return defaultFilter;
   } catch (_) {
@@ -219,6 +255,13 @@ export default class ResultsFilterComponent extends Vue {
 
   private isFilterAvailable(key: FilterType): boolean {
     return this.availableFilters.includes(key);
+  }
+
+  @Watch('filter.sortBy')
+  private onChangeSortBy(_: any, oldValue: boolean): void {
+    if (!oldValue) {
+      this.filter.sortByOrder = 'desc';
+    }
   }
 }
 </script>
