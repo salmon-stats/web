@@ -5,7 +5,7 @@
         :results-with-pagination="latestResults"
         :is-in-start-date-order="false"
         :paginator="paginator"
-        :available-filters="fieldsWithout('weapons')"
+        :available-filters="fieldsWithout('weapons', 'player_results')"
       />
     </div>
   </require-fetch-template>

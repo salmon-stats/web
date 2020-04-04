@@ -1,9 +1,5 @@
 <template>
   <div>
-    <div v-if="isPlayerResults" class="field">
-      <b-switch v-model="isTeamView">Team</b-switch>
-    </div>
-
     <div class="table-wrap is-fullwidth">
       <results-filter-controller
         v-if="paginator"
@@ -12,6 +8,10 @@
       >
         <results-filter :value.sync="filters" :available-filters="availableFilters" />
       </results-filter-controller>
+
+      <div v-if="isPlayerResults" class="field">
+        <b-switch v-model="isTeamView">Team</b-switch>
+      </div>
 
       <table class="is-hoverable is-fullwidth">
         <thead>

@@ -92,10 +92,12 @@
         <div class="column is-4">
           <form-field label="By">
             <div class="select is-fullwidth">
-              <select v-model="filter.sortBy">
+              <select v-model="filter.sort_by">
                 <option :value="undefined">-</option>
                 <option value="golden_egg_delivered">Golden eggs</option>
+                <option v-if="isFilterAvailable('player_results')" value="player_golden_eggs">Golden eggs (personal)</option>
                 <option value="power_egg_collected">Power eggs</option>
+                <option v-if="isFilterAvailable('player_results')" value="player_power_eggs">Golden eggs (personal)</option>
               </select>
             </div>
           </form-field>
@@ -103,8 +105,8 @@
         <div class="column is-4">
           <form-field label="Order">
             <div class="select is-fullwidth">
-              <select v-model="filter.sortByOrder" :disabled="!filter.sortBy">
-                <template v-if="filter.sortBy">
+              <select v-model="filter.sort_by_order" :disabled="!filter.sort_by">
+                <template v-if="filter.sort_by">
                   <option value="asc">Ascending</option>
                   <option value="desc">Descending</option>
                 </template>
@@ -137,7 +139,7 @@ import { translate } from '@/helper';
 import FormField from '@/components/FormField.vue';
 import WeaponPicker from '@/components/WeaponPicker.vue';
 
-const allAvailableFilters: FilterType[] = ['is_cleared', 'golden_egg', 'power_egg', 'events', 'stages', 'weapons', 'special'];
+const allAvailableFilters: FilterType[] = ['is_cleared', 'golden_egg', 'power_egg', 'events', 'stages', 'weapons', 'special', 'player_results'];
 
 export const fieldsWithout = (fieldsToIgnore: FilterType | FilterType[]): FilterType[] => {
   if (!Array.isArray(fieldsToIgnore)) {
@@ -153,8 +155,8 @@ export const createResultFilter = (): ResultsFilter => ({
   stages: [],
   events: [],
   weapons: [],
-  sortBy: undefined,
-  sortByOrder: undefined,
+  sort_by: undefined,
+  sort_by_order: undefined,
 });
 
 export const filterToRequestParams = (filters: ResultsFilter) => {
@@ -168,8 +170,8 @@ export const filterToRequestParams = (filters: ResultsFilter) => {
     is_cleared: filters.is_cleared,
     special: filters.special,
     stages: filters.stages,
-    sort_by: filters.sortBy,
-    sort_by_order: filters.sortByOrder,
+    sort_by: filters.sort_by,
+    sort_by_order: filters.sort_by_order,
   };
 
   type RequestParamKey = keyof typeof params;
@@ -223,8 +225,8 @@ export const restoreFilters = (serialziedFilters: string): ResultsFilter => {
     defaultFilter.power_egg.max = filter.max_power_egg || defaultFilter.power_egg.max;
     defaultFilter.stages = filter.stages ? filter.stages : defaultFilter.stages;
     defaultFilter.weapons = filter.weapons ? filter.weapons : defaultFilter.weapons;
-    defaultFilter.sortBy = filter.sort_by ? filter.sort_by : defaultFilter.sortBy;
-    defaultFilter.sortByOrder = filter.sort_by_order ? filter.sort_by_order : defaultFilter.sortByOrder;
+    defaultFilter.sort_by = filter.sort_by ? filter.sort_by : defaultFilter.sort_by;
+    defaultFilter.sort_by_order = filter.sort_by_order ? filter.sort_by_order : defaultFilter.sort_by_order;
 
     return defaultFilter;
   } catch (_) {
