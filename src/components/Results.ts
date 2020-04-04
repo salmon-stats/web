@@ -70,6 +70,11 @@ export default class Results extends Vue {
       : this.rawResults;
   }
 
+  public get showScheduleGroupRow(): boolean {
+    const hasSorted = this.$route.query.filters && !!JSON.parse(this.$route.query.filters as string).sort_by;
+    return !this.hideScheduleHeading && this.isInStartDateOrder && !hasSorted;
+  }
+
   public dateFormatterShort(date: string): string {
     return formatDateInLocalTz(date, 'DD HH:mm');
   }
@@ -144,7 +149,7 @@ export default class Results extends Vue {
     );
   }
 
-  public shouldShowScheduleHeading(scheduleId: string) {
+  public shouldShowScheduleHeading(scheduleId: string): boolean {
     // This is not good because v-if condition shouldn't have side-effects
 
     if (!this.scheduleIdHeadings.has(scheduleId)) {
