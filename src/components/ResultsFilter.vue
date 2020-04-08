@@ -97,7 +97,7 @@
                 <option value="golden_egg_delivered">Golden eggs</option>
                 <option v-if="isFilterAvailable('player_results')" value="player_golden_eggs">Golden eggs (personal)</option>
                 <option value="power_egg_collected">Power eggs</option>
-                <option v-if="isFilterAvailable('player_results')" value="player_power_eggs">Golden eggs (personal)</option>
+                <option v-if="isFilterAvailable('player_results')" value="player_power_eggs">Power eggs (personal)</option>
               </select>
             </div>
           </form-field>
