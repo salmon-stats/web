@@ -56,13 +56,13 @@
 
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import MainWeapon from '@/components/MainWeapon';
+import MainWeapon from '@/components/MainWeapon.vue';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
-import RequireFetchTemplate from '../components/RequireFetchTemplate.vue';
-import RequireFetchBase from '../components/RequireFetchBase.vue';
-import Results from '../components/Results.vue';
-import ScheduleCard from '@/components/ScheduleCard';
-import ShiftDetails from '@/components/ShiftDetails';
+import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
+import RequireFetchBase from '@/components/RequireFetchBase.vue';
+import Results from '@/components/Results.vue';
+import ScheduleCard from '@/components/ScheduleCard.vue';
+import ShiftDetails from '@/components/ShiftDetails.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { playersModule } from '@/store/modules/players';
 import { schedulesModule } from '@/store/modules/schedules';

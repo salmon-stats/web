@@ -167,7 +167,7 @@ h2 {
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
-import ScheduleCard from '@/components/ScheduleCard';
+import ScheduleCard from '@/components/ScheduleCard.vue';
 import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import { getTranslationKey, percentage, toFixed } from '@/helper';
 

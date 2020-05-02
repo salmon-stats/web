@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from 'dayjs';
 import { Component, Vue } from 'vue-property-decorator';
 
-import ScheduleCard from '@/components/ScheduleCard';
+import ScheduleCard from '@/components/ScheduleCard.vue';
 import { metadataModule } from '@/store/modules/metadata';
 import { Schedule } from '@/types/salmon-stats';
 

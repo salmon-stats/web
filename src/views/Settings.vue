@@ -108,7 +108,7 @@ import dragDrop from 'drag-drop';
 
 import { statefulApiClient } from '../api-client';
 import { metadataModule as metadata } from '../store/modules/metadata';
-import RequireSignIn from '../components/RequireSignIn.vue';
+import RequireSignIn from '@/components/RequireSignIn.vue';
 
 @Component({
   name: 'SalmonResultUploader',

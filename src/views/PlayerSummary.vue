@@ -48,7 +48,7 @@
 
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import ProportionalBarChart from '@/components/ProportionalBarChart';
+import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import Results from '@/components/Results.vue';

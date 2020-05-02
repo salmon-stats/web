@@ -15,7 +15,7 @@
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { playersModule } from '@/store/modules/players';
-import PlayerPageHeader from '../components/PlayerPageHeader.vue';
+import PlayerPageHeader from '@/components/PlayerPageHeader.vue';
 
 
 @Component({
