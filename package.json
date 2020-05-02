@@ -5,15 +5,15 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@download/blockies": "git+https://github.com/download13/blockies.git",
     "axios": "^0.19.0",
     "buefy": "^0.8.2",
     "clipboard": "^2.0.4",
-    "core-js": "^2.6.5",
+    "core-js": "^3.6.4",
     "dayjs": "^1.8.14",
     "drag-drop": "^4.2.0",
     "splatoon2-constants": "git+https://github.com/yukidaruma/splatoon2-constants.git",
@@ -26,16 +26,16 @@
   },
   "devDependencies": {
     "@types/jest": "^23.1.4",
-    "@vue/cli-plugin-babel": "^3.8.0",
-    "@vue/cli-plugin-typescript": "^3.8.0",
-    "@vue/cli-plugin-unit-jest": "^3.8.0",
-    "@vue/cli-service": "^3.8.0",
+    "@vue/cli-plugin-babel": "^4.3.1",
+    "@vue/cli-plugin-typescript": "^4.3.1",
+    "@vue/cli-plugin-unit-jest": "^4.3.1",
+    "@vue/cli-service": "^4.3.1",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
-    "sass": "^1.18.0",
+    "sass": "^1.26.5",
     "sass-loader": "^7.1.0",
     "ts-jest": "^23.0.0",
-    "typescript": "^3.4.3",
+    "typescript": "~3.8.3",
     "vue-template-compiler": "^2.6.10",
     "vuex-module-decorators": "^0.9.9"
   }
