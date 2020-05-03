@@ -10,20 +10,22 @@
 </template>
 
 <style scoped>
-a { color: inherit; }
+a {
+  color: inherit;
+}
 </style>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
-import { formatDateToMdhm, formatScheduleId } from '@/helper';
+import { formatDateToMdhm, formatScheduleId, DateFormatter } from '@/helper';
 
 @Component({
   name: 'Schedule',
 })
 export default class Schedule extends Vue {
   @Prop({ default: formatDateToMdhm, type: Function })
-  dateFormatter!: Function;
+  dateFormatter!: DateFormatter;
 
   @Prop({ default: false })
   isLinkDisabled!: boolean;

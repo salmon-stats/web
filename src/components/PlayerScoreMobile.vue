@@ -2,19 +2,18 @@
   <div class="box clickable player">
     <div class="player-name-row" @click="toPlayerSummary(p.player_id)">
       <div>
-        <player-avatar :user="getAccountByPlayerId(p.player_id)"
-          :size="32" :blockiesSeed="p.player_id" />
+        <player-avatar :user="getAccountByPlayerId(p.player_id)" :size="32" :blockiesSeed="p.player_id" />
         <div class="name-container">
-          <p class="player-name">{{ getPlayerName(p.player_id) }}</p>
+          <p class="player-name">
+            {{ getPlayerName(p.player_id) }}
+          </p>
           <p class="grade-point" v-if="p.grade_point && p.grade_point > 400">
             <span>{{ p.grade_point - 400 }}</span>
           </p>
         </div>
       </div>
       <div>
-        <special-usage
-          :special-id="p.special_id"
-          :count="sum(p.special_uses.map(special => special.count))" />
+        <special-usage :special-id="p.special_id" :count="sum(p.special_uses.map((special) => special.count))" />
         <span class="weapon-icon main" v-for="(w, i) in p.weapons" :key="i">
           <main-weapon :weapon-id="w.weapon_id" />
         </span>
@@ -24,7 +23,7 @@
       <div class="columns is-gapless is-mobile stats">
         <div class="column">
           <span class="box large-image">
-            <img src="@/assets/rescue.png">
+            <img src="@/assets/rescue.png" />
             <span :class="hasMost('rescue', p.rescue) ? 'has-most' : ''">
               <small>{{ p.rescue }}</small>
             </span>
@@ -32,7 +31,7 @@
         </div>
         <div class="column">
           <span class="box large-image">
-            <img src="@/assets/death.png">
+            <img src="@/assets/death.png" />
             <span :class="hasMost('death', p.death) ? 'has-most' : ''">
               <small>{{ p.death }}</small>
             </span>
@@ -40,7 +39,7 @@
         </div>
         <div class="column">
           <span class="box small-image">
-            <img src="@/assets/golden-egg.png">
+            <img src="@/assets/golden-egg.png" />
             <span class="golden-egg" :class="hasMost('golden_eggs', p.golden_eggs) ? 'has-most' : ''">
               <small>{{ p.golden_eggs }}</small>
             </span>
@@ -48,7 +47,7 @@
         </div>
         <div class="column">
           <span class="box small-image">
-            <img src="@/assets/power-egg.png">
+            <img src="@/assets/power-egg.png" />
             <span class="power-egg" :class="hasMost('power_eggs', p.power_eggs) ? 'has-most' : ''">
               <small>{{ p.power_eggs }}</small>
             </span>
@@ -68,7 +67,7 @@ img {
 }
 
 .box.player {
-  padding: .75em;
+  padding: 0.75em;
 }
 
 .weapon-icon {
@@ -77,7 +76,7 @@ img {
   background-color: darken($background, 15%);
   border-radius: 50%;
   height: 24px;
-  margin-left: .25em;
+  margin-left: 0.25em;
 
   img {
     height: 24px;
@@ -95,15 +94,24 @@ img {
     align-content: center;
     overflow: hidden;
 
-    &:first-child { flex: 1; }
+    &:first-child {
+      flex: 1;
+    }
 
-    .grade-point, .player-name { margin-left: .5em; }
-    .grade-point { font-size: 80%; }
+    .grade-point,
+    .player-name {
+      margin-left: 0.5em;
+    }
+    .grade-point {
+      font-size: 80%;
+    }
 
     .name-container {
       overflow: hidden;
       p {
-        &.player-name { color: $text-strong; }
+        &.player-name {
+          color: $text-strong;
+        }
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
@@ -117,17 +125,24 @@ img {
 
   .stats {
     .column {
-      &:not(:first-child) { margin-left: .5em; }
+      &:not(:first-child) {
+        margin-left: 0.5em;
+      }
 
       .box {
         display: grid;
-        padding: .25em;
+        padding: 0.25em;
         background-color: darken($background, 15%);
 
-        &.large-image { grid-template-columns: 50px 1fr; }
-        &.small-image { grid-template-columns: 24px 1fr; }
+        &.large-image {
+          grid-template-columns: 50px 1fr;
+        }
+        &.small-image {
+          grid-template-columns: 24px 1fr;
+        }
 
-        img, span {
+        img,
+        span {
           display: inline-flex;
           // justify-content: flex-end;
           justify-self: center;
@@ -164,7 +179,9 @@ import SpecialUsage from '@/components/SpecialUsage.vue';
 export default class PlayerScoreMobile extends Vue {
   sum = sum;
 
-  get p() { return this.player; }
+  get p() {
+    return this.player;
+  }
 
   toPlayerSummary(playerId) {
     this.$router.push({ name: 'players.summary', params: { playerId } });

@@ -1,8 +1,7 @@
 <template>
-  <div :class="['box', 'wave',
-    failedWave === waveIndex && 'failed-wave',
-    ['low', 'normal', 'high'][wave.water_id - 1],
-  ]">
+  <div
+    :class="['box', 'wave', failedWave === waveIndex && 'failed-wave', ['low', 'normal', 'high'][wave.water_id - 1]]"
+  >
     <div class="wave-index">
       <p>{{ waveIndex }}</p>
       <span v-if="failedWave === waveIndex" class="fail">Fail</span>
@@ -11,7 +10,8 @@
       <span class="event">{{ wave.event_id ? translate('event', wave.event_id) : '-' }}</span>
       <div class="special-usages">
         <span class="special-usage" v-for="special in specialsUsedInWave(waveIndex)">
-          <special-usage v-if="special.count"
+          <special-usage
+            v-if="special.count"
             :special-id="special.id"
             :count="special.count"
             :hide-count-if-one="true"
@@ -22,16 +22,16 @@
     </div>
     <div class="eggs">
       <div class="header">
-        <img src="@/assets/golden-egg.png">
+        <img src="@/assets/golden-egg.png" />
       </div>
       <div class="value">
-        <span class="golden-egg">{{ wave.golden_egg_delivered }}</span>/<!--
-     --><span class="golden-egg">{{ wave.golden_egg_quota }}</span>
+        <span class="golden-egg">{{ wave.golden_egg_delivered }}</span><!--
+        -->/<span class="golden-egg">{{ wave.golden_egg_quota }}</span>
         <span class="total-count">/{{ wave.golden_egg_appearances }}</span>
       </div>
 
       <div class="header">
-        <img src="@/assets/power-egg.png">
+        <img src="@/assets/power-egg.png" />
       </div>
       <div class="value">
         <span class="power-egg">{{ wave.power_egg_collected }}</span>
@@ -69,12 +69,12 @@ img {
     align-items: center;
   }
   .value {
-    margin-left: .25em;
+    margin-left: 0.25em;
   }
 }
 
 .wave {
-  padding: 1em .5em;
+  padding: 1em 0.5em;
 
   display: grid;
   grid-template-columns: auto auto auto;
@@ -88,7 +88,7 @@ img {
     background-position-y: -1em;
   }
   &.normal {
-    background-position-y: .5em;
+    background-position-y: 0.5em;
   }
   &.low {
     background-position-y: 2.5em;
@@ -135,16 +135,15 @@ import SpecialUsage from '@/components/SpecialUsage.vue';
   props: { result: Object, wave: Object, failedWave: Number, translate: Function },
 })
 export default class Wave extends Vue {
-  get waveIndex() { return this.wave.wave; }
+  get waveIndex() {
+    return this.wave.wave;
+  }
 
   specialsUsedInWave(waveIndex) {
-    return this.result.player_results
-      .map((player) => {
-        return {
-          id: player.special_id,
-          count: player.special_uses[waveIndex - 1].count,
-        };
-      });
+    return this.result.player_results.map((player) => ({
+      id: player.special_id,
+      count: player.special_uses[waveIndex - 1].count,
+    }));
   }
 }
 </script>

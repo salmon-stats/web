@@ -9,17 +9,19 @@
             :is-detail="true"
             :normalize-failed-game="normalizeFailedGame"
             :player-name="player && player.name"
-            :shift-summaries="[{
-              isGlobal: false,
-              ...summary,
-              rescue: summary.player_rescue,
-              death: summary.player_death,
-            },
-            {
-              isGlobal: true,
-              ...shiftSummary.global,
-              rescue: shiftSummary.global.rescue,
-            }]"
+            :shift-summaries="[
+              {
+                isGlobal: false,
+                ...summary,
+                rescue: summary.player_rescue,
+                death: summary.player_death,
+              },
+              {
+                isGlobal: true,
+                ...shiftSummary.global,
+                rescue: shiftSummary.global.rescue,
+              },
+            ]"
           />
         </div>
 
@@ -30,7 +32,12 @@
               <tbody>
                 <tr v-for="weapon in shiftSummary.weapons" :key="weapon.weapon_id">
                   <td><main-weapon :weapon-id="weapon.weapon_id" /></td>
-                  <td>{{ weapon.count }} <small class="weak">({{ weapon.count / (summary.clear_waves + summary.games - summary.clear_games) | percentage }})</small></td>
+                  <td>
+                    {{ weapon.count }}
+                    <small class="weak">({{
+                      (weapon.count / (summary.clear_waves + summary.games - summary.clear_games)) | percentage
+                    }})</small>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -40,10 +47,7 @@
 
       <section>
         <h2>Results</h2>
-        <results
-          :hide-schedule-heading="true"
-          :raw-results="shiftSummary.results"
-          :show-more-link="showMoreLink" />
+        <results :hide-schedule-heading="true" :raw-results="shiftSummary.results" :show-more-link="showMoreLink" />
       </section>
     </template>
   </require-fetch-template>
@@ -51,11 +55,10 @@
 
 <style lang="scss" scoped>
 @import '@/assets/bulma-variables.scss';
-
 </style>
 
 <script>
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component } from 'vue-property-decorator';
 import MainWeapon from '@/components/MainWeapon.vue';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
@@ -66,7 +69,7 @@ import ShiftDetails from '@/components/ShiftDetails.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { playersModule } from '@/store/modules/players';
 import { schedulesModule } from '@/store/modules/schedules';
-import { parseRawSchedule, percentage, toFixed } from '@/helper';
+import { percentage, toFixed } from '@/helper';
 
 @Component({
   name: 'PlayerShifts',
@@ -107,8 +110,7 @@ export default class PlayerShifts extends RequireFetchBase {
         const key = k.substr(7);
         result[`team_${key}`] = v + summary[`others_${key}`];
         result[k] = v;
-      }
-      else {
+      } else {
         result[k] = v;
       }
     });
@@ -119,11 +121,13 @@ export default class PlayerShifts extends RequireFetchBase {
   mounted() {
     state.fetch(this.apiPath);
 
-    schedulesModule.fetchScheduleMetadata(this.scheduleId)
-      .then((schedule) => { this.schedule = schedule; });
+    schedulesModule.fetchScheduleMetadata(this.scheduleId).then((schedule) => {
+      this.schedule = schedule;
+    });
 
-    playersModule.fetchPlayer(this.playerId)
-      .then((player) => { this.player = player; })
+    playersModule.fetchPlayer(this.playerId).then((player) => {
+      this.player = player;
+    });
   }
 }
 </script>

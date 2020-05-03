@@ -1,18 +1,18 @@
 <template>
   <require-fetch-template>
     <div v-if="playerShifts">
-      <div v-for="playerShift in playerShifts" :key="playerShift.schedule_id"
-        class="columns">
+      <div v-for="playerShift in playerShifts" :key="playerShift.schedule_id" class="columns">
         <div class="column is-4">
-          <schedule-card :schedule="formatSchedule(playerShift)"
-            :link-to="`/players/${playerId}/schedules/${formatScheduleId(playerShift.schedule_id)}`" />
+          <schedule-card
+            :schedule="formatSchedule(playerShift)"
+            :link-to="`/players/${playerId}/schedules/${formatScheduleId(playerShift.schedule_id)}`"
+          />
         </div>
-        <shift-summary
-          :shift-summary="playerShift"
-          class="column is-8" />
+        <shift-summary :shift-summary="playerShift" class="column is-8" />
       </div>
 
-      <b-pagination v-if="playerShifts.length > 0"
+      <b-pagination
+        v-if="playerShifts.length > 0"
         :total="state.total"
         :current.sync="currentPage"
         :per-page="state.per_page"
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';

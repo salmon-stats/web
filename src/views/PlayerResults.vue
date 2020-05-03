@@ -1,14 +1,13 @@
 <template>
   <require-fetch-template>
     <div v-if="playerResults">
-      <results :results-with-pagination="playerResults"
-        :paginator="paginator" />
+      <results :results-with-pagination="playerResults" :paginator="paginator" />
     </div>
   </require-fetch-template>
 </template>
 
 <script>
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import Results from '@/components/Results.vue';
@@ -22,7 +21,8 @@ import { mapQueryParamsToApiPath } from '@/helper';
 })
 export default class PlayerResults extends RequireFetchBase {
   get apiPath() {
-    const path = `players/${this.playerId}` +
+    const path =
+      `players/${this.playerId}` +
       (this.$route.params.scheduleId ? `/schedules/${this.$route.params.scheduleId}` : '') +
       '/results';
 

@@ -1,10 +1,9 @@
 <template>
   <span :class="chartKey">
-    <span v-if="fillRemainder" class="remainder-filler" >
+    <span v-if="fillRemainder" class="remainder-filler">
       <span class="chart-body" :style="{ width }" />
     </span>
-    <span v-else
-      class="chart-body" :style="{ width }" />
+    <span v-else class="chart-body" :style="{ width }" />
   </span>
 </template>
 
@@ -12,17 +11,17 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 type ChartKey =
-  'rescue' |
-  'death' |
-  'boss-kill' |
-  'golden-egg' |
-  'power-egg' |
-  'player-1' |
-  'player-2' |
-  'player-3' |
-  'player-4' |
-  'rescue-death' |
-  'win-loss';
+  | 'rescue'
+  | 'death'
+  | 'boss-kill'
+  | 'golden-egg'
+  | 'power-egg'
+  | 'player-1'
+  | 'player-2'
+  | 'player-3'
+  | 'player-4'
+  | 'rescue-death'
+  | 'win-loss';
 
 const chartKeys: ChartKey[] = [
   'rescue',
@@ -68,7 +67,7 @@ export default class ProportionalBarChart extends Vue {
   public fillRemainder!: boolean;
 
   get width(): string {
-    return this.max === 0 ? '0' : `${this.value / this.max * 100}%`;
+    return this.max === 0 ? '0' : `${(this.value / this.max) * 100}%`;
   }
 }
 </script>

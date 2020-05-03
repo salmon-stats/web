@@ -6,9 +6,15 @@
           <form-field label="Result">
             <div class="select is-fullwidth">
               <select v-model="filter.is_cleared">
-                <option :value="undefined">-</option>
-                <option :value="true">Clear</option>
-                <option :value="false">Fail</option>
+                <option :value="undefined">
+                  -
+                </option>
+                <option :value="true">
+                  Clear
+                </option>
+                <option :value="false">
+                  Fail
+                </option>
               </select>
             </div>
           </form-field>
@@ -25,12 +31,19 @@
     </div>
 
     <template v-if="isFilterAvailable('golden_egg')">
-      <h2><img src="@/assets/golden-egg.png">Golden eggs</h2>
+      <h2><img src="@/assets/golden-egg.png" />Golden eggs</h2>
       <div class="columns">
         <div class="column is-4">
           <form-field label="Min">
             <div class="control">
-              <input v-model.number="filter.golden_egg.min" type="number" min="0" :max="filter.golden_egg.max" step="1" class="input">
+              <input
+                v-model.number="filter.golden_egg.min"
+                type="number"
+                min="0"
+                :max="filter.golden_egg.max"
+                step="1"
+                class="input"
+              />
             </div>
           </form-field>
         </div>
@@ -38,7 +51,13 @@
         <div class="column is-4">
           <form-field label="Max">
             <div class="control">
-              <input v-model.number="filter.golden_egg.max" type="number" :min="filter.golden_egg.min || 0" step="1" class="input">
+              <input
+                v-model.number="filter.golden_egg.max"
+                type="number"
+                :min="filter.golden_egg.min || 0"
+                step="1"
+                class="input"
+              />
             </div>
           </form-field>
         </div>
@@ -46,12 +65,19 @@
     </template>
 
     <template v-if="isFilterAvailable('power_egg')">
-      <h2><img src="@/assets/power-egg.png">Power eggs</h2>
+      <h2><img src="@/assets/power-egg.png" />Power eggs</h2>
       <div class="columns">
         <div class="column is-4">
           <form-field label="Min">
             <div class="control">
-              <input v-model.number="filter.power_egg.min" type="number" min="0" :max="filter.power_egg.max" step="1" class="input">
+              <input
+                v-model.number="filter.power_egg.min"
+                type="number"
+                min="0"
+                :max="filter.power_egg.max"
+                step="1"
+                class="input"
+              />
             </div>
           </form-field>
         </div>
@@ -59,7 +85,13 @@
         <div class="column is-4">
           <form-field label="Max">
             <div class="control">
-              <input v-model.number="filter.power_egg.max" type="number" :min="filter.power_egg.min || 0" step="1" class="input">
+              <input
+                v-model.number="filter.power_egg.max"
+                type="number"
+                :min="filter.power_egg.min || 0"
+                step="1"
+                class="input"
+              />
             </div>
           </form-field>
         </div>
@@ -73,10 +105,7 @@
           <form-field>
             <div class="select is-fullwidth is-multiple">
               <select v-model="filter.stages" multiple>
-                <option
-                  v-for="stageId in stageIds" :key="stageId"
-                  :value="stageId"
-                >
+                <option v-for="stageId in stageIds" :key="stageId" :value="stageId">
                   {{ translate('stage', stageId) }}
                 </option>
               </select>
@@ -93,11 +122,21 @@
           <form-field label="By">
             <div class="select is-fullwidth">
               <select v-model="filter.sort_by">
-                <option :value="undefined">-</option>
-                <option value="golden_egg_delivered">Golden eggs</option>
-                <option v-if="isFilterAvailable('player_results')" value="player_golden_eggs">Golden eggs (personal)</option>
-                <option value="power_egg_collected">Power eggs</option>
-                <option v-if="isFilterAvailable('player_results')" value="player_power_eggs">Power eggs (personal)</option>
+                <option :value="undefined">
+                  -
+                </option>
+                <option value="golden_egg_delivered">
+                  Golden eggs
+                </option>
+                <option v-if="isFilterAvailable('player_results')" value="player_golden_eggs">
+                  Golden eggs (personal)
+                </option>
+                <option value="power_egg_collected">
+                  Power eggs
+                </option>
+                <option v-if="isFilterAvailable('player_results')" value="player_power_eggs">
+                  Power eggs (personal)
+                </option>
               </select>
             </div>
           </form-field>
@@ -107,10 +146,16 @@
             <div class="select is-fullwidth">
               <select v-model="filter.sort_by_order" :disabled="!filter.sort_by">
                 <template v-if="filter.sort_by">
-                  <option value="asc">Ascending</option>
-                  <option value="desc">Descending</option>
+                  <option value="asc">
+                    Ascending
+                  </option>
+                  <option value="desc">
+                    Descending
+                  </option>
                 </template>
-                <option v-else :value="undefined">-</option>
+                <option v-else :value="undefined">
+                  -
+                </option>
               </select>
             </div>
           </form-field>
@@ -123,7 +168,7 @@
 <style scoped>
 img {
   width: 16px;
-  margin-right: .5em;
+  margin-right: 0.5em;
 }
 </style>
 
@@ -133,13 +178,21 @@ import { Route } from 'vue-router';
 import { mapGetters } from 'vuex';
 
 import { FilterType, ResultsFilter } from '@/types/salmon-stats';
-import { idKeyMapModule } from '@/store/modules/id-key-map';
 import { translate } from '@/helper';
 
 import FormField from '@/components/FormField.vue';
 import WeaponPicker from '@/components/WeaponPicker.vue';
 
-const allAvailableFilters: FilterType[] = ['is_cleared', 'golden_egg', 'power_egg', 'events', 'stages', 'weapons', 'special', 'player_results'];
+const allAvailableFilters: FilterType[] = [
+  'is_cleared',
+  'golden_egg',
+  'power_egg',
+  'events',
+  'stages',
+  'weapons',
+  'special',
+  'player_results',
+];
 
 export const fieldsWithout = (fieldsToIgnore: FilterType | FilterType[]): FilterType[] => {
   if (!Array.isArray(fieldsToIgnore)) {
@@ -193,7 +246,7 @@ export const filterToRequestParams = (filters: ResultsFilter) => {
 };
 
 export const paginatorWithFilters = (route: Route, page: number, filters?: ResultsFilter | null) => {
-  const query: { page: number, playerId?: number, filters?: any } = {
+  const query: { page: number; playerId?: number; filters?: any } = {
     page,
   };
 

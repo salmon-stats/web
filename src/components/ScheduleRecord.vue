@@ -24,7 +24,7 @@
 </style>
 
 <script>
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   name: 'ScheduleRecord',
@@ -33,6 +33,5 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
     recordType: String,
   },
 })
-export default class ScheduleRecord extends Vue {
-}
+export default class ScheduleRecord extends Vue {}
 </script>

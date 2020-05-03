@@ -107,7 +107,8 @@ export default new Router({
         },
       ],
     },
-    { // Fallback route
+    {
+      // Fallback route
       path: '*',
       component: Home,
       redirect: '/',

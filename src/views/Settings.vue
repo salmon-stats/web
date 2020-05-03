@@ -4,16 +4,24 @@
       <div>
         <h1>API token</h1>
         <b-field>
-          <b-button class="is-primary" @click="onClickGenerateApiToken" :disabled="isRequesting || (!regenerateToken && apiToken !== '')">
+          <b-button
+            class="is-primary"
+            @click="onClickGenerateApiToken"
+            :disabled="isRequesting || (!regenerateToken && apiToken !== '')"
+          >
             {{ regenerateToken ? 'Regenerate' : 'Get' }} API token
           </b-button>
         </b-field>
         <b-field>
           <b-input custom-class="is-small" type="text" :value="apiToken" disabled />
-          <button class="button is-success is-small" ref="copyToClipboard" :disabled="apiToken === ''">Copy to clipboard</button>
+          <button class="button is-success is-small" ref="copyToClipboard" :disabled="apiToken === ''">
+            Copy to clipboard
+          </button>
         </b-field>
         <div>
-          <b-checkbox v-model="regenerateToken" :value="true">Regenerate API token</b-checkbox>
+          <b-checkbox v-model="regenerateToken" :value="true">
+            Regenerate API token
+          </b-checkbox>
         </div>
         <p v-if="regenerateToken">
           Note: Existing API token will be invalidated.
@@ -27,33 +35,37 @@
           label="Display Name"
           message="If you leave this field blank, your Twitter screen name will be used."
         >
-          <b-input
-            type="text"
-            custom-class="is-small"
-            maxlength="10"
-            style="width: 10em"
-            v-model="displayName"
-          />
+          <b-input type="text" custom-class="is-small" maxlength="10" style="width: 10em;" v-model="displayName" />
         </b-field>
         <b-field label="Avatar" horizontal>
-          <b-checkbox v-model="useTwitterAvatar">Use Twitter avatar</b-checkbox>
+          <b-checkbox v-model="useTwitterAvatar">
+            Use Twitter avatar
+          </b-checkbox>
         </b-field>
         <b-field horizontal>
-          <b-button class="is-primary" @click="onClickUpdatePrivacySettings" :disabled="isRequesting">Update privacy settings</b-button>
+          <b-button class="is-primary" @click="onClickUpdatePrivacySettings" :disabled="isRequesting">
+            Update privacy settings
+          </b-button>
         </b-field>
-        <p>Your Twitter profile is <strong>{{ isTwitterProfilePublic ? 'Public' : 'Private' }}</strong>.</p>
+        <p>
+          Your Twitter profile is <strong>{{ isTwitterProfilePublic ? 'Public' : 'Private' }}</strong>.
+        </p>
       </div>
 
       <div v-if="isBrowserUploadEnabled">
         <h1>Upload results</h1>
         <form @submit.prevent>
           <label for="file-selector">
-            <a>Select result file(s)</a> or drag and drop result files (each file must be 20KB&lt;).<br>
-            You can upload up to 10 results at once.<br>
-            <input id="file-selector" @change="onSelectFiles" type="file" accept="application/json" multiple>
+            <a>Select result file(s)</a> or drag and drop result files (each file must be 20KB&lt;).<br />
+            You can upload up to 10 results at once.<br />
+            <input id="file-selector" @change="onSelectFiles" type="file" accept="application/json" multiple />
           </label>
-          <button :disabled="isUploading" @click="onClickUpload">Upload</button>
-          <button :disabled="isUploading" @click="onClickClearFiles">Clear files</button>
+          <button :disabled="isUploading" @click="onClickUpload">
+            Upload
+          </button>
+          <button :disabled="isUploading" @click="onClickClearFiles">
+            Clear files
+          </button>
 
           <h2>Selected Files</h2>
           <div v-for="file in selectedFiles">
@@ -64,14 +76,14 @@
           <div>
             <div v-for="item in uploadLog" :key="item.job_id">
               <p class="error" v-if="item.error">
-                {{ item.error.summary }}<br>
+                {{ item.error.summary }}<br />
                 {{ item.error.message }}
               </p>
               <p v-else>
                 <strong>{{ item.job_id ? item.job_id : '?' }}</strong>
                 <span v-if="!item.created"> already exists.</span>
                 <span v-else> was uploaded successfully.</span>
-                See: <router-link :to="`/results/${item.salmon_id}`">/result/{{ item.salmon_id }}</router-link>
+                See: <router-link :to="`/results/${item.salmon_id}`"> /result/{{ item.salmon_id }} </router-link>
               </p>
             </div>
           </div>
@@ -85,7 +97,7 @@
 h1 {
   font-size: 120%;
   margin-top: 1em;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 }
 
 #file-selector {
@@ -103,7 +115,7 @@ h1 {
 
 <script>
 import Clipboard from 'clipboard';
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import dragDrop from 'drag-drop';
 
 import { statefulApiClient } from '../api-client';
@@ -144,16 +156,18 @@ export default class SalmonResultUploader extends Vue {
 
     if (this.clipboard === null && this.$refs.copyToClipboard !== undefined) {
       this.clipboard = new Clipboard(this.$refs.copyToClipboard, {
-        text: (trigger) => this.apiToken,
+        text: () => this.apiToken,
       });
-      this.clipboard.on('success', (e) => {
+      this.clipboard.on('success', () => {
         alert('Successfully copied API token to clipboard.');
       });
     }
 
     if (this.removeListner === null) {
       this.removeListner = dragDrop('body', (files) => {
-        if (this.isSignedIn) this.addToSelectedFiles(files);
+        if (this.isSignedIn) {
+          this.addToSelectedFiles(files);
+        }
       });
     }
   }
@@ -167,10 +181,11 @@ export default class SalmonResultUploader extends Vue {
             return;
           }
 
-          const isAlreadySelected = this.selectedFiles.some((selectedFile) => {
-            // Note: Technically this assumption is not always correct.
-            return file.name === selectedFile.name && file.size === selectedFile.size;
-          });
+          const isAlreadySelected = this.selectedFiles.some(
+            (selectedFile) =>
+              // Note: Technically this assumption is not always correct.
+              file.name === selectedFile.name && file.size === selectedFile.size,
+          );
 
           if (isAlreadySelected) {
             return;
@@ -185,13 +200,13 @@ export default class SalmonResultUploader extends Vue {
     event.target.form.reset(); // clear selected files
     event.preventDefault();
   }
-  onClickUpload(event) {
+  onClickUpload() {
     this.uploadResults();
   }
-  onClickClearFiles(event) {
+  onClickClearFiles() {
     this.selectedFiles = [];
   }
-  onClickGenerateApiToken(event) {
+  onClickGenerateApiToken() {
     this.isRequesting = true;
 
     statefulApiClient
@@ -201,7 +216,9 @@ export default class SalmonResultUploader extends Vue {
       .then((res) => {
         this.apiToken = res.data.api_token;
       })
-      .finally(() => { this.isRequesting = false; });
+      .finally(() => {
+        this.isRequesting = false;
+      });
   }
   onClickUpdatePrivacySettings() {
     this.isRequesting = true;
@@ -214,7 +231,9 @@ export default class SalmonResultUploader extends Vue {
       .then((res) => {
         metadata.SET_USER_METADATA(res.data);
       })
-      .finally(() => { this.isRequesting = false; });
+      .finally(() => {
+        this.isRequesting = false;
+      });
   }
 
   uploadResults() {

@@ -17,14 +17,14 @@ export const i18n = new VueI18n({
 
 const loadedLanguages: string[] = [];
 
-function setI18nLanguage(lang: string) {
+const setI18nLanguage = (lang: string) => {
   i18n.locale = lang;
   // axios.defaults.headers.common['Accept-Language'] = lang;
   document.querySelector('html')!.setAttribute('lang', lang);
   return lang;
-}
+};
 
-export function loadLanguageAsync(lang: string, forceLoad: boolean = false) {
+export const loadLanguageAsync = (lang: string, forceLoad = false) => {
   lang = supportedLanguages.includes(lang) ? lang : defaultLanguage;
 
   if (forceLoad || i18n.locale !== lang) {
@@ -41,4 +41,4 @@ export function loadLanguageAsync(lang: string, forceLoad: boolean = false) {
     return Promise.resolve(setI18nLanguage(lang));
   }
   return Promise.resolve(lang);
-}
+};

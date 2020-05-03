@@ -1,13 +1,21 @@
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <router-link class="navbar-item" to="/" active-class="" exact>Salmon Stats</router-link>
+      <router-link class="navbar-item" to="/" active-class="" exact>
+        Salmon Stats
+      </router-link>
 
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-        @click="toggleBurgerMenu" :class="isBurgerMenuOpen ? 'is-active' : ''">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
+      <a
+        role="button"
+        class="navbar-burger"
+        aria-label="menu"
+        aria-expanded="false"
+        @click="toggleBurgerMenu"
+        :class="isBurgerMenuOpen ? 'is-active' : ''"
+      >
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
       </a>
 
       <div class="is-hidden-desktop my-profile">
@@ -19,19 +27,27 @@
     <div class="navbar-menu" :class="isBurgerMenuOpen ? 'is-active' : ''">
       <div class="navbar-start">
         <div class="use-marker navbar-item">
-          <router-link to="/results" :class="$route.name === 'results' && 'router-link-active'" exact>Results</router-link>
+          <router-link to="/results" :class="$route.name === 'results' && 'router-link-active'" exact>
+            Results
+          </router-link>
         </div>
         <div class="use-marker navbar-item">
-          <router-link to="/schedules" :class="$route.name === 'schedules' && 'router-link-active'" exact>Schedules</router-link>
+          <router-link to="/schedules" :class="$route.name === 'schedules' && 'router-link-active'" exact>
+            Schedules
+          </router-link>
         </div>
         <div class="use-marker navbar-item">
-          <router-link to="/players/search" :class="$route.name === 'players.search' && 'router-link-active'" exact>Search</router-link>
+          <router-link to="/players/search" :class="$route.name === 'players.search' && 'router-link-active'" exact>
+            Search
+          </router-link>
         </div>
       </div>
       <div class="navbar-end">
         <template v-if="user">
           <div class="use-marker navbar-item is-hidden-touch">
-            <router-link to="/settings">Settings</router-link>
+            <router-link to="/settings">
+              Settings
+            </router-link>
           </div>
 
           <div class="navbar-item my-profile is-hidden-touch">
@@ -56,7 +72,7 @@ a {
 }
 
 .navbar-item a {
-  padding: 0 .25rem;
+  padding: 0 0.25rem;
 }
 .use-marker a {
   color: inherit;
@@ -69,14 +85,14 @@ a {
   }
   &:hover {
     background-size: 100%;
-    transition: background-size .2s;
+    transition: background-size 0.2s;
   }
 }
 .my-profile {
   display: flex;
   align-items: center;
 
-  margin: 0 .5em;
+  margin: 0 0.5em;
 
   a {
     display: flex;

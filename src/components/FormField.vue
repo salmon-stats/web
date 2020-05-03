@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, PropSync, Prop } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 
 @Component
 export default class FormField extends Vue {

@@ -8,19 +8,17 @@ const extendSalmonResult = (result: any): ExtendedSalmonResult => {
   const highest: any = { boss_eliminations: {} };
 
   idKeyMap.bossIds.forEach((bossId) => {
-    const bossEliminationCounts = result.player_results!
-      .map((p: any) => p.boss_eliminations.counts[bossId]);
-    totalResult.boss_eliminations[bossId] =
-      bossEliminationCounts.reduce((sum: number, count: any) => sum + count, 0);
-    highest.boss_eliminations[bossId] =
-      bossEliminationCounts.reduce((max: number, count: any) => count > max ? count : max, 0);
+    const bossEliminationCounts = result.player_results!.map((p: any) => p.boss_eliminations.counts[bossId]);
+    totalResult.boss_eliminations[bossId] = bossEliminationCounts.reduce((sum: number, count: any) => sum + count, 0);
+    highest.boss_eliminations[bossId] = bossEliminationCounts.reduce(
+      (max: number, count: any) => (count > max ? count : max),
+      0,
+    );
   });
 
   keysToSumUp.forEach((key) => {
-    totalResult[key] =
-      result.player_results!.reduce((sum: number, p: any) => sum + p[key], 0);
-    highest[key] =
-      Math.max(...result.player_results!.map((p: any) => p[key]));
+    totalResult[key] = result.player_results!.reduce((sum: number, p: any) => sum + p[key], 0);
+    highest[key] = Math.max(...result.player_results!.map((p: any) => p[key]));
   });
 
   const extendedSalmonResult: ExtendedSalmonResult = {
@@ -31,6 +29,4 @@ const extendSalmonResult = (result: any): ExtendedSalmonResult => {
   return extendedSalmonResult;
 };
 
-export {
-  extendSalmonResult,
-};
+export { extendSalmonResult };

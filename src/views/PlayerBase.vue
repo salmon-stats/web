@@ -1,7 +1,11 @@
 <template>
   <div>
-    <player-page-header :title="title" :player-id="playerId"
-      :is-loading-user-data="isLoadingUserData" :user-data="user" />
+    <player-page-header
+      :title="title"
+      :player-id="playerId"
+      :is-loading-user-data="isLoadingUserData"
+      :user-data="user"
+    />
     <router-view class="body" />
   </div>
 </template>
@@ -16,7 +20,6 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { playersModule } from '@/store/modules/players';
 import PlayerPageHeader from '@/components/PlayerPageHeader.vue';
-
 
 @Component({
   components: { PlayerPageHeader },
@@ -53,9 +56,10 @@ export default class PlayerBase extends Vue {
       this.user = null;
     }
 
-    playersModule.fetchPlayer(this.playerId)
-      .then((responseBody) => this.user = responseBody)
-      .finally(() => this.isLoadingUserData = false);
+    playersModule
+      .fetchPlayer(this.playerId)
+      .then((responseBody) => (this.user = responseBody))
+      .finally(() => (this.isLoadingUserData = false));
   }
 
   mounted() {

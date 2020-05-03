@@ -27,7 +27,7 @@ import ScheduleCard from '@/components/ScheduleCard.vue';
   components: { ScheduleCard },
   computed: {
     ...mapState('schedulesMetadata', {
-      schedules: state => state.schedules,
+      schedules: (state) => state.schedules,
     }),
   },
 })
@@ -44,12 +44,16 @@ export default class ScheduleBase extends Vue {
     return this.$route.params.scheduleId;
   }
   get nextSchedule() {
-    if (!this.schedule || !this.schedule.nextScheduleId) return;
+    if (!this.schedule || !this.schedule.nextScheduleId) {
+      return;
+    }
 
     return schedulesModule.schedules.get(this.schedule.nextScheduleId);
   }
   get previousSchedule() {
-    if (!this.schedule || !this.schedule.prevScheduleId) return;
+    if (!this.schedule || !this.schedule.prevScheduleId) {
+      return;
+    }
 
     return schedulesModule.schedules.get(this.schedule.prevScheduleId);
   }
@@ -61,11 +65,12 @@ export default class ScheduleBase extends Vue {
 
     this.isLoadingScheduleMetadata = true;
 
-    schedulesModule.fetchScheduleMetadata(this.scheduleId)
+    schedulesModule
+      .fetchScheduleMetadata(this.scheduleId)
       .then((schedule) => {
         this.schedule = schedule;
       })
-      .finally(() => this.isLoadingScheduleMetadata = false);
+      .finally(() => (this.isLoadingScheduleMetadata = false));
   }
 
   mounted() {
@@ -76,15 +81,14 @@ export default class ScheduleBase extends Vue {
   onChangeScheduleId() {
     if (this.$route.name === 'schedules.summary') {
       this.schedule = this.schedules[this.$route.params.scheduleId] || null;
-    }
-    else {
+    } else {
       this.schedule = null;
       this.fetchScheduleMetadata();
     }
   }
 
   @Watch('schedules')
-  onChangeSchedules(newSchedules) {
+  onChangeSchedules() {
     this.onChangeScheduleId();
   }
 }

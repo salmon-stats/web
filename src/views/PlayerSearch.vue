@@ -9,9 +9,11 @@
         :maxlength="maxLength"
         :disabled="isSearching"
         @keypress.enter.native="search"
-        />
+      />
       <p class="control">
-        <b-button @click="search" :disabled="isSearching" class="button is-primary">Search</b-button>
+        <b-button @click="search" :disabled="isSearching" class="button is-primary">
+          Search
+        </b-button>
       </p>
     </b-field>
 
@@ -50,7 +52,7 @@
 </style>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import PlayerSearchResult from '@/components/PlayerSearchResult.vue';
 import apiClient from '@/api-client';
 
@@ -85,7 +87,9 @@ export default class PlayerSearch extends Vue {
         this.playerNames = res.data.names;
         this.registeredUsers = res.data.users;
       })
-      .finally(() => { this.isSearching = false; });
+      .finally(() => {
+        this.isSearching = false;
+      });
   }
 
   public mounted() {

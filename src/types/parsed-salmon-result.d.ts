@@ -82,13 +82,13 @@ interface ParsedSalmonResult {
   danger_rate: string;
   created_at: string;
   updated_at: string;
-  member_accounts: Array<MemberAccount>;
+  member_accounts: MemberAccount[];
   player_results: ParsedPlayerResult[];
   schedule: Schedule;
   waves: Wave[];
 }
 
-interface TotalResult  {
+interface TotalResult {
   rescue: number;
   death: number;
   golden_eggs: number;
@@ -103,11 +103,4 @@ interface ExtendedSalmonResult extends ParsedSalmonResult {
   highest: TotalResult;
 }
 
-export {
-  BossIdKeys,
-  TotalResult,
-  ParsedSalmonResult,
-  ParsedPlayerResult,
-  MemberAccount,
-  ExtendedSalmonResult,
-}
+export { BossIdKeys, TotalResult, ParsedSalmonResult, ParsedPlayerResult, MemberAccount, ExtendedSalmonResult };

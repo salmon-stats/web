@@ -12,13 +12,13 @@
 </template>
 
 <script>
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import { mapQueryParamsToApiPath } from '@/helper';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import Results from '@/components/Results.vue';
-import { paginatorWithFilters } from '@/components/ResultsFilter.vue'
+import { paginatorWithFilters } from '@/components/ResultsFilter.vue';
 import { fieldsWithout } from '@/components/ResultsFilter.vue';
 
 @Component({

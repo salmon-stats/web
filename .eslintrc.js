@@ -1,13 +1,20 @@
+const STRICT_CHECKING = true;
+
+const extendsOptions = [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:vue/recommended"
+];
+
+if (STRICT_CHECKING) {
+  extendsOptions.push("plugin:@typescript-eslint/recommended-requiring-type-checking");
+}
+
 module.exports = {
     "env": {
         "browser": true,
         "es6": true
     },
-    "extends": [
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking",
-        "plugin:vue/recommended"
-    ],
+    "extends": extendsOptions,
     "parser": "vue-eslint-parser",
     "parserOptions": {
         "parser": "@typescript-eslint/parser",
@@ -54,6 +61,7 @@ module.exports = {
                 }
             }
         ],
+        "@typescript-eslint/camelcase": "off",
         "@typescript-eslint/class-name-casing": "warn",
         // "@typescript-eslint/consistent-type-assertions": "warn",
         "@typescript-eslint/consistent-type-definitions": "warn",
@@ -101,15 +109,17 @@ module.exports = {
         ],
         "@typescript-eslint/type-annotation-spacing": "warn",
         "@typescript-eslint/unified-signatures": "warn",
+
+        "vue/attributes-order": "off",
+        "vue/max-attributes-per-line": "off",
+        "vue/html-self-closing": "off",
+        "vue/no-multiple-template-root": "off", // false positive
+        "vue/singleline-html-element-content-newline": "off",
+
         "arrow-body-style": "warn",
         "brace-style": [
             "warn",
             "1tbs"
-        ],
-        "camelcase": "warn",
-        "comma-dangle": [
-            "warn",
-            "always-multiline"
         ],
         "complexity": "off",
         "constructor-super": "warn",
@@ -124,14 +134,10 @@ module.exports = {
         "id-blacklist": [
             "warn",
             "any",
-            "Number",
             "number",
-            "String",
             "string",
-            "Boolean",
             "boolean",
-            "Undefined",
-            "undefined"
+            "Undefined"
         ],
         "id-match": "warn",
         "import/order": "off",
@@ -139,14 +145,13 @@ module.exports = {
             "warn",
             1
         ],
-        "max-len": [
+        "new-parens": "warn",
+        "no-bitwise": [
             "warn",
             {
-                "code": 120
-            }
+                "int32Hint": true
+            },
         ],
-        "new-parens": "warn",
-        "no-bitwise": "warn",
         "no-caller": "warn",
         "no-cond-assign": "warn",
         "no-console": "warn",

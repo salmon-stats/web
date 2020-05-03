@@ -3,9 +3,13 @@
     <div class="box">
       <div class="user">
         <player-avatar v-if="player.twitter_avatar" :user="player" />
-        <p class="name"><strong>{{ player.name }}</strong></p>
+        <p class="name">
+          <strong>{{ player.name }}</strong>
+        </p>
       </div>
-      <p><span class="weak">{{ player.updated_at }}</span></p>
+      <p>
+        <span class="weak">{{ player.updated_at }}</span>
+      </p>
     </div>
   </router-link>
 </template>
@@ -18,8 +22,8 @@
     width: 32px;
     height: 32px;
 
-    &+.name {
-      margin-left: .5em;
+    & + .name {
+      margin-left: 0.5em;
       align-self: center;
     }
   }
@@ -31,7 +35,7 @@
 </style>
 
 <script>
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import PlayerAvatar from '@/components/PlayerAvatar.vue';
 
 @Component({
@@ -39,6 +43,5 @@ import PlayerAvatar from '@/components/PlayerAvatar.vue';
   components: { PlayerAvatar },
   props: { player: Object },
 })
-export default class PlayerSearchResult extends Vue {
-}
+export default class PlayerSearchResult extends Vue {}
 </script>

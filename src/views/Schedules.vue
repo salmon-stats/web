@@ -1,14 +1,13 @@
 <template>
   <require-fetch-template>
     <div class="columns is-multiline">
-      <div class="column is-one-third schedule" v-for="schedule in schedules"
-        :key="schedule.scheduleId">
-        <schedule-card
-          :schedule="schedule" />
+      <div class="column is-one-third schedule" v-for="schedule in schedules" :key="schedule.scheduleId">
+        <schedule-card :schedule="schedule" />
       </div>
     </div>
 
-    <b-pagination v-if="schedules.length > 0"
+    <b-pagination
+      v-if="schedules.length > 0"
       :total="state.total"
       :current.sync="currentPage"
       :per-page="state.per_page"
@@ -31,7 +30,7 @@
 </style>
 
 <script>
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import ScheduleCard from '@/components/ScheduleCard.vue';
@@ -66,12 +65,13 @@ export default class Schedules extends RequireFetchBase {
   }
 
   fetch() {
-    state.fetch(this.apiPath)
-      .then((res) => {
-        if (!res) return;
+    state.fetch(this.apiPath).then((res) => {
+      if (!res) {
+        return;
+      }
 
-        res.data.forEach(schedulesModule.setScheduleData);
-      });
+      res.data.forEach((schedule) => schedulesModule.setScheduleData(schedule));
+    });
   }
 
   mounted() {

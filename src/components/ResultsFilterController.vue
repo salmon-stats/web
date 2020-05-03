@@ -6,8 +6,12 @@
       <div class="is-flex">
         <button class="button" @click="toggleVisibility">{{ isFilterVisible ? 'Close' : 'Open' }} filters</button>
         <div>
-          <button class="button is-danger" @click="$emit('clear')">Clear</button>
-          <button class="button is-success" @click="$emit('search')">Apply</button>
+          <button class="button is-danger" @click="$emit('clear')">
+            Clear
+          </button>
+          <button class="button is-success" @click="$emit('search')">
+            Apply
+          </button>
         </div>
       </div>
     </template>
@@ -41,7 +45,7 @@
 </style>
 
 <script lang="ts">
-import { Vue, Component, PropSync, Prop } from 'vue-property-decorator';
+import { Vue, Component } from 'vue-property-decorator';
 
 @Component
 export default class ResultsFilterController extends Vue {

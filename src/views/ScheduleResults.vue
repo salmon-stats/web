@@ -1,7 +1,8 @@
 <template>
   <require-fetch-template>
     <div v-if="scheduleResults">
-      <results :results-with-pagination="scheduleResults"
+      <results
+        :results-with-pagination="scheduleResults"
         :hide-schedule-heading="true"
         :paginator="paginator"
         :available-filters="fieldsWithout(['stages', 'weapons', 'player_results'])"
@@ -11,7 +12,7 @@
 </template>
 
 <script>
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import Results from '@/components/Results.vue';
@@ -32,7 +33,9 @@ export default class ScheduleResults extends RequireFetchBase {
     return mapQueryParamsToApiPath(`schedules/${this.scheduleId}/results`, this.$route.query);
   }
   get scheduleResults() {
-    if (!state.data || !('results' in state.data)) return;
+    if (!state.data || !('results' in state.data)) {
+      return;
+    }
 
     return state.data.results;
   }

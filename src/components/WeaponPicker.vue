@@ -1,20 +1,33 @@
 <template>
   <div class="container">
     <div class="is-flex" style="align-items: center;">
-      <button class="button" @click="openModal">Open</button>
-      <p style="margin-left: .5em;">({{selectedWeapons.length}}/{{weapons.length}})</p>
+      <button class="button" @click="openModal">
+        Open
+      </button>
+      <p style="margin-left: 0.5em;">({{ selectedWeapons.length }}/{{ weapons.length }})</p>
     </div>
 
     <div :class="['modal', isOpen ? 'is-active' : '']">
-      <div class="modal-background" @click="closeModal"></div>
+      <div class="modal-background" @click="closeModal" />
       <div class="modal-content">
         <div class="modal-controls">
-          <button class="button" v-if="isInitialState" @click="selectAll">Select All</button>
-          <button class="button" v-else @click="unselectAll">Unselect All</button>
-          <button class="button is-success" @click="closeModal">Close</button>
+          <button class="button" v-if="isInitialState" @click="selectAll">
+            Select All
+          </button>
+          <button class="button" v-else @click="unselectAll">
+            Unselect All
+          </button>
+          <button class="button is-success" @click="closeModal">
+            Close
+          </button>
         </div>
 
-        <div class="weapon-icon-container" v-for="weaponId in weapons" :key="weaponId" @click="toggleSelection(weaponId)">
+        <div
+          class="weapon-icon-container"
+          v-for="weaponId in weapons"
+          :key="weaponId"
+          @click="toggleSelection(weaponId)"
+        >
           <main-weapon
             :weapon-id="weaponId"
             :class="['weapon-icon', selectedWeapons.includes(weaponId) ? 'is-selected' : '']"
@@ -41,7 +54,7 @@
 
 img:not(.is-selected) {
   filter: grayscale(1);
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .weapon-icon-container {
@@ -59,15 +72,14 @@ img {
   position: absolute;
   bottom: 0;
   left: 0;
-  padding: 0 .125em;
-  background-color: rgba(0,0,0,0.5);
+  padding: 0 0.125em;
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
 }
 </style>
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch, PropSync } from 'vue-property-decorator';
-import { mapState } from 'vuex';
 import { idKeyMapModule } from '@/store/modules/id-key-map';
 import MainWeapon from '@/components/MainWeapon.vue';
 
@@ -105,7 +117,7 @@ export default class WeaponPicker extends Vue {
   })
   counts!: { [key: string]: number };
 
-  isOpen: boolean = false;
+  isOpen = false;
 
   closeModal() {
     this.isOpen = false;
@@ -145,5 +157,5 @@ export default class WeaponPicker extends Vue {
       this.initialize();
     }
   }
-};
+}
 </script>

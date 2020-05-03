@@ -14,7 +14,7 @@
 
 <script>
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
-import { Component, Vue } from 'vue-property-decorator';
+import { Vue } from 'vue-property-decorator';
 
 export default class RequireFetchTemplate extends Vue {
   get error() {

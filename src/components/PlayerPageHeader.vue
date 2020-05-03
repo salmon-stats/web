@@ -3,8 +3,7 @@
     <div class="is-marginless columns user is-clipped">
       <router-link class="is-flex" tag="div" :to="`/players/${playerId}`">
         <template v-if="user" class="is-marginless is-flex">
-          <player-avatar class="avatar"
-            :size="72" :user="user" :blockies-seed="playerId" :key="playerId" />
+          <player-avatar class="avatar" :size="72" :user="user" :blockies-seed="playerId" :key="playerId" />
           <div>
             <h1>
               <a>
@@ -17,8 +16,7 @@
         <template v-else>
           <div class="avatar">
             <div v-if="isLoadingUserData" class="placeholder" />
-            <player-avatar v-else class="avatar"
-              :size="72" :blockies-seed="playerId" />
+            <player-avatar v-else class="avatar" :size="72" :blockies-seed="playerId" />
           </div>
           <div>
             <h1>
@@ -31,47 +29,51 @@
         </template>
       </router-link>
 
-      <div  class="is-flex lifetime-stats">
+      <div class="is-flex lifetime-stats">
         <template v-if="user && user.results">
           <div>
             <p>Results</p>
             <p>
-              <span class="clear">{{user.results.clear}}</span>
+              <span class="clear">{{ user.results.clear }}</span>
               -
-              <span class="fail">{{user.results.fail}}</span>
+              <span class="fail">{{ user.results.fail }}</span>
             </p>
           </div>
           <div class="is-hidden-mobile">
             <p>Clear rate</p>
-            <p>{{percentage(user.results.clear/totalGames)}}</p>
+            <p>{{ percentage(user.results.clear / totalGames) }}</p>
           </div>
           <div>
-            <p title="Rescue/Death">R/D</p>
-            <p class="is-hidden-mobile">
-              {{user.total.rescue}}/{{user.total.death}}
+            <p title="Rescue/Death">
+              R/D
             </p>
+            <p class="is-hidden-mobile">{{ user.total.rescue }}/{{ user.total.death }}</p>
             <p class="is-hidden-tablet">
-              {{user.total.rescue / (user.total.death === 0 ? 1 : user.total.death) | toFixed(2)}}
+              {{ (user.total.rescue / (user.total.death === 0 ? 1 : user.total.death)) | toFixed(2) }}
             </p>
           </div>
           <div>
             <p>Total eggs</p>
             <p class="is-hidden-mobile">
-              <span class="golden-egg" :title="user.total.golden_eggs">{{useMetricPrefix(user.total.golden_eggs, 2)}}</span>
+              <span class="golden-egg" :title="user.total.golden_eggs">{{
+                useMetricPrefix(user.total.golden_eggs, 2)
+              }}</span>
               -
-              <span class="power-egg" :title="user.total.power_eggs">{{useMetricPrefix(user.total.power_eggs, 2)}}</span>
+              <span class="power-egg" :title="user.total.power_eggs">{{
+                useMetricPrefix(user.total.power_eggs, 2)
+              }}</span>
             </p>
             <p class="is-hidden-tablet">
-              <span class="golden-egg">{{useMetricPrefix(user.total.golden_eggs, 2)}}</span>
+              <span class="golden-egg">{{ useMetricPrefix(user.total.golden_eggs, 2) }}</span>
               -
-              <span class="power-egg">{{useMetricPrefix(user.total.power_eggs, 2)}}</span>
+              <span class="power-egg">{{ useMetricPrefix(user.total.power_eggs, 2) }}</span>
             </p>
           </div>
           <div>
             <p>Avg boss</p>
             <p>
               <span :title="user.total.boss_elimination_count">
-                {{user.total.boss_elimination_count / totalGames | toFixed(2)}}
+                {{ (user.total.boss_elimination_count / totalGames) | toFixed(2) }}
               </span>
             </p>
           </div>
@@ -84,7 +86,11 @@
       <router-link :exact="true" :to="playerSummary">
         Overview
       </router-link>
-      <router-link :exact="true" :class="$route.name === 'players.results' && 'router-link-active'" :to="`/players/${playerId}/results`">
+      <router-link
+        :exact="true"
+        :class="$route.name === 'players.results' && 'router-link-active'"
+        :to="`/players/${playerId}/results`"
+      >
         Results
       </router-link>
       <router-link :to="`/players/${playerId}/schedules`">
@@ -110,7 +116,7 @@
 .avatar {
   // height: 72px;
   & + div {
-    margin-left: .5em;
+    margin-left: 0.5em;
   }
   > .placeholder {
     width: 72px;
@@ -135,13 +141,12 @@ h1 {
 }
 
 .user {
-  padding: .5em;
+  padding: 0.5em;
   justify-content: space-between;
   > div {
-    width: fit-content
+    width: fit-content;
   }
 }
-
 
 .lifetime-stats {
   align-items: flex-end;
@@ -169,14 +174,22 @@ h1 {
   overflow-x: auto;
 
   a {
-    padding: .5em;
+    padding: 0.5em;
     white-space: nowrap;
 
     &.external {
-      &.twitter { color: $twitter-color; }
-      &.twitter:hover { color: lighten($twitter-color, 10%); }
-      &.splatoon-stats { color: $link; }
-      &.splatoon-stats:hover { color: lighten($link, 10%); }
+      &.twitter {
+        color: $twitter-color;
+      }
+      &.twitter:hover {
+        color: lighten($twitter-color, 10%);
+      }
+      &.splatoon-stats {
+        color: $link;
+      }
+      &.splatoon-stats:hover {
+        color: lighten($link, 10%);
+      }
     }
 
     &:hover,
@@ -186,7 +199,9 @@ h1 {
     }
     &:not(.router-link-active) {
       color: $body-color;
-      &:hover { color: $text-strong; }
+      &:hover {
+        color: $text-strong;
+      }
     }
     // &:not(:first-child) { margin-left: 1em; }
   }
@@ -220,7 +235,9 @@ export default class PlayerPageHeader extends Vue {
     return this.user.results.clear + this.user.results.fail;
   }
   get twitterProfileUrl() {
-    if (!this.user || !this.user.isRegistered || this.user.isCustomName || !this.user.avatar) return null;
+    if (!this.user || !this.user.isRegistered || this.user.isCustomName || !this.user.avatar) {
+      return null;
+    }
 
     return `https://twitter.com/${this.user.name}`;
   }

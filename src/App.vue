@@ -17,16 +17,21 @@
 
 $footer-height: 5em;
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: bold;
   color: $text-strong;
 }
 
 h2 {
   font-size: 120%;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
   &.has-margin-top {
-    margin-top: .5em;
+    margin-top: 0.5em;
   }
 }
 
@@ -59,8 +64,8 @@ h2 {
 
 @media screen and (max-width: $tablet - 1) {
   #app > .body {
-    padding-left: .75em;
-    padding-right: .75em;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
   }
 }
 @media screen and (min-width: $tablet) and (max-width: $desktop - 1) {
@@ -81,20 +86,23 @@ footer {
   height: $footer-height;
 }
 
-table, tr, td {
+table,
+tr,
+td {
   border-collapse: collapse;
   border: 0;
 }
-th, td {
+th,
+td {
   vertical-align: middle !important; // TODO
 }
 :not(.table) {
   th {
     text-align: left;
-    padding: .125em .5em !important;
+    padding: 0.125em 0.5em !important;
   }
   td {
-    padding: .25em .5em !important;
+    padding: 0.25em 0.5em !important;
   }
 }
 .table-wrap {
@@ -102,12 +110,18 @@ th, td {
   background-color: darken($background, 5%);
 
   @media screen and (min-width: $tablet) {
-    padding: .25em;
+    padding: 0.25em;
   }
   @media screen and (max-width: $tablet - 1) {
-    &.box { padding: .25em 0; }
-    thead tr { border-bottom: 1px solid darken($background, 7.5%); }
-    tfoot tr { border-top: 1px solid darken($background, 7.5%); }
+    &.box {
+      padding: 0.25em 0;
+    }
+    thead tr {
+      border-bottom: 1px solid darken($background, 7.5%);
+    }
+    tfoot tr {
+      border-top: 1px solid darken($background, 7.5%);
+    }
   }
 }
 tbody tr:nth-child(odd) {
@@ -171,12 +185,11 @@ export default class App extends Vue {
     const timerId = setInterval(() => {
       const now = new Date().getTime();
       if (now > metadataModule.lastFetchedTime + SESSION_REFRESH_TIME) {
-        metadataModule.refreshSession()
-          .then(() => {
-            if (metadataModule.hasSessionExpired) {
-              clearInterval(timerId);
-            }
-          });
+        metadataModule.refreshSession().then(() => {
+          if (metadataModule.hasSessionExpired) {
+            clearInterval(timerId);
+          }
+        });
       }
     }, 60000);
   }

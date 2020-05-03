@@ -40,14 +40,18 @@
           </table>
         </div>
 
-        <p v-if="playerSummary.weapons.length > 10"><a @click="isWeaponTableExpanded = !isWeaponTableExpanded">{{ isWeaponTableExpanded ? 'Collapse' : 'Expand' }}</a></p>
+        <p v-if="playerSummary.weapons.length > 10">
+          <a @click="isWeaponTableExpanded = !isWeaponTableExpanded">{{
+            isWeaponTableExpanded ? 'Collapse' : 'Expand'
+          }}</a>
+        </p>
       </div>
     </div>
   </require-fetch-template>
 </template>
 
 <script>
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
@@ -55,7 +59,6 @@ import Results from '@/components/Results.vue';
 import MainWeapon from '@/components/MainWeapon.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { isGrizzcoWeapon } from '@/helper';
-import { playersModule } from '@/store/modules/players';
 
 @Component({
   name: 'PlayerSummary',

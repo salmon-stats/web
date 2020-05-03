@@ -1,7 +1,12 @@
 <template>
-  <img v-if="avatar" :style="style" :src="avatar">
-  <blockies v-else :style="style"
-    :sizePerPixel="blockiesSizePerPixel" :pixels="blockiesPixels" :seed="blockiesSeed || (user && (user.player_id || user.playerId))" />
+  <img v-if="avatar" :style="style" :src="avatar" />
+  <blockies
+    v-else
+    :style="style"
+    :sizePerPixel="blockiesSizePerPixel"
+    :pixels="blockiesPixels"
+    :seed="blockiesSeed || (user && (user.player_id || user.playerId))"
+  />
 </template>
 
 <style scoped>
@@ -11,7 +16,7 @@ img {
 </style>
 
 <script>
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component } from 'vue-property-decorator';
 import Blockies from './Blockies.vue';
 
 // Note: size should be divisible by blockiesPixel. (otherwise Blockies will be streched)
@@ -34,7 +39,9 @@ const blockiesPixels = 8;
 export default class PlayerAvatar extends Vue {
   blockiesPixels = blockiesPixels;
   get avatar() {
-    if (!this.user) return;
+    if (!this.user) {
+      return;
+    }
 
     return this.user.avatar || this.user.twitter_avatar;
   }

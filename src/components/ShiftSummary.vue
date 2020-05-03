@@ -7,10 +7,12 @@
         <small class="weak">({{ (shiftSummary.clear_games / shiftSummary.games) | percentage }})</small>
       </p>
       <span class="bar-container">
-        <proportional-bar-chart chart-key="win-loss"
+        <proportional-bar-chart
+          chart-key="win-loss"
           :fill-remainder="true"
           :value="shiftSummary.clear_games"
-          :max="shiftSummary.games" />
+          :max="shiftSummary.games"
+        />
       </span>
     </div>
 
@@ -20,10 +22,12 @@
         {{ (shiftSummary.clear_waves / shiftSummary.games) | toFixed(2) }}
       </p>
       <span class="bar-container">
-        <proportional-bar-chart chart-key="win-loss"
+        <proportional-bar-chart
+          chart-key="win-loss"
           :fill-remainder="true"
           :value="shiftSummary.clear_waves"
-          :max="shiftSummary.games * 3" />
+          :max="shiftSummary.games * 3"
+        />
       </span>
     </div>
 
@@ -33,13 +37,16 @@
         {{ shiftSummary.rescue }}
         /
         {{ shiftSummary.death }}
-        <small class="weak">({{ shiftSummary.rescue * normalizationMultiplier | toFixed(2) }} / {{ shiftSummary.death * normalizationMultiplier | toFixed(2) }})</small>
+        <small class="weak">({{ (shiftSummary.rescue * normalizationMultiplier) | toFixed(2) }} /
+          {{ (shiftSummary.death * normalizationMultiplier) | toFixed(2) }})</small>
       </p>
       <span class="bar-container">
-        <proportional-bar-chart chart-key="rescue-death"
+        <proportional-bar-chart
+          chart-key="rescue-death"
           :fill-remainder="true"
           :value="shiftSummary.rescue"
-          :max="shiftSummary.rescue + shiftSummary.death" />
+          :max="shiftSummary.rescue + shiftSummary.death"
+        />
       </span>
     </div>
 
@@ -49,7 +56,9 @@
         {{ shiftSummary.player_boss_elimination_count }}
         /
         {{ shiftSummary.team_boss_elimination_count }}
-        <small class="weak">({{ (shiftSummary.player_boss_elimination_count / shiftSummary.team_boss_elimination_count) | percentage }})</small>
+        <small class="weak">({{
+          (shiftSummary.player_boss_elimination_count / shiftSummary.team_boss_elimination_count) | percentage
+        }})</small>
       </p>
       <!--
       <span class="bar-container">
@@ -112,7 +121,9 @@
     & + * {
       font-weight: normal;
       margin-left: 1em;
-      &:not([class]) { color: $text-strong; }
+      &:not([class]) {
+        color: $text-strong;
+      }
     }
   }
   .bar-container {
@@ -123,7 +134,7 @@
 </style>
 
 <script>
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import ScheduleCard from '@/components/ScheduleCard';
 import { getTranslationKey, percentage, toFixed } from '@/helper';
@@ -134,7 +145,7 @@ import { getTranslationKey, percentage, toFixed } from '@/helper';
   filters: { percentage, toFixed },
   props: {
     shiftSummary: Object,
-  }
+  },
 })
 export default class ShiftSummary extends Vue {
   getTranslationKey = getTranslationKey;

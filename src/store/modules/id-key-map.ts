@@ -2,7 +2,9 @@ import { Mutation, Action, VuexModule, getModule, Module } from 'vuex-module-dec
 import store from '@/store/store';
 import apiCleint from '@/api-client';
 
-type StringMap = { [key: string]: string };
+interface StringMap {
+  [key: string]: string;
+}
 
 export interface IIdKeyMap {
   boss: StringMap;
@@ -41,10 +43,9 @@ class IdKeyMap extends VuexModule implements IIdKeyMap {
 
   @Action
   public fetchIdKeyMap() {
-    apiCleint.get('/id-key-map')
-      .then((res) => {
-        this.SET_ID_KEY_MAP(res.data);
-      });
+    apiCleint.get('/id-key-map').then((res) => {
+      this.SET_ID_KEY_MAP(res.data);
+    });
   }
 
   @Mutation

@@ -22,8 +22,9 @@ export default class PlayerPeers extends Vue {
   }
 
   public get ongoingSchedule(): Schedule | null {
-    return this.schedules.find((schedule) =>
-      this.now.isBefore(schedule.endAt) && this.now.isAfter(schedule.startAt)) || null;
+    return (
+      this.schedules.find((schedule) => this.now.isBefore(schedule.endAt) && this.now.isAfter(schedule.startAt)) || null
+    );
   }
 
   public get pastSchedules(): Schedule[] {
@@ -34,7 +35,7 @@ export default class PlayerPeers extends Vue {
   }
 
   public mounted() {
-    this.timerId = setInterval(() => this.now = dayjs(), 1000);
+    this.timerId = setInterval(() => (this.now = dayjs()), 1000);
   }
 
   public beforeDestroy() {

@@ -1,7 +1,7 @@
 import { Mutation, Action, VuexModule, getModule, Module } from 'vuex-module-decorators';
 
 import store from '@/store/store';
-import { Schedule, User, UserData } from '@/types/salmon-stats';
+import { Schedule, User } from '@/types/salmon-stats';
 import { parseRawSchedule } from '@/helper';
 import { statefulApiClient } from '@/api-client';
 import { schedulesModule } from '@/store/modules/schedules';
@@ -22,7 +22,7 @@ class Metadata extends VuexModule implements IMetadata {
   public currentUser = 0;
 
   public get myPlayerId(): string | null {
-    return (this.user && this.user.accounts.length > 0) ? this.user.accounts[this.currentUser].player_id : null;
+    return this.user && this.user.accounts.length > 0 ? this.user.accounts[this.currentUser].player_id : null;
   }
 
   @Action
@@ -34,7 +34,7 @@ class Metadata extends VuexModule implements IMetadata {
         const data = res.data;
         this.SET_USER_METADATA(data.user);
         this.SET_SCHEDULE_METADATA(data.schedules);
-        data.schedules.forEach(schedulesModule.setScheduleData);
+        data.schedules.forEach((schedule: any) => schedulesModule.setScheduleData(schedule));
         return data;
       })
       .finally(() => {
@@ -48,13 +48,17 @@ class Metadata extends VuexModule implements IMetadata {
       return;
     }
 
-    this.fetchMetadata()
-      .then((data) => {
-        if (data.user === null) {
-          this.SET_SESSION_EXPIRED_TRUE();
-          this.SET_USER_METADATA(null);
-        }
-      });
+    this.fetchMetadata().then((data) => {
+      if (data.user === null) {
+        this.SET_SESSION_EXPIRED_TRUE();
+        this.SET_USER_METADATA(null);
+      }
+    });
+  }
+
+  @Mutation
+  public SET_USER_METADATA(user: null | User) {
+    this.user = user;
   }
 
   @Mutation
@@ -65,11 +69,6 @@ class Metadata extends VuexModule implements IMetadata {
   @Mutation
   private SET_LAST_FETCHED_TIME(time: number) {
     this.lastFetchedTime = time;
-  }
-
-  @Mutation
-  public SET_USER_METADATA(user: null | User) {
-    this.user = user;
   }
 
   @Mutation

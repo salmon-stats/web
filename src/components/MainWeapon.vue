@@ -1,9 +1,9 @@
 <template>
-  <img :src="iconUrl('weapon', weaponId)" :style="style">
+  <img :src="iconUrl('weapon', weaponId)" :style="style" />
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import { iconUrl } from '@/helper';
 
 @Component({
@@ -31,5 +31,5 @@ export default class MainWeapon extends Vue {
       height: size,
     };
   }
-};
+}
 </script>

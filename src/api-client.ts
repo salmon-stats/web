@@ -21,12 +21,13 @@ export const createApiClient = (options: AxiosRequestConfig = {}) => {
   }
 
   return client;
-}
+};
 
-export const createStatefulApiClient = (options: AxiosRequestConfig = {}) => createApiClient({
-  ...options,
-  withCredentials: true,
-});
+export const createStatefulApiClient = (options: AxiosRequestConfig = {}) =>
+  createApiClient({
+    ...options,
+    withCredentials: true,
+  });
 
 export const statefulApiClient = createStatefulApiClient();
 

@@ -1,7 +1,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import dayjs, { Dayjs } from 'dayjs';
 
-import { formatDateToMdhm, timeDifference } from '@/helper';
+import { formatDateToMdhm, timeDifference, DateFormatter } from '@/helper';
 import MainWeapon from '@/components/MainWeapon.vue';
 import { idKeyMapModule } from '@/store/modules/id-key-map';
 import { Schedule } from '@/types/salmon-stats';
@@ -12,7 +12,7 @@ import { Schedule } from '@/types/salmon-stats';
 })
 export default class ScheduleCard extends Vue {
   @Prop({ default: formatDateToMdhm, type: Function })
-  dateFormatter!: Function;
+  dateFormatter!: DateFormatter;
 
   @Prop()
   readonly differenceTo?: 'endAt' | 'startAt';
@@ -32,6 +32,8 @@ export default class ScheduleCard extends Vue {
   @Prop()
   readonly linkTo?: string;
 
+  public duration = dayjs(this.schedule.endAt).diff(this.schedule.startAt, 'h');
+
   public stageKey(id: number) {
     return idKeyMapModule.stage[id.toString()];
   }
@@ -48,7 +50,6 @@ export default class ScheduleCard extends Vue {
   public get endAt() {
     return this.dateFormatter(this.schedule.endAt);
   }
-  public duration = dayjs(this.schedule.endAt).diff(this.schedule.startAt, 'h');
   public get timeDifference(): undefined | string {
     if (!this.differenceTo) {
       return;

@@ -1,7 +1,9 @@
 <template>
   <div class="summary">
     <div class="field">
-      <b-switch v-model="isTeamView">Team</b-switch>
+      <b-switch v-model="isTeamView">
+        Team
+      </b-switch>
       <!-- <b-switch v-model="normalizeFailedGame">Normalize failed games</b-switch> -->
     </div>
 
@@ -15,10 +17,12 @@
         <small class="weak">({{ (shiftSummaries[0].clear_games / shiftSummaries[0].games) | percentage }})</small>
       </p>
       <span class="bar-container">
-        <proportional-bar-chart chart-key="win-loss"
+        <proportional-bar-chart
+          chart-key="win-loss"
           :fill-remainder="true"
           :value="shiftSummaries[0].clear_games"
-          :max="shiftSummaries[0].games" />
+          :max="shiftSummaries[0].games"
+        />
       </span>
     </div>
     <div>
@@ -27,10 +31,12 @@
         <small class="weak">({{ (shiftSummaries[1].clear_games / shiftSummaries[1].games) | percentage }})</small>
       </p>
       <span class="bar-container">
-        <proportional-bar-chart chart-key="win-loss"
+        <proportional-bar-chart
+          chart-key="win-loss"
           :fill-remainder="true"
           :value="shiftSummaries[1].clear_games"
-          :max="shiftSummaries[1].games" />
+          :max="shiftSummaries[1].games"
+        />
       </span>
     </div>
 
@@ -40,10 +46,12 @@
         {{ (shiftSummaries[0].clear_waves / shiftSummaries[0].games) | toFixed(2) }}
       </p>
       <span class="bar-container">
-        <proportional-bar-chart chart-key="win-loss"
+        <proportional-bar-chart
+          chart-key="win-loss"
           :fill-remainder="true"
           :value="shiftSummaries[0].clear_waves"
-          :max="shiftSummaries[0].games * 3" />
+          :max="shiftSummaries[0].games * 3"
+        />
       </span>
     </div>
     <div>
@@ -51,20 +59,22 @@
         {{ (shiftSummaries[1].clear_waves / shiftSummaries[1].games) | toFixed(2) }}
       </p>
       <span class="bar-container">
-        <proportional-bar-chart chart-key="win-loss"
+        <proportional-bar-chart
+          chart-key="win-loss"
           :fill-remainder="true"
           :value="shiftSummaries[1].clear_waves"
-          :max="shiftSummaries[1].games * 3" />
+          :max="shiftSummaries[1].games * 3"
+        />
       </span>
     </div>
 
     <span class="leading">Rescue</span>
     <p v-if="isTeamView">
-      {{ shiftSummaries[0].team_rescue * normalizationMultiplier(0) | toFixed(2) }}
+      {{ (shiftSummaries[0].team_rescue * normalizationMultiplier(0)) | toFixed(2) }}
       <!-- <small class="weak">({{ shiftSummaries[0].team_rescue * normalizationMultiplier(0) | toFixed(2) }})</small> -->
     </p>
     <p v-else>
-      {{ shiftSummaries[0].rescue * normalizationMultiplier(0) | toFixed(2) }}
+      {{ (shiftSummaries[0].rescue * normalizationMultiplier(0)) | toFixed(2) }}
       <!-- <small class="weak">({{ shiftSummaries[0].rescue * normalizationMultiplier(0) | toFixed(2) }})</small> -->
     </p>
     <p>
@@ -77,7 +87,7 @@
       -
     </p>
     <p v-else>
-      {{ shiftSummaries[0].death * normalizationMultiplier(0) | toFixed(2) }}
+      {{ (shiftSummaries[0].death * normalizationMultiplier(0)) | toFixed(2) }}
       <!-- <small class="weak">({{ shiftSummaries[0].team_death * normalizationMultiplier(0) | toFixed(2) }})</small> -->
     </p>
     <p>
@@ -86,16 +96,27 @@
 
     <span class="leading">Boss elimination</span>
     <p v-if="isTeamView">
-      {{ (shiftSummaries[0].boss_elimination_count / shiftSummaries[0].boss_appearance_count / teamMultiplier(0)) | percentage }}
-      <small class="weak">({{ shiftSummaries[0].boss_elimination_count * normalizationMultiplier(0) | toFixed(1) }})</small>
+      {{
+        (shiftSummaries[0].boss_elimination_count / shiftSummaries[0].boss_appearance_count / teamMultiplier(0))
+          | percentage
+      }}
+      <small class="weak">({{ (shiftSummaries[0].boss_elimination_count * normalizationMultiplier(0)) | toFixed(1) }})</small>
     </p>
     <p v-else>
-      {{ (shiftSummaries[0].player_boss_elimination_count / shiftSummaries[0].team_boss_elimination_count / teamMultiplier(0)) | percentage }}
-      <small class="weak">({{ shiftSummaries[0].player_boss_elimination_count * normalizationMultiplier(0) | toFixed(1) }})</small>
+      {{
+        (shiftSummaries[0].player_boss_elimination_count /
+          shiftSummaries[0].team_boss_elimination_count /
+          teamMultiplier(0))
+          | percentage
+      }}
+      <small class="weak">({{ (shiftSummaries[0].player_boss_elimination_count * normalizationMultiplier(0)) | toFixed(1) }})</small>
     </p>
     <p>
-      {{ (shiftSummaries[1].boss_elimination_count / shiftSummaries[1].boss_appearance_count / teamMultiplier(1)) | percentage }}
-      <small class="weak">({{ shiftSummaries[1].boss_elimination_count * normalizationMultiplier(1) | toFixed(1) }})</small>
+      {{
+        (shiftSummaries[1].boss_elimination_count / shiftSummaries[1].boss_appearance_count / teamMultiplier(1))
+          | percentage
+      }}
+      <small class="weak">({{ (shiftSummaries[1].boss_elimination_count * normalizationMultiplier(1)) | toFixed(1) }})</small>
     </p>
 
     <span class="leading">Golden eggs</span>
@@ -120,16 +141,30 @@
       </span>
       <div :key="`${bossId}-player`">
         <p v-if="shiftSummaries[0][`boss_appearance_${bossId}`]">
-          {{ (shiftSummaries[0][`${keyPrefix}boss_elimination_${bossId}`] / shiftSummaries[0][`boss_appearance_${bossId}`] / teamMultiplier(0)) | percentage(1) }}
+          {{
+            (shiftSummaries[0][`${keyPrefix}boss_elimination_${bossId}`] /
+              shiftSummaries[0][`boss_appearance_${bossId}`] /
+              teamMultiplier(0))
+              | percentage(1)
+          }}
         </p>
-        <p v-else>-</p>
+        <p v-else>
+          -
+        </p>
       </div>
 
       <div :key="`${bossId}-global`">
         <p v-if="shiftSummaries[1][`boss_appearance_${bossId}`]">
-          {{ (shiftSummaries[1][`boss_elimination_${bossId}`] / shiftSummaries[1][`boss_appearance_${bossId}`] / teamMultiplier(1)) | percentage(1) }}
+          {{
+            (shiftSummaries[1][`boss_elimination_${bossId}`] /
+              shiftSummaries[1][`boss_appearance_${bossId}`] /
+              teamMultiplier(1))
+              | percentage(1)
+          }}
         </p>
-        <p v-else>-</p>
+        <p v-else>
+          -
+        </p>
       </div>
     </template>
   </div>
@@ -145,10 +180,13 @@
   span.leading {
     text-align: right;
     justify-content: center;
-    & + *, & + * + * {
+    & + *,
+    & + * + * {
       font-weight: normal;
       margin-left: 1em;
-      &:not([class]) { color: $text-strong; }
+      &:not([class]) {
+        color: $text-strong;
+      }
     }
   }
   .bar-container {
@@ -165,7 +203,7 @@ h2 {
 </style>
 
 <script>
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import ScheduleCard from '@/components/ScheduleCard.vue';
 import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';

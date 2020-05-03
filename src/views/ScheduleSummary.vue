@@ -2,12 +2,8 @@
   <require-fetch-template>
     <template v-if="schedule">
       <div v-if="records">
-
         <h2>Results</h2>
-        <results
-          :hide-schedule-heading="true"
-          :raw-results="results"
-          :show-more-link="showMoreLink" />
+        <results :hide-schedule-heading="true" :raw-results="results" :show-more-link="showMoreLink" />
 
         <b-tabs v-model="activeTabIndex">
           <b-tab-item label="Golden Eggs" />
@@ -30,20 +26,30 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="waterLevelId in waterLevels" :key="waterLevelId"
-              :class="['low', 'normal', 'high'][waterLevelId - 1]">
-              <td v-for="eventId in events" :key="`${waterLevelId}-${eventId}`"
+            <tr
+              v-for="waterLevelId in waterLevels"
+              :key="waterLevelId"
+              :class="['low', 'normal', 'high'][waterLevelId - 1]"
+            >
+              <td
+                v-for="eventId in events"
+                :key="`${waterLevelId}-${eventId}`"
                 :class="isCellClicable(eventId, waterLevelId) ? 'clickable' : ''"
-                @click="toResultPage(eventWaterLevelRecord(eventId, waterLevelId).id)">
-                <schedule-record v-if="eventWaterLevelRecord(eventId, waterLevelId)"
-                  :record="eventWaterLevelRecord(eventId, waterLevelId)" :record-type="eggType" />
+                @click="toResultPage(eventWaterLevelRecord(eventId, waterLevelId).id)"
+              >
+                <schedule-record
+                  v-if="eventWaterLevelRecord(eventId, waterLevelId)"
+                  :record="eventWaterLevelRecord(eventId, waterLevelId)"
+                  :record-type="eggType"
+                />
               </td>
             </tr>
           </tbody>
         </table>
       </div>
       <div v-else>
-        No records found for <schedule :date-formatter="formatDateToYmdhm" :is-link-disabled="true" :schedule-id="scheduleId" />.
+        No records found for
+        <schedule :date-formatter="formatDateToYmdhm" :is-link-disabled="true" :schedule-id="scheduleId" />.
       </div>
     </template>
   </require-fetch-template>
@@ -64,9 +70,11 @@ $cell-width: 6em;
 table {
   width: $cell-width * 7;
 }
-thead, tbody {
-  th, td {
-    padding: .5em;
+thead,
+tbody {
+  th,
+  td {
+    padding: 0.5em;
     height: 4em;
     width: $cell-width;
   }
@@ -83,10 +91,10 @@ tbody {
     background-size: auto 150%;
 
     &.high {
-      background-position-y: -.5em;
+      background-position-y: -0.5em;
     }
     &.normal {
-      background-position-y: .5em;
+      background-position-y: 0.5em;
     }
     &.low {
       background-position-y: 1.5em;
@@ -103,13 +111,13 @@ td:not(:first-child) {
 </style>
 
 <script>
-import { Component, Vue, Watch } from 'vue-property-decorator';
-import RequireFetchTemplate from '../components/RequireFetchTemplate.vue';
-import RequireFetchBase from '../components/RequireFetchBase.vue';
-import Schedule from '../components/Schedule.vue';
-import ScheduleCard from '../components/ScheduleCard.vue';
-import ScheduleRecord from '../components/ScheduleRecord.vue';
-import Results from '../components/Results.vue';
+import { Component, Watch } from 'vue-property-decorator';
+import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
+import RequireFetchBase from '@/components/RequireFetchBase.vue';
+import Schedule from '@/components/Schedule.vue';
+import ScheduleCard from '@/components/ScheduleCard.vue';
+import ScheduleRecord from '@/components/ScheduleRecord.vue';
+import Results from '@/components/Results.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { schedulesModule } from '@/store/modules/schedules';
 import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
@@ -122,6 +130,7 @@ import { formatDateToYmdhm, getTranslationKey, parseRawSchedule } from '@/helper
 export default class ScheduleRecords extends RequireFetchBase {
   activeTabIndex = 0;
   formatDateToYmdhm = formatDateToYmdhm;
+  getTranslationKey = getTranslationKey;
 
   get scheduleId() {
     return this.$route.params.scheduleId;
@@ -133,25 +142,31 @@ export default class ScheduleRecords extends RequireFetchBase {
     return `schedules/${this.scheduleId}`;
   }
   get schedule() {
-    if (!state.data || !('schedule' in state.data)) return;
+    if (!state.data || !('schedule' in state.data)) {
+      return;
+    }
 
     return parseRawSchedule(state.data.schedule);
   }
   get records() {
-    if (!state.data || !('records' in state.data)) return;
+    if (!state.data || !('records' in state.data)) {
+      return;
+    }
 
     return state.data.records;
   }
   get results() {
-    if (!state.data || !('results' in state.data)) return;
+    if (!state.data || !('results' in state.data)) {
+      return;
+    }
 
     return state.data.results;
   }
   get waterLevels() {
-    return Object.keys(idKeyMap.water_level).map(id => parseInt(id, 10));
+    return Object.keys(idKeyMap.water_level).map((id) => parseInt(id, 10));
   }
   get events() {
-    return Object.keys(idKeyMap.event).map(id => parseInt(id, 10));
+    return Object.keys(idKeyMap.event).map((id) => parseInt(id, 10));
   }
   get showMoreLink() {
     return {
@@ -162,7 +177,7 @@ export default class ScheduleRecords extends RequireFetchBase {
 
   eventWaterLevelRecord(eventId, waterLevelId) {
     return this.records.wave_records[this.eggType].find(
-      record => record.event_id === eventId && record.water_id === waterLevelId,
+      (record) => record.event_id === eventId && record.water_id === waterLevelId,
     );
   }
 
@@ -175,12 +190,13 @@ export default class ScheduleRecords extends RequireFetchBase {
   }
 
   fetch() {
-    state.fetch(this.apiPath)
-      .then((res) => {
-        if (!res) return;
+    state.fetch(this.apiPath).then((res) => {
+      if (!res) {
+        return;
+      }
 
-        schedulesModule.setScheduleData(res.schedule);
-      });
+      schedulesModule.setScheduleData(res.schedule);
+    });
   }
 
   mounted() {
@@ -191,7 +207,5 @@ export default class ScheduleRecords extends RequireFetchBase {
   onRouteChange() {
     this.fetch();
   }
-
-  getTranslationKey = getTranslationKey;
 }
 </script>

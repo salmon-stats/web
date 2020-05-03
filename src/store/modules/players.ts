@@ -46,8 +46,7 @@ class Players extends VuexModule implements IPlayers {
 
     if (fetchedUsers.length === 0) {
       return cachedUsers;
-    }
-    else if (cachedUsers.length === 0) {
+    } else if (cachedUsers.length === 0) {
       return fetchedUsers;
     }
 
@@ -55,7 +54,7 @@ class Players extends VuexModule implements IPlayers {
   }
 
   @Mutation
-  private SET_PLAYER_USER_DATA(options: { playerId: string, rawUser: any }) {
+  private SET_PLAYER_USER_DATA(options: { playerId: string; rawUser: any }) {
     const { playerId, rawUser } = options;
 
     this.players.set(playerId, parseRawUserData(rawUser));

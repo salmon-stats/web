@@ -6,24 +6,38 @@ import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import Schedule from '@/components/Schedule.vue';
 import SpecialUsage from '@/components/SpecialUsage.vue';
 import MainWeapon from '@/components/MainWeapon.vue';
-import ResultsFilterComponent, { createResultFilter, fieldsWithout, filterToRequestParams, restoreFilters } from '@/components/ResultsFilter.vue';
+import ResultsFilterComponent, {
+  createResultFilter,
+  fieldsWithout,
+  filterToRequestParams,
+  restoreFilters,
+} from '@/components/ResultsFilter.vue';
 import ResultsFilterController from '@/components/ResultsFilterController.vue';
-import { formatDateToMdhm, formatDateInLocalTz, formatScheduleId } from '@/helper';
+import { formatDateToMdhm, formatDateInLocalTz, formatScheduleId, DateFormatter } from '@/helper';
 import { playersModule } from '@/store/modules/players';
 import { UserData, User, ResultsFilter, FilterType } from '@/types/salmon-stats';
 import { metadataModule } from '@/store/modules/metadata';
 
 @Component({
   name: 'Results',
-  components: { HazardLevel, MainWeapon, PlayerAvatar, ProportionalBarChart, 'results-filter': ResultsFilterComponent, ResultsFilterController, Schedule, SpecialUsage },
+  components: {
+    HazardLevel,
+    MainWeapon,
+    PlayerAvatar,
+    ProportionalBarChart,
+    'results-filter': ResultsFilterComponent,
+    ResultsFilterController,
+    Schedule,
+    SpecialUsage,
+  },
   methods: { createResultFilter },
 })
 export default class Results extends Vue {
   @Prop({ default: formatDateToMdhm, type: Function })
-  dateFormatter!: Function;
+  dateFormatter!: DateFormatter;
 
   @Prop()
-  paginator?: (toPage: number, filters?: Object|null) => Object;
+  paginator?: (toPage: number, filters?: object | null) => object;
 
   @Prop({ default: '' })
   showMoreLink!: string;
@@ -48,7 +62,7 @@ export default class Results extends Vue {
 
   private filters: ResultsFilter = createResultFilter();
   private playersMetadata: Map<string, UserData> = new Map();
-  private scheduleIdHeadings = new Set<String>();
+  private scheduleIdHeadings = new Set<string>();
   private currentPage = 1;
   private isTeamView = true;
   private formatScheduleId = formatScheduleId;
@@ -66,8 +80,7 @@ export default class Results extends Vue {
   }
 
   public get results(): any[] {
-    return this.resultsWithPagination ? this.resultsWithPagination.data
-      : this.rawResults;
+    return this.resultsWithPagination ? this.resultsWithPagination.data : this.rawResults;
   }
 
   public get showScheduleGroupRow(): boolean {
@@ -80,7 +93,7 @@ export default class Results extends Vue {
   }
 
   public membersData(ids: string | string[]): UserData[] {
-    const playerIds = typeof ids === 'string' ? JSON.parse(ids) as string[] : ids;
+    const playerIds = typeof ids === 'string' ? (JSON.parse(ids) as string[]) : ids;
 
     const players = playerIds
       .map((playerId) => this.playersMetadata.get(playerId))
@@ -102,29 +115,29 @@ export default class Results extends Vue {
       return false;
     };
 
-    return players.sort((a, b) =>
-      (b.isRegistered ? 1 : 0) - (a.isRegistered ? 1 : 0) ||
-      (isMyself(b) ? 1 : 0) - (isMyself(a) ? 1 : 0) ||
-      a.playerId.localeCompare(b.playerId)
+    return players.sort(
+      (a, b) =>
+        (b.isRegistered ? 1 : 0) - (a.isRegistered ? 1 : 0) ||
+        (isMyself(b) ? 1 : 0) - (isMyself(a) ? 1 : 0) ||
+        a.playerId.localeCompare(b.playerId),
     );
   }
 
   public paginate(toPage: number) {
-    if (!this.paginator) return;
+    if (!this.paginator) {
+      return;
+    }
 
-    this.$router.push(
-      this.paginator(toPage),
-    );
+    this.$router.push(this.paginator(toPage));
   }
 
   public profreshionalGradePoint(gradePoint: number): number | null {
     const profreshionalMinGradePoint = 400;
-    return gradePoint >= profreshionalMinGradePoint ?
-      gradePoint - profreshionalMinGradePoint : null;
+    return gradePoint >= profreshionalMinGradePoint ? gradePoint - profreshionalMinGradePoint : null;
   }
 
   public scheduleRouter(scheduleId: string) {
-    const isPlayerPage = this.$route.name!.indexOf('players.') !== -1;
+    const isPlayerPage = this.$route.name!.includes('players.');
     const params: any = {
       scheduleId: formatScheduleId(scheduleId),
     };
@@ -140,13 +153,13 @@ export default class Results extends Vue {
   }
 
   public search() {
-    if (!this.paginator) return;
+    if (!this.paginator) {
+      return;
+    }
 
     const filters = filterToRequestParams(this.filters);
 
-    this.$router.push(
-      this.paginator(1, filters),
-    );
+    this.$router.push(this.paginator(1, filters));
   }
 
   public shouldShowScheduleHeading(scheduleId: string): boolean {
@@ -168,22 +181,20 @@ export default class Results extends Vue {
     this.currentPage = parseInt(this.$route.query.page as string, 10) || 1;
     this.filters = restoreFilters(this.$route.query.filters as string);
 
-    const members = this.results
-      .flatMap((result) => {
-        if (typeof result.members === 'string') {
-          return JSON.parse(result.members);
-        }
-        return result.members;
+    const members = this.results.flatMap((result) => {
+      if (typeof result.members === 'string') {
+        return JSON.parse(result.members);
+      }
+      return result.members;
+    });
+
+    playersModule.fetchPlayers(members).then((players) => {
+      players.forEach((player) => {
+        this.playersMetadata.set(player.playerId, player);
       });
 
-    playersModule.fetchPlayers(members)
-      .then((players) => {
-        players.forEach((player) => {
-          this.playersMetadata.set(player.playerId, player);
-        });
-
-        this.playersMetadata = new Map(this.playersMetadata);
-      });
+      this.playersMetadata = new Map(this.playersMetadata);
+    });
   }
 
   public beforeUpdate() {

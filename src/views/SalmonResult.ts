@@ -3,7 +3,15 @@ import { Component } from 'vue-property-decorator';
 import { extendSalmonResult } from '@/extend-salmon-result';
 import { BossId, PlayerId, Schedule, UserData } from '@/types/salmon-stats';
 import { ExtendedSalmonResult, TotalResult, BossIdKeys } from '@/types/parsed-salmon-result';
-import { formatScheduleId, formatDateToMdhm, getTranslationKey, iconUrl, parseRawUserData, sum, parseRawSchedule } from '@/helper';
+import {
+  formatScheduleId,
+  formatDateToMdhm,
+  getTranslationKey,
+  iconUrl,
+  parseRawUserData,
+  sum,
+  parseRawSchedule,
+} from '@/helper';
 import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import HazardLevel from '@/components/HazardLevel.vue';
@@ -19,7 +27,17 @@ import PlayerScoreMobile from '@/components/PlayerScoreMobile.vue';
 
 @Component({
   name: 'SalmonResult',
-  components: { HazardLevel, MainWeapon, PlayerAvatar, ProportionalBarChart, ScheduleCard, SpecialUsage, RequireFetchTemplate, Wave, PlayerScoreMobile },
+  components: {
+    HazardLevel,
+    MainWeapon,
+    PlayerAvatar,
+    ProportionalBarChart,
+    ScheduleCard,
+    SpecialUsage,
+    RequireFetchTemplate,
+    Wave,
+    PlayerScoreMobile,
+  },
 })
 export default class SalmonResult extends RequireFetchBase {
   public formatDate = formatDateToMdhm;
@@ -59,7 +77,7 @@ export default class SalmonResult extends RequireFetchBase {
     return this.getAccountByPlayerId(playerId).name;
   }
   public translate(key: keyof IIdKeyMap, id: string | number): string {
-    return key ? this.$t(getTranslationKey(key, id)) as string : '';
+    return key ? (this.$t(getTranslationKey(key, id)) as string) : '';
   }
   public hasMost(key: keyof TotalResult, value: number, bossId: BossIdKeys): boolean {
     if (value === 0) {
@@ -70,11 +88,10 @@ export default class SalmonResult extends RequireFetchBase {
     return this.salmonResult!.highest[key] === value;
   }
   public hasLeastDeath(value: number): boolean {
-    return value === Math.min(...this.salmonResult!.player_results.map(p => p.death));
+    return value === Math.min(...this.salmonResult!.player_results.map((p) => p.death));
   }
   public totalBossElimination(bossId: BossIdKeys): number {
-    return this.sum(this.salmonResult!.player_results
-      .map((player) => player.boss_eliminations.counts[bossId]));
+    return this.sum(this.salmonResult!.player_results.map((player) => player.boss_eliminations.counts[bossId]));
   }
   public totalBossSpawn(bossId: BossIdKeys): number {
     return this.salmonResult!.boss_appearances[bossId];
@@ -83,8 +100,9 @@ export default class SalmonResult extends RequireFetchBase {
     this.$router.push({ name: 'players.summary', params: { playerId } });
   }
   public getAccountByPlayerId(playerId: PlayerId): UserData {
-    return parseRawUserData(this.salmonResult!.member_accounts.find((member) =>
-      member && member.player_id === playerId)!);
+    return parseRawUserData(
+      this.salmonResult!.member_accounts.find((member) => member && member.player_id === playerId)!,
+    );
   }
 
   public mounted() {

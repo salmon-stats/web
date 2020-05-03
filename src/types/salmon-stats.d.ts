@@ -65,9 +65,7 @@ interface ResultsFilter {
   is_cleared?: boolean;
   special?: number;
 
-  sort_by?:
-    'golden_egg_delivered' | 'player_golden_eggs' |
-    'power_egg_collected' | 'player_power_eggs';
+  sort_by?: 'golden_egg_delivered' | 'player_golden_eggs' | 'power_egg_collected' | 'player_power_eggs';
   sort_by_order?: 'asc' | 'desc';
 }
 

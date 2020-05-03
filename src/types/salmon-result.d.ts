@@ -21,11 +21,11 @@ type BossKillCounts = { [key in BossIdKeys]: BossKillCount };
 
 interface Grade {
   id:
-    '1' | // Apprentice
-    '2' | // Part-Timer
-    '3' | // Go-Getter
-    '4' | // Overachiever
-    '5'; // Profreshional
+    | '1' // Apprentice
+    | '2' // Part-Timer
+    | '3' // Go-Getter
+    | '4' // Overachiever
+    | '5'; // Profreshional
   name?: string; // optional: unnecessary
   long_name?: string; // optional: unnecessary
   short_name?: string; // optional: unnecessary
@@ -39,12 +39,10 @@ interface Special {
 }
 
 interface PlayerResult {
-  weapon_list: Array<
-    {
-      id: string;
-      weapon?: Weapon,
-    }
-  >;
+  weapon_list: Array<{
+    id: string;
+    weapon?: Weapon;
+  }>;
   pid: PlayerId;
   special_counts: number[];
   dead_count: number;
@@ -75,7 +73,7 @@ interface CoopSpecialWeapon {
   coop_special_weapon: {
     name: string;
     image: string;
-  }
+  };
 }
 
 interface Stage {
@@ -96,13 +94,14 @@ interface JobResult {
   is_clear?: boolean; // optional: same as !!failure_wave
 }
 
-export type EventKey = 'cohock-charge' |
-  'fog' |
-  'griller' |
-  'rush' |
-  'the-mothership' |
-  'goldie-seeking' |
-  'water-levels';
+export type EventKey =
+  | 'cohock-charge'
+  | 'fog'
+  | 'griller'
+  | 'rush'
+  | 'the-mothership'
+  | 'goldie-seeking'
+  | 'water-levels';
 
 interface EventType {
   key: EventKey;
@@ -145,7 +144,4 @@ interface SalmonResult {
   wave_details: WaveDetail[];
 }
 
-export {
-  PlayerResult,
-  SalmonResult,
-};
+export { PlayerResult, SalmonResult };

@@ -10,9 +10,10 @@ describe('salmon-job.ts', () => {
     expect(result).toHaveProperty('total_result');
   });
   it('.total_result.rescue should be some of .player_result[].rescue', () => {
-    const helpCount = result
-      .player_results
-      .reduce((sum: number, playerResult: ParsedPlayerResult) => sum + playerResult.rescue, 0);
+    const helpCount = result.player_results.reduce(
+      (sum: number, playerResult: ParsedPlayerResult) => sum + playerResult.rescue,
+      0,
+    );
     expect(result.total_result.rescue).toBe(helpCount);
   });
 

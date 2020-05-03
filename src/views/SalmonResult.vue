@@ -29,7 +29,9 @@
 
         <!-- For phones -->
         <div class="is-hidden-tablet">
-          <player-score-mobile v-for="player in salmonResult.player_results" :key="player.player_id"
+          <player-score-mobile
+            v-for="player in salmonResult.player_results"
+            :key="player.player_id"
             :player="player"
             :get-account-by-player-id="getAccountByPlayerId"
             :get-player-name="getPlayerName"
@@ -42,10 +44,16 @@
           <table class="is-hoverable">
             <thead>
               <tr>
-                <th class="player-icon"></th>
-                <th class="player-name">Player</th>
-                <th class="special-usage">Special</th>
-                <th class="main-weapons">Main</th>
+                <th class="player-icon" />
+                <th class="player-name">
+                  Player
+                </th>
+                <th class="special-usage">
+                  Special
+                </th>
+                <th class="main-weapons">
+                  Main
+                </th>
                 <th>Rescue</th>
                 <th>Death</th>
                 <th>Boss</th>
@@ -54,71 +62,94 @@
             </thead>
             <tbody>
               <!-- Todo: highlight if my row -->
-              <tr :class="['player-summary', 'clickable', isMyPlayerId(p.player_id) ? 'my' : null]"
-                v-for="p in salmonResult.player_results" :key="p.player_id"
-                @click="toPlayerSummary(p.player_id)">
+              <tr
+                :class="['player-summary', 'clickable', isMyPlayerId(p.player_id) ? 'my' : null]"
+                v-for="p in salmonResult.player_results"
+                :key="p.player_id"
+                @click="toPlayerSummary(p.player_id)"
+              >
                 <td class="player-icon">
-                  <player-avatar :user="getAccountByPlayerId(p.player_id)"
-                    :size="32" :blockiesSeed="p.player_id" />
+                  <player-avatar :user="getAccountByPlayerId(p.player_id)" :size="32" :blockiesSeed="p.player_id" />
                 </td>
                 <td class="player-name">
                   {{ getPlayerName(p.player_id) }}
                 </td>
                 <td class="special-usage">
-                  <special-usage :special-id="p.special_id"
-                    :count="sum(p.special_uses.map(special => special.count))" />
+                  <special-usage
+                    :special-id="p.special_id"
+                    :count="sum(p.special_uses.map((special) => special.count))"
+                  />
                 </td>
                 <td class="main-weapons">
-                  <main-weapon v-for="(w, i) in p.weapons" :key="i"
-                    :weapon-id="w.weapon_id" />
+                  <main-weapon v-for="(w, i) in p.weapons" :key="i" :weapon-id="w.weapon_id" />
                 </td>
                 <td>
-                  <p><span :class="hasMost('rescue', p.rescue) ? 'has-most' : ''">{{ p.rescue }}</span></p>
-                  <p class="proportional-bar-chart-container">
-                    <proportional-bar-chart chart-key="rescue"
-                      :value="p.rescue" :max="salmonResult.highest.rescue" />
+                  <p>
+                    <span :class="hasMost('rescue', p.rescue) ? 'has-most' : ''">{{ p.rescue }}</span>
                   </p>
-                </td>
-                <td>
-                  <p><span :class="hasLeastDeath(p.death) ? 'has-least-death' : ''">{{ p.death }}</span></p>
                   <p class="proportional-bar-chart-container">
-                    <proportional-bar-chart chart-key="death"
-                      :value="p.death" :max="salmonResult.highest.death" />
-                  </p>
-                </td>
-                <td>
-                  <p><span :class="hasMost('boss_elimination_count', p.boss_elimination_count) ? 'has-most' : ''">{{ p.boss_elimination_count }}</span></p>
-                  <p class="proportional-bar-chart-container">
-                    <proportional-bar-chart chart-key="boss-kill"
-                      :value="p.boss_elimination_count" :max="salmonResult.highest.boss_elimination_count" />
+                    <proportional-bar-chart chart-key="rescue" :value="p.rescue" :max="salmonResult.highest.rescue" />
                   </p>
                 </td>
                 <td>
                   <p>
-                    <span class="golden-egg" :class="hasMost('golden_eggs', p.golden_eggs) ? 'has-most' : ''">{{ p.golden_eggs }}</span>
+                    <span :class="hasLeastDeath(p.death) ? 'has-least-death' : ''">{{ p.death }}</span>
+                  </p>
+                  <p class="proportional-bar-chart-container">
+                    <proportional-bar-chart chart-key="death" :value="p.death" :max="salmonResult.highest.death" />
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    <span :class="hasMost('boss_elimination_count', p.boss_elimination_count) ? 'has-most' : ''">{{
+                      p.boss_elimination_count
+                    }}</span>
+                  </p>
+                  <p class="proportional-bar-chart-container">
+                    <proportional-bar-chart
+                      chart-key="boss-kill"
+                      :value="p.boss_elimination_count"
+                      :max="salmonResult.highest.boss_elimination_count"
+                    />
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    <span class="golden-egg" :class="hasMost('golden_eggs', p.golden_eggs) ? 'has-most' : ''">{{
+                      p.golden_eggs
+                    }}</span>
                     +
-                    <span class="power-egg" :class="hasMost('power_eggs', p.power_eggs) ? 'has-most' : ''">{{ p.power_eggs }}</span>
+                    <span class="power-egg" :class="hasMost('power_eggs', p.power_eggs) ? 'has-most' : ''">{{
+                      p.power_eggs
+                    }}</span>
                   </p>
                   <p class="proportional-bar-chart egg-collection">
-                    <proportional-bar-chart chart-key="golden-egg"
-                      :value="p.golden_eggs" :max="salmonResult.highest.golden_eggs" />
-                    <proportional-bar-chart chart-key="power-egg"
-                      :value="p.power_eggs" :max="salmonResult.highest.power_eggs" />
+                    <proportional-bar-chart
+                      chart-key="golden-egg"
+                      :value="p.golden_eggs"
+                      :max="salmonResult.highest.golden_eggs"
+                    />
+                    <proportional-bar-chart
+                      chart-key="power-egg"
+                      :value="p.power_eggs"
+                      :max="salmonResult.highest.power_eggs"
+                    />
                   </p>
                 </td>
               </tr>
             </tbody>
             <tfoot>
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td />
+                <td />
+                <td />
+                <td />
                 <!-- sum of rescue always equals to sum of death -->
                 <td><!-- {{ salmonResult.total_result.rescue }} --></td>
                 <td>{{ salmonResult.total_result.death }}</td>
                 <td>
-                  {{ salmonResult.boss_elimination_count }}<span class="total-count">/{{ salmonResult.boss_appearance_count }}</span>
+                  {{ salmonResult.boss_elimination_count
+                  }}<span class="total-count">/{{ salmonResult.boss_appearance_count }}</span>
                 </td>
                 <td>
                   <span class="golden-egg">{{ salmonResult.total_result.golden_eggs }}</span>
@@ -136,12 +167,15 @@
         <section class="waves column is-4-desktop">
           <h2>Waves</h2>
           <div>
-            <wave v-for="wave in salmonResult.waves" :key="wave.wave"
+            <wave
+              v-for="wave in salmonResult.waves"
+              :key="wave.wave"
               class="wave"
               :failed-wave="failedWave"
               :translate="translate"
               :result="salmonResult"
-              :wave="wave" />
+              :wave="wave"
+            />
           </div>
         </section>
 
@@ -151,56 +185,84 @@
             <table class="is-hoverable">
               <thead>
                 <tr>
-                  <th class="boss-name"></th>
+                  <th class="boss-name" />
                   <th v-for="pid in salmonResult.members" :key="pid">
                     <div class="clickable" @click="toPlayerSummary(pid)">
-                      <player-avatar :user="getAccountByPlayerId(pid)"
-                        :size="32" :blockiesSeed="pid" />
+                      <player-avatar :user="getAccountByPlayerId(pid)" :size="32" :blockiesSeed="pid" />
                     </div>
                   </th>
-                  <th></th>
+                  <th />
                 </tr>
               </thead>
               <tbody>
-                <tr :class="hasEliminatedEverySpawn(bossId) ? 'has-eliminated-every-spawn' : null" v-for="bossId in appearedBossIds" :key="bossId">
+                <tr
+                  :class="hasEliminatedEverySpawn(bossId) ? 'has-eliminated-every-spawn' : null"
+                  v-for="bossId in appearedBossIds"
+                  :key="bossId"
+                >
                   <th class="boss-name">
-                    <img :src="iconUrl('salmon-boss', bossId)">
+                    <img :src="iconUrl('salmon-boss', bossId)" />
                     <span class="is-hidden-touch">{{ translate('boss', bossId) }}</span>
                   </th>
-                  <td class="player-boss-elimination" v-for="(p, playerIndex) in salmonResult.player_results" :key="p.pid">
-                    <span :class="hasMost('boss_eliminations', p.boss_eliminations.counts[bossId], bossId) ? 'has-most' : null">{{ p.boss_eliminations.counts[bossId] }}</span>
-                    <proportional-bar-chart :chart-key="`player-${playerIndex + 1}`"
+                  <td
+                    class="player-boss-elimination"
+                    v-for="(p, playerIndex) in salmonResult.player_results"
+                    :key="p.pid"
+                  >
+                    <span
+                      :class="
+                        hasMost('boss_eliminations', p.boss_eliminations.counts[bossId], bossId) ? 'has-most' : null
+                      "
+                    >{{ p.boss_eliminations.counts[bossId] }}</span>
+                    <proportional-bar-chart
+                      :chart-key="`player-${playerIndex + 1}`"
                       :value="p.boss_eliminations.counts[bossId]"
-                      :max="salmonResult.highest.boss_eliminations[bossId]" />
+                      :max="salmonResult.highest.boss_eliminations[bossId]"
+                    />
                   </td>
                   <td class="total-boss-elimination">
                     {{ totalBossElimination(bossId) }}/{{ totalBossSpawn(bossId) }}
-                    <proportional-bar-chart chart-key="boss-kill"
+                    <proportional-bar-chart
+                      chart-key="boss-kill"
                       :fill-remainder="true"
                       :value="totalBossElimination(bossId)"
-                      :max="totalBossSpawn(bossId)" />
+                      :max="totalBossSpawn(bossId)"
+                    />
                   </td>
                 </tr>
               </tbody>
               <tfoot>
-                <tr :class="['total', appearedBossIds.every(hasEliminatedEverySpawn) ? 'has-eliminated-every-spawn' : null]">
+                <tr
+                  :class="[
+                    'total',
+                    appearedBossIds.every(hasEliminatedEverySpawn) ? 'has-eliminated-every-spawn' : null,
+                  ]"
+                >
                   <th class="boss-name total">
                     <span>Total</span>
                   </th>
-                  <td class="player-boss-elimination" v-for="(p, playerIndex) in salmonResult.player_results" :key="p.pid">
+                  <td
+                    class="player-boss-elimination"
+                    v-for="(p, playerIndex) in salmonResult.player_results"
+                    :key="p.pid"
+                  >
                     <span :class="hasMost('boss_elimination_count', p.boss_elimination_count) ? 'has-most' : null">
                       {{ p.boss_elimination_count }}
                     </span>
-                    <proportional-bar-chart :chart-key="`player-${playerIndex + 1}`"
+                    <proportional-bar-chart
+                      :chart-key="`player-${playerIndex + 1}`"
                       :value="p.boss_elimination_count"
-                      :max="salmonResult.highest.boss_elimination_count" />
+                      :max="salmonResult.highest.boss_elimination_count"
+                    />
                   </td>
                   <td class="total-boss-elimination">
                     {{ salmonResult.boss_elimination_count }}/{{ salmonResult.boss_appearance_count }}
-                    <proportional-bar-chart chart-key="boss-kill"
+                    <proportional-bar-chart
+                      chart-key="boss-kill"
                       :fill-remainder="true"
                       :value="salmonResult.boss_elimination_count"
-                      :max="salmonResult.boss_appearance_count" />
+                      :max="salmonResult.boss_appearance_count"
+                    />
                   </td>
                 </tr>
               </tfoot>
@@ -219,13 +281,19 @@
 @import '@/assets/bulma-variables.scss';
 @import '@/assets/helper-functions.scss';
 
-.scores, .waves, .bosses {
+.scores,
+.waves,
+.bosses {
   margin-top: 1.5em;
 }
 
-th.player-icon, td.player-icon {
+th.player-icon,
+td.player-icon {
   width: 32px;
-  img, canvas { display: flex; }
+  img,
+  canvas {
+    display: flex;
+  }
 }
 td.player-name {
   width: 11em;
@@ -235,7 +303,7 @@ td.special-usage {
 }
 td.main-weapons {
   width: 112px; // magic number
-  height: calc(32px + .75em); // magic number
+  height: calc(32px + 0.75em); // magic number
   display: flex;
   align-items: center;
   img {
@@ -248,25 +316,34 @@ td.main-weapons {
     .clickable {
       display: flex;
       justify-content: center;
-      padding-bottom: .375em !important;
-      img, canvas { display: flex; }
+      padding-bottom: 0.375em !important;
+      img,
+      canvas {
+        display: flex;
+      }
     }
   }
   tbody tr {
-    th, td {
-      padding-top: .375em !important;
-      padding-bottom: .375em !important;
+    th,
+    td {
+      padding-top: 0.375em !important;
+      padding-bottom: 0.375em !important;
     }
   }
   tfoot tr {
-    th, td { padding-bottom: .375em !important; }
+    th,
+    td {
+      padding-bottom: 0.375em !important;
+    }
   }
 }
 
 th.boss-name {
   @media (max-width: $desktop - 1) {
     width: 32px;
-    img { display: flex; }
+    img {
+      display: flex;
+    }
   }
   @media (min-width: $desktop) {
     display: flex;
@@ -274,7 +351,9 @@ th.boss-name {
 
     &.total {
       display: table-cell;
-      span { margin-left: 32px; }
+      span {
+        margin-left: 32px;
+      }
     }
   }
 }
@@ -282,8 +361,12 @@ th.boss-name {
 .inner-schedule-card {
   display: grid;
   grid-template-columns: auto 1fr;
-  span:nth-child(odd) { text-align: right; }
-  span:nth-child(even) { margin-left: .5em; }
+  span:nth-child(odd) {
+    text-align: right;
+  }
+  span:nth-child(even) {
+    margin-left: 0.5em;
+  }
 }
 
 .total-count {
@@ -293,7 +376,8 @@ th.boss-name {
   }
 }
 
-.table-wrap, table {
+.table-wrap,
+table {
   width: 100%;
 }
 
@@ -308,7 +392,8 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-.has-most, .has-least-death {
+.has-most,
+.has-least-death {
   text-decoration: underline;
 }
 .has-eliminated-every-spawn {
