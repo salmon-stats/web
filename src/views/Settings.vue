@@ -1,94 +1,99 @@
 <template>
   <div class="salmon-result-uploader">
-    <require-sign-in message="to upload results">
-      <div>
-        <h1>API token</h1>
-        <b-field>
-          <b-button
-            class="is-primary"
-            @click="onClickGenerateApiToken"
-            :disabled="isRequesting || (!regenerateToken && apiToken !== '')"
-          >
-            {{ regenerateToken ? 'Regenerate' : 'Get' }} API token
-          </b-button>
-        </b-field>
-        <b-field>
-          <b-input custom-class="is-small" type="text" :value="apiToken" disabled />
-          <button class="button is-success is-small" ref="copyToClipboard" :disabled="apiToken === ''">
-            Copy to clipboard
-          </button>
-        </b-field>
+    <require-sign-in message="to open settings page">
+      <template v-if="appTokenMode">
+        <p>Returning to app. Wait a second...</p>
+      </template>
+      <template v-else>
         <div>
-          <b-checkbox v-model="regenerateToken" :value="true">
-            Regenerate API token
-          </b-checkbox>
-        </div>
-        <p v-if="regenerateToken">
-          Note: Existing API token will be invalidated.
-        </p>
-      </div>
-
-      <div>
-        <h1>Privacy</h1>
-        <b-field
-          horizontal
-          label="Display Name"
-          message="If you leave this field blank, your Twitter screen name will be used."
-        >
-          <b-input type="text" custom-class="is-small" maxlength="10" style="width: 10em;" v-model="displayName" />
-        </b-field>
-        <b-field label="Avatar" horizontal>
-          <b-checkbox v-model="useTwitterAvatar">
-            Use Twitter avatar
-          </b-checkbox>
-        </b-field>
-        <b-field horizontal>
-          <b-button class="is-primary" @click="onClickUpdatePrivacySettings" :disabled="isRequesting">
-            Update privacy settings
-          </b-button>
-        </b-field>
-        <p>
-          Your Twitter profile is <strong>{{ isTwitterProfilePublic ? 'Public' : 'Private' }}</strong>.
-        </p>
-      </div>
-
-      <div v-if="isBrowserUploadEnabled">
-        <h1>Upload results</h1>
-        <form @submit.prevent>
-          <label for="file-selector">
-            <a>Select result file(s)</a> or drag and drop result files (each file must be 20KB&lt;).<br />
-            You can upload up to 10 results at once.<br />
-            <input id="file-selector" @change="onSelectFiles" type="file" accept="application/json" multiple />
-          </label>
-          <button :disabled="isUploading" @click="onClickUpload">
-            Upload
-          </button>
-          <button :disabled="isUploading" @click="onClickClearFiles">
-            Clear files
-          </button>
-
-          <h2>Selected Files</h2>
-          <div v-for="file in selectedFiles">
-            {{ file.name }}
-          </div>
-
-          <h2>Upload log</h2>
+          <h1>API token</h1>
+          <b-field>
+            <b-button
+              class="is-primary"
+              @click="onClickGenerateApiToken"
+              :disabled="isRequesting || (!regenerateToken && apiToken !== '')"
+            >
+              {{ regenerateToken ? 'Regenerate' : 'Get' }} API token
+            </b-button>
+          </b-field>
+          <b-field>
+            <b-input custom-class="is-small" type="text" :value="apiToken" disabled />
+            <button class="button is-success is-small" ref="copyToClipboard" :disabled="apiToken === ''">
+              Copy to clipboard
+            </button>
+          </b-field>
           <div>
-            <div v-for="item in uploadLog" :key="item.job_id">
-              <p class="error" v-if="item.error">
-                {{ item.error.summary }}<br />
-                {{ item.error.message }}
-              </p>
-              <p v-else>
-                <strong>{{ item.job_id ? item.job_id : '?' }}</strong>
-                <span v-if="!item.created"> already exists.</span>
-                <span v-else> was uploaded successfully.</span>
-                See: <router-link :to="`/results/${item.salmon_id}`"> /result/{{ item.salmon_id }} </router-link>
-              </p>
-            </div>
+            <b-checkbox v-model="regenerateToken" :value="true">
+              Regenerate API token
+            </b-checkbox>
           </div>
-        </form>
-      </div>
+          <p v-if="regenerateToken">
+            Note: Existing API token will be invalidated.
+          </p>
+        </div>
+
+        <div>
+          <h1>Privacy</h1>
+          <b-field
+            horizontal
+            label="Display Name"
+            message="If you leave this field blank, your Twitter screen name will be used."
+          >
+            <b-input type="text" custom-class="is-small" maxlength="10" style="width: 10em;" v-model="displayName" />
+          </b-field>
+          <b-field label="Avatar" horizontal>
+            <b-checkbox v-model="useTwitterAvatar">
+              Use Twitter avatar
+            </b-checkbox>
+          </b-field>
+          <b-field horizontal>
+            <b-button class="is-primary" @click="onClickUpdatePrivacySettings" :disabled="isRequesting">
+              Update privacy settings
+            </b-button>
+          </b-field>
+          <p>
+            Your Twitter profile is <strong>{{ isTwitterProfilePublic ? 'Public' : 'Private' }}</strong>.
+          </p>
+        </div>
+
+        <div v-if="isBrowserUploadEnabled">
+          <h1>Upload results</h1>
+          <form @submit.prevent>
+            <label for="file-selector">
+              <a>Select result file(s)</a> or drag and drop result files (each file must be 20KB&lt;).<br />
+              You can upload up to 10 results at once.<br />
+              <input id="file-selector" @change="onSelectFiles" type="file" accept="application/json" multiple />
+            </label>
+            <button :disabled="isUploading" @click="onClickUpload">
+              Upload
+            </button>
+            <button :disabled="isUploading" @click="onClickClearFiles">
+              Clear files
+            </button>
+
+            <h2>Selected Files</h2>
+            <div v-for="file in selectedFiles">
+              {{ file.name }}
+            </div>
+
+            <h2>Upload log</h2>
+            <div>
+              <div v-for="item in uploadLog" :key="item.job_id">
+                <p class="error" v-if="item.error">
+                  {{ item.error.summary }}<br />
+                  {{ item.error.message }}
+                </p>
+                <p v-else>
+                  <strong>{{ item.job_id ? item.job_id : '?' }}</strong>
+                  <span v-if="!item.created"> already exists.</span>
+                  <span v-else> was uploaded successfully.</span>
+                  See: <router-link :to="`/results/${item.salmon_id}`"> /result/{{ item.salmon_id }} </router-link>
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </template>
     </require-sign-in>
   </div>
 </template>
@@ -118,16 +123,17 @@ import Clipboard from 'clipboard';
 import { Component, Vue } from 'vue-property-decorator';
 import dragDrop from 'drag-drop';
 
-import { statefulApiClient } from '../api-client';
-import { metadataModule as metadata } from '../store/modules/metadata';
+import { statefulApiClient } from '@/api-client';
+import { metadataModule as metadata } from '@/store/modules/metadata';
 import RequireSignIn from '@/components/RequireSignIn.vue';
 
 @Component({
-  name: 'SalmonResultUploader',
+  name: 'Settings',
   extends: RequireSignIn,
 })
-export default class SalmonResultUploader extends Vue {
+export default class Settings extends Vue {
   apiToken = '';
+  appTokenMode = false;
   clipboard = null;
   displayName = '';
   isUploading = false;
@@ -146,6 +152,13 @@ export default class SalmonResultUploader extends Vue {
   }
 
   onAuthenticated() {
+    if (this.$router.currentRoute.hash === '#app-request-api-token') {
+      this.appTokenMode = true;
+
+      statefulApiClient.get('/api-token').then((res) => this.$router.push(`#token=${res.data.api_token}`));
+      return;
+    }
+
     if (metadata.user.is_custom_name) {
       this.displayName = metadata.user.name;
     }
