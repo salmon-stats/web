@@ -63,7 +63,7 @@
             <tbody>
               <!-- Todo: highlight if my row -->
               <tr
-                :class="['player-summary', 'clickable', isMyPlayerId(p.player_id) ? 'my' : null]"
+                :class="['player-summary', 'clickable']"
                 v-for="p in salmonResult.player_results"
                 :key="p.player_id"
                 @click="toPlayerSummary(p.player_id)"
