@@ -103,10 +103,10 @@ a {
 
 <script>
 import { Vue, Component } from 'vue-property-decorator';
-import { apiBaseUrl } from '../api-client';
 import { metadataModule as metadata } from '../store/modules/metadata';
 import { mapGetters } from 'vuex';
 import AccountSwitcher from '@/components/AccountSwitcher.vue';
+import { signIn as signInUrl } from '@/urls';
 
 @Component({
   components: { AccountSwitcher },
@@ -116,7 +116,7 @@ import AccountSwitcher from '@/components/AccountSwitcher.vue';
 export default class GlobalHeader extends Vue {
   isBurgerMenuOpen = false;
 
-  signInUrl = apiBaseUrl + '/auth/twitter';
+  signInUrl = signInUrl;
 
   get user() {
     return metadata.user;
