@@ -41,6 +41,11 @@
             Search
           </router-link>
         </div>
+        <div class="is-hidden-desktop use-marker navbar-item">
+          <router-link to="/settings" :class="$route.name === 'settings' && 'router-link-active'" exact>
+            Settings
+          </router-link>
+        </div>
       </div>
       <div class="navbar-end">
         <template v-if="user">
