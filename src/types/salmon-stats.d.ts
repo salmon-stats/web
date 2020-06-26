@@ -54,19 +54,23 @@ interface MinMax {
   max?: number | string;
 }
 
+type SortByOptions = 'golden_egg_delivered' | 'player_golden_eggs' | 'power_egg_collected' | 'player_power_eggs';
+type SortByOrderOptions = 'asc' | 'desc';
+
 interface ResultsFilter {
   golden_egg: MinMax;
   power_egg: MinMax;
 
   events: EventKey[];
   stages: number[];
+
   weapons: number[];
 
   is_cleared?: boolean;
   special?: number;
 
-  sort_by?: 'golden_egg_delivered' | 'player_golden_eggs' | 'power_egg_collected' | 'player_power_eggs';
-  sort_by_order?: 'asc' | 'desc';
+  sort_by?: SortByOptions;
+  sort_by_order?: SortByOrderOptions;
 }
 
 export type FilterType = keyof ResultsFilter | 'player_results';

@@ -176,8 +176,9 @@ img {
 import { Vue, Component, PropSync, Prop, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import { mapGetters } from 'vuex';
+import { PickByValue } from 'utility-types';
 
-import { FilterType, ResultsFilter } from '@/types/salmon-stats';
+import { FilterType, ResultsFilter, SortByOptions, SortByOrderOptions } from '@/types/salmon-stats';
 import { translate } from '@/helper';
 
 import FormField from '@/components/FormField.vue';
@@ -270,16 +271,17 @@ export const restoreFilters = (serialziedFilters: string): ResultsFilter => {
 
   try {
     const filter = JSON.parse(serialziedFilters);
+    const restore = <T>(key: keyof PickByValue<Required<ResultsFilter>, T>): T => filter[key] ?? defaultFilter[key];
 
-    defaultFilter.is_cleared = typeof filter.is_cleared === 'boolean' ? filter.is_cleared : defaultFilter.is_cleared;
-    defaultFilter.golden_egg.min = filter.min_golden_egg || defaultFilter.golden_egg.min;
-    defaultFilter.golden_egg.max = filter.max_golden_egg || defaultFilter.golden_egg.max;
-    defaultFilter.power_egg.min = filter.min_power_egg || defaultFilter.power_egg.min;
-    defaultFilter.power_egg.max = filter.max_power_egg || defaultFilter.power_egg.max;
-    defaultFilter.stages = filter.stages ? filter.stages : defaultFilter.stages;
-    defaultFilter.weapons = filter.weapons ? filter.weapons : defaultFilter.weapons;
-    defaultFilter.sort_by = filter.sort_by ? filter.sort_by : defaultFilter.sort_by;
-    defaultFilter.sort_by_order = filter.sort_by_order ? filter.sort_by_order : defaultFilter.sort_by_order;
+    defaultFilter.is_cleared = restore<boolean>('is_cleared');
+    defaultFilter.golden_egg.min = filter.min_golden_egg ?? defaultFilter.golden_egg.min;
+    defaultFilter.golden_egg.max = filter.max_golden_egg ?? defaultFilter.golden_egg.max;
+    defaultFilter.power_egg.min = filter.min_power_egg ?? defaultFilter.power_egg.min;
+    defaultFilter.power_egg.max = filter.max_power_egg ?? defaultFilter.power_egg.max;
+    defaultFilter.stages = restore<number[]>('stages');
+    defaultFilter.weapons = restore<number[]>('weapons');
+    defaultFilter.sort_by = restore<SortByOptions>('sort_by');
+    defaultFilter.sort_by_order = restore<SortByOrderOptions>('sort_by_order');
 
     return defaultFilter;
   } catch (_) {
