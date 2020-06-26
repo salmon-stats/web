@@ -7,35 +7,27 @@
       <p style="margin-left: 0.5em;">({{ selectedWeapons.length }}/{{ weapons.length }})</p>
     </div>
 
-    <div :class="['modal', isOpen ? 'is-active' : '']">
-      <div class="modal-background" @click="closeModal" />
-      <div class="modal-content">
-        <div class="modal-controls">
-          <button class="button" v-if="isInitialState" @click="selectAll">
-            Select All
-          </button>
-          <button class="button" v-else @click="unselectAll">
-            Unselect All
-          </button>
-          <button class="button is-success" @click="closeModal">
-            Close
-          </button>
-        </div>
-
-        <div
-          class="weapon-icon-container"
-          v-for="weaponId in weapons"
-          :key="weaponId"
-          @click="toggleSelection(weaponId)"
-        >
-          <main-weapon
-            :weapon-id="weaponId"
-            :class="['weapon-icon', selectedWeapons.includes(weaponId) ? 'is-selected' : '']"
-          />
-          <span v-if="counts[weaponId]" class="count">{{ counts[weaponId] }}</span>
-        </div>
+    <b-modal :active.sync="isOpen">
+      <div class="modal-controls">
+        <button class="button" v-if="isInitialState" @click="selectAll">
+          Select All
+        </button>
+        <button class="button" v-else @click="unselectAll">
+          Unselect All
+        </button>
+        <button class="button is-success" @click="closeModal">
+          Apply
+        </button>
       </div>
-    </div>
+
+      <div class="weapon-icon-container" v-for="weaponId in weapons" :key="weaponId" @click="toggleSelection(weaponId)">
+        <main-weapon
+          :weapon-id="weaponId"
+          :class="['weapon-icon', selectedWeapons.includes(weaponId) ? 'is-selected' : '']"
+        />
+        <span v-if="counts[weaponId]" class="count">{{ counts[weaponId] }}</span>
+      </div>
+    </b-modal>
   </div>
 </template>
 
