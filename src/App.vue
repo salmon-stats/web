@@ -9,6 +9,8 @@
     <footer>
       <global-footer />
     </footer>
+
+    <confirmation-dialog ref="confirm" />
   </div>
 </template>
 
@@ -172,16 +174,19 @@ table.is-hoverable tbody tr:hover {
 <script>
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import GlobalHeader from './components/GlobalHeader.vue';
-import GlobalFooter from './components/GlobalFooter.vue';
-import { metadataModule } from './store/modules/metadata';
+import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
+import GlobalHeader from '@/components/GlobalHeader.vue';
+import GlobalFooter from '@/components/GlobalFooter.vue';
+import { metadataModule } from '@/store/modules/metadata';
 
 @Component({
   name: 'App',
-  components: { GlobalHeader, GlobalFooter },
+  components: { ConfirmationDialog, GlobalHeader, GlobalFooter },
 })
 export default class App extends Vue {
   mounted() {
+    this.$root.$confirm = this.$refs.confirm.open;
+
     const timerId = setInterval(() => {
       const now = new Date().getTime();
       if (now > metadataModule.lastFetchedTime + SESSION_REFRESH_TIME) {

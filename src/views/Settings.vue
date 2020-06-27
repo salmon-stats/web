@@ -259,8 +259,8 @@ export default class Settings extends Vue {
         this.isRequesting = false;
       });
   }
-  onClickSignOut() {
-    if (confirm('Are you sure you want to sign out of Salmon Stats account?')) {
+  async onClickSignOut() {
+    if (await this.$root.$confirm('Are you sure you want to sign out of Salmon Stats account?')) {
       location.href = signOutUrl;
     }
   }
