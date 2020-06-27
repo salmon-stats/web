@@ -94,6 +94,7 @@ module.exports = {
         "@typescript-eslint/no-namespace": "warn",
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-parameter-properties": "off",
+        "@typescript-eslint/no-unused-expressions": "warn",
         "@typescript-eslint/no-use-before-define": "off",
         "@typescript-eslint/no-var-requires": "warn",
         "@typescript-eslint/prefer-for-of": "warn",
@@ -173,7 +174,8 @@ module.exports = {
         "no-undef-init": "warn",
         "no-underscore-dangle": "warn",
         "no-unsafe-finally": "warn",
-        "no-unused-expressions": "warn",
+        // False positive on optional chaining: https://github.com/facebook/create-react-app/issues/8107
+        // "no-unused-expressions": "warn",
         "no-unused-labels": "warn",
         "no-var": "warn",
         "object-shorthand": "warn",
