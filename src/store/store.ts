@@ -5,7 +5,7 @@ import { IMetadata } from '@/store/modules/metadata';
 
 Vue.use(Vuex);
 
-export interface State {
+export type State = {
   metadata: IMetadata;
-}
+};
 export default new Vuex.Store<State>({});

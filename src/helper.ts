@@ -10,10 +10,10 @@ export const iconUrl = (weaponType: string, id: string | number) =>
 
 export const isGrizzcoWeapon = (weaponId: number): boolean => weaponId >= 20000;
 
-interface QueryParams {
+type QueryParams = {
   page?: number;
   filters?: string;
-}
+};
 
 export const mapQueryParamsToApiPath = (endpoint: string, { page, filters }: QueryParams = {}): string => {
   const parsedFilters = filters ? (JSON.parse(filters) as { [key: string]: any }) : {};

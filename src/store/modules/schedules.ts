@@ -4,9 +4,9 @@ import apiCleint from '@/api-client';
 import { parseRawSchedule } from '@/helper';
 import { Schedule } from '@/types/salmon-stats';
 
-export interface IScheduleStore {
+export type IScheduleStore = {
   schedules: { [key: string]: Schedule };
-}
+};
 
 @Module({ dynamic: true, store, name: 'schedulesMetadata', namespaced: true })
 class ScheduleStore extends VuexModule implements IScheduleStore {

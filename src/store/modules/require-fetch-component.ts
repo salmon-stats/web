@@ -5,11 +5,11 @@ import { createApiClient } from '@/api-client';
 
 const CancelToken = axios.CancelToken;
 
-export interface IRequireFetchComponent {
+export type IRequireFetchComponent = {
   isLoading: boolean;
   error: null | object;
   data: null | object;
-}
+};
 
 @Module({ dynamic: true, store, name: 'require-fetch-component', namespaced: true })
 class RequireFetchComponent extends VuexModule implements IRequireFetchComponent {

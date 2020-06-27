@@ -6,12 +6,12 @@ import { parseRawSchedule } from '@/helper';
 import { statefulApiClient } from '@/api-client';
 import { schedulesModule } from '@/store/modules/schedules';
 
-export interface IMetadata {
+export type IMetadata = {
   user: null | User;
   schedules: null | Schedule[];
   hasSessionExpired: boolean;
   lastFetchedTime: number;
-}
+};
 
 @Module({ dynamic: true, store, name: 'metadata', namespaced: true })
 class Metadata extends VuexModule implements IMetadata {

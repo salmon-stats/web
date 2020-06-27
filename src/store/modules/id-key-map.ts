@@ -2,11 +2,11 @@ import { Mutation, Action, VuexModule, getModule, Module } from 'vuex-module-dec
 import store from '@/store/store';
 import apiCleint from '@/api-client';
 
-interface StringMap {
+type StringMap = {
   [key: string]: string;
-}
+};
 
-export interface IIdKeyMap {
+export type IIdKeyMap = {
   boss: StringMap;
   event: StringMap;
   fail_reason: StringMap;
@@ -14,7 +14,7 @@ export interface IIdKeyMap {
   stage: StringMap;
   water_level: StringMap;
   weapon: StringMap;
-}
+};
 
 const keysAsNumber = (map: StringMap): number[] => Object.keys(map).map(Number);
 

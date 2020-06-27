@@ -64,7 +64,7 @@ module.exports = {
         "@typescript-eslint/camelcase": "off",
         "@typescript-eslint/class-name-casing": "warn",
         // "@typescript-eslint/consistent-type-assertions": "warn",
-        "@typescript-eslint/consistent-type-definitions": "warn",
+        "@typescript-eslint/consistent-type-definitions": ["warn", "type"],
         "@typescript-eslint/explicit-function-return-type": "off",
         // "@typescript-eslint/explicit-member-accessibility": [
         //     "warn",

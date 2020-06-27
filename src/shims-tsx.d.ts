@@ -7,8 +7,8 @@ declare global {
     type Element = VNode;
     // tslint:disable no-empty-interface
     type ElementClass = Vue;
-    interface IntrinsicElements {
+    type IntrinsicElements = {
       [elem: string]: any;
-    }
+    };
   }
 }

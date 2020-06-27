@@ -4,16 +4,16 @@ export type PlayerId = string;
 export type BossId = string | number;
 export type BossIdKeys = '3' | '6' | '9' | '12' | '13' | '14' | '15' | '16' | '21';
 
-export interface Schedule {
+export type Schedule = {
   scheduleId: string;
   startAt: Date;
   endAt: Date;
   weapons: number[];
   stageId: number;
   rareWeaponId: null | 20000 | 20010 | 20020 | 20030;
-}
+};
 
-export interface UserData {
+export type UserData = {
   isRegistered: boolean;
   isCustomName: boolean;
   playerId: string;
@@ -30,15 +30,15 @@ export interface UserData {
     power_eggs: number;
     rescue: number;
   };
-}
+};
 
-interface Account {
+type Account = {
   user_id: number;
   player_id: string;
   is_primary: boolean;
-}
+};
 
-export interface User {
+export type User = {
   id: number;
   is_custom_name: boolean;
   is_registered: boolean;
@@ -46,18 +46,18 @@ export interface User {
   accounts: Account[];
   twitter_avatar: null | string;
   twitter_id: string;
-}
+};
 
-interface MinMax {
+type MinMax = {
   // https://github.com/vuejs/vue/issues/7136
   min?: number | string;
   max?: number | string;
-}
+};
 
 type SortByOptions = 'golden_egg_delivered' | 'player_golden_eggs' | 'power_egg_collected' | 'player_power_eggs';
 type SortByOrderOptions = 'asc' | 'desc';
 
-interface ResultsFilter {
+type ResultsFilter = {
   golden_egg: MinMax;
   power_egg: MinMax;
 
@@ -71,6 +71,6 @@ interface ResultsFilter {
 
   sort_by?: SortByOptions;
   sort_by_order?: SortByOrderOptions;
-}
+};
 
 export type FilterType = keyof ResultsFilter | 'player_results';

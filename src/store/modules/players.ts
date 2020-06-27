@@ -4,9 +4,9 @@ import store from '@/store/store';
 import apiCleint from '@/api-client';
 import { parseRawUserData } from '@/helper';
 
-export interface IPlayers {
+export type IPlayers = {
   players: Map<string, object>;
-}
+};
 
 @Module({ dynamic: true, store, name: 'players', namespaced: true })
 class Players extends VuexModule implements IPlayers {

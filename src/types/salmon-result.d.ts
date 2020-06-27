@@ -1,25 +1,25 @@
 import { BossIdKeys, PlayerId } from './salmon-stats';
 
-interface Boss {
+type Boss = {
   key: string;
   name?: string; // optional: unnecessary
-}
+};
 
-interface BossCount {
+type BossCount = {
   count: number;
   boss?: Boss;
-}
+};
 
 type BossCounts = { [key in BossIdKeys]: BossKillCount };
 
-interface BossKillCount {
+type BossKillCount = {
   count: number;
   boss?: Boss;
-}
+};
 
 type BossKillCounts = { [key in BossIdKeys]: BossKillCount };
 
-interface Grade {
+type Grade = {
   id:
     | '1' // Apprentice
     | '2' // Part-Timer
@@ -29,16 +29,16 @@ interface Grade {
   name?: string; // optional: unnecessary
   long_name?: string; // optional: unnecessary
   short_name?: string; // optional: unnecessary
-}
+};
 
-interface Special {
+type Special = {
   name?: string; // optional: unnecessary
   id: string;
   image_a?: string; // optional: unnecessary
   image_b?: string; // optional: unnecessary
-}
+};
 
-interface PlayerResult {
+type PlayerResult = {
   weapon_list: Array<{
     id: string;
     weapon?: Weapon;
@@ -53,46 +53,46 @@ interface PlayerResult {
   boss_kill_counts: BossKillCounts;
   special: Special;
   player_type?: PlayerType; // optional: unused
-}
+};
 
 type Style = 'girl' | 'boy';
 type Species = 'inklings' | 'octolings';
-interface PlayerType {
+type PlayerType = {
   style: Style;
   species: Species;
-}
+};
 
-interface Weapon {
+type Weapon = {
   thumbnail?: string; // optional: unnecessary
   name?: string; // optional: unnecessary
   id: string;
   image?: string; // optional: unnecessary
-}
+};
 
-interface CoopSpecialWeapon {
+type CoopSpecialWeapon = {
   coop_special_weapon: {
     name: string;
     image: string;
   };
-}
+};
 
-interface Stage {
+type Stage = {
   name: string;
   image?: string; // optional: unnecessary
-}
+};
 
-interface Schedule {
+type Schedule = {
   start_time: number;
   stage: Stage;
   weapons: Array<Weapon | CoopSpecialWeapon>;
   end_time: number;
-}
+};
 
-interface JobResult {
+type JobResult = {
   failure_wave: 1 | 2 | 3 | null;
   failure_reason: string | null;
   is_clear?: boolean; // optional: same as !!failure_wave
-}
+};
 
 export type EventKey =
   | 'cohock-charge'
@@ -103,26 +103,26 @@ export type EventKey =
   | 'goldie-seeking'
   | 'water-levels';
 
-interface EventType {
+type EventType = {
   key: EventKey;
   name?: string; // optional: unnecessary
-}
+};
 
-interface WaterLevel {
+type WaterLevel = {
   key: 'low' | 'normal' | 'high';
   name?: string; // optional: unnecessary
-}
+};
 
-interface WaveDetail {
+type WaveDetail = {
   golden_ikura_pop_num: number;
   quota_num: number;
   golden_ikura_num: number;
   ikura_num: number;
   event_type: EventType;
   water_level: WaterLevel;
-}
+};
 
-interface SalmonResult {
+type SalmonResult = {
   kuma_point?: number; // optional: unnecessary: =floor(job_score * job_rate)
   job_rate?: number; // optional: unnecessary: can be calucated from grade.id and grade_point
   end_time: number;
@@ -142,6 +142,6 @@ interface SalmonResult {
   schedule?: Schedule; // optional: unused
   job_result: JobResult;
   wave_details: WaveDetail[];
-}
+};
 
 export { PlayerResult, SalmonResult };

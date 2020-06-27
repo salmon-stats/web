@@ -2,30 +2,30 @@ import { BossIdKeys, PlayerId } from './salmon-stats';
 
 type BossAppearances = { [key in BossIdKeys]: number };
 
-interface MemberAccount {
+type MemberAccount = {
   id: number;
   name: string;
   player_id?: string;
   twitter_avatar?: string;
   created_at?: string;
   updated_at?: string;
-}
+};
 
 type Counts = { [key in BossIdKeys]: number };
 
-interface BossEliminations {
+type BossEliminations = {
   counts: Counts;
-}
+};
 
-interface SpecialUses {
+type SpecialUses = {
   count: number;
-}
+};
 
-interface Weapon {
+type Weapon = {
   weapon_id: number;
-}
+};
 
-interface ParsedPlayerResult {
+type ParsedPlayerResult = {
   player_id: string;
   golden_eggs: number;
   power_eggs: number;
@@ -36,31 +36,31 @@ interface ParsedPlayerResult {
   boss_elimination_count: number;
   special_uses: SpecialUses[];
   weapons: Weapon[];
-}
+};
 
-interface Schedule {
+type Schedule = {
   schedule_id: string;
   end_at: string;
   weapons: number[];
   stage_id: number;
   rare_weapon_id: number;
-}
+};
 
-interface Event {
+type Event = {
   id: number;
   key: string;
   name: string;
   splatnet: string;
-}
+};
 
-interface Water {
+type Water = {
   id: number;
   key: string;
   name: string;
   splatnet: string;
-}
+};
 
-interface Wave {
+type Wave = {
   wave: number;
   golden_egg_quota: number;
   golden_egg_appearances: number;
@@ -68,9 +68,9 @@ interface Wave {
   power_egg_collected: number;
   event: Event;
   water: Water;
-}
+};
 
-interface ParsedSalmonResult {
+type ParsedSalmonResult = {
   id: number;
   schedule_id: string;
   start_at: string;
@@ -86,21 +86,21 @@ interface ParsedSalmonResult {
   player_results: ParsedPlayerResult[];
   schedule: Schedule;
   waves: Wave[];
-}
+};
 
-interface TotalResult {
+type TotalResult = {
   rescue: number;
   death: number;
   golden_eggs: number;
   normal_eggs: number;
   boss_eliminations: Counts;
   boss_elimination_count: number;
-}
+};
 
-interface ExtendedSalmonResult extends ParsedSalmonResult {
+type ExtendedSalmonResult = {
   player_results: ParsedPlayerResult[];
   total_result: TotalResult;
   highest: TotalResult;
-}
+} & ParsedSalmonResult;
 
 export { BossIdKeys, TotalResult, ParsedSalmonResult, ParsedPlayerResult, MemberAccount, ExtendedSalmonResult };
