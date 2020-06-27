@@ -52,11 +52,15 @@
             </b-button>
           </b-field>
           <p>
-            Your Twitter profile is <strong>{{ isTwitterProfilePublic ? 'Public' : 'Private' }}</strong>.
+            Your Twitter profile is
+            <strong>{{ isTwitterProfilePublic ? 'Public' : 'Private' }}</strong>
+            .
           </p>
         </div>
 
-        <div v-if="isBrowserUploadEnabled">
+        <template v-if="false && isBrowserUploadEnabled">
+          <hr />
+
           <h1>Upload results</h1>
           <form @submit.prevent>
             <label for="file-selector">
@@ -92,6 +96,12 @@
               </div>
             </div>
           </form>
+        </template>
+
+        <hr />
+
+        <div class="buttons is-centered">
+          <button class="button is-danger" @click="onClickSignOut">Sign Out</button>
         </div>
       </template>
     </require-sign-in>
@@ -126,6 +136,7 @@ import dragDrop from 'drag-drop';
 import { statefulApiClient } from '@/api-client';
 import { metadataModule as metadata } from '@/store/modules/metadata';
 import RequireSignIn from '@/components/RequireSignIn.vue';
+import { signOut as signOutUrl } from '@/urls';
 
 @Component({
   name: 'Settings',
@@ -247,6 +258,11 @@ export default class Settings extends Vue {
       .finally(() => {
         this.isRequesting = false;
       });
+  }
+  onClickSignOut() {
+    if (confirm('Are you sure you want to sign out of Salmon Stats account?')) {
+      location.href = signOutUrl;
+    }
   }
 
   uploadResults() {
