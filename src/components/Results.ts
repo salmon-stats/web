@@ -12,7 +12,7 @@ import ResultsFilterComponent, {
   filterToRequestParams,
   restoreFilters,
 } from '@/components/ResultsFilter.vue';
-import ResultsFilterController from '@/components/ResultsFilterController.vue';
+import FilterController from '@/components/FilterController.vue';
 import { formatDateToMdhm, formatDateInLocalTz, formatScheduleId, DateFormatter } from '@/helper';
 import { playersModule } from '@/store/modules/players';
 import { UserData, User, ResultsFilter, FilterType } from '@/types/salmon-stats';
@@ -26,7 +26,7 @@ import { metadataModule } from '@/store/modules/metadata';
     PlayerAvatar,
     ProportionalBarChart,
     'results-filter': ResultsFilterComponent,
-    ResultsFilterController,
+    FilterController,
     Schedule,
     SpecialUsage,
   },

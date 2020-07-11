@@ -1,5 +1,9 @@
 <template>
   <require-fetch-template>
+    <filter-controller v-if="paginator" @clear="filters = createResultFilter()" @search="search">
+      <results-filter :value.sync="filters" :available-filters="['stages', 'weapons']" />
+    </filter-controller>
+
     <div class="columns is-multiline">
       <div class="column is-one-third schedule" v-for="schedule in schedules" :key="schedule.scheduleId">
         <schedule-card :schedule="schedule" />
@@ -29,59 +33,77 @@
 }
 </style>
 
-<script>
+<script lang="ts">
 import { Component, Watch } from 'vue-property-decorator';
+import FilterController from '@/components/FilterController.vue';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
+import ResultsFilterComponent, {
+  createResultFilter,
+  filterToRequestParams,
+  paginatorWithFilters,
+} from '@/components/ResultsFilter.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import ScheduleCard from '@/components/ScheduleCard.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { schedulesModule } from '@/store/modules/schedules';
 import { parseRawSchedule, mapQueryParamsToApiPath } from '@/helper.ts';
-import { paginatorWithFilters } from '@/components/ResultsFilter.vue';
+import { Pop } from '@/types/util';
+import { ResultsFilter } from '@/types/salmon-stats';
 
 @Component({
   name: 'Schedules',
-  components: { RequireFetchTemplate, ScheduleCard },
+  components: { FilterController, RequireFetchTemplate, ResultsFilter: ResultsFilterComponent, ScheduleCard },
 })
 export default class Schedules extends RequireFetchBase {
-  currentPage = 1;
+  public currentPage = 1;
+  public filters: ResultsFilter = createResultFilter();
 
-  get apiPath() {
+  public get apiPath() {
     return mapQueryParamsToApiPath('schedules', this.$route.query);
   }
-  get state() {
+  public get state() {
     return state.data;
   }
   get schedules() {
     return state.data ? state.data.data.map(parseRawSchedule) : [];
   }
 
-  paginate(toPage) {
-    this.$router.push(this.paginator(toPage));
+  public paginate(toPage: number) {
+    this.$router.push(this.paginator(toPage) as any);
   }
 
-  paginator(...args) {
+  public paginator(...args: Pop<Parameters<typeof paginatorWithFilters>>) {
     return paginatorWithFilters(this.$route, ...args);
   }
 
-  fetch() {
+  private fetch() {
     state.fetch(this.apiPath).then((res) => {
       if (!res) {
         return;
       }
 
-      res.data.forEach((schedule) => schedulesModule.setScheduleData(schedule));
+      res.data.forEach((schedule: any) => schedulesModule.setScheduleData(schedule));
     });
   }
 
-  mounted() {
-    this.currentPage = parseInt(this.$route.query.page, 10) || 1;
+  private mounted() {
+    this.currentPage = parseInt(this.$route.query.page as string, 10) || 1;
     this.fetch();
   }
 
   @Watch('$route')
-  onRouteChange() {
+  private onRouteChange() {
     this.fetch();
+  }
+
+  private search() {
+    if (!this.paginator) {
+      return;
+    }
+
+    const filters = filterToRequestParams(this.filters);
+
+    this.$router.push(this.paginator(1, filters));
   }
 }
 </script>

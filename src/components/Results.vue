@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="table-wrap is-fullwidth">
-      <results-filter-controller v-if="paginator" @clear="filters = createResultFilter()" @search="search">
+      <filter-controller v-if="paginator" @clear="filters = createResultFilter()" @search="search">
         <results-filter :value.sync="filters" :available-filters="availableFilters" />
-      </results-filter-controller>
+      </filter-controller>
 
       <div v-if="isPlayerResults" class="field">
         <b-switch v-model="isTeamView">
