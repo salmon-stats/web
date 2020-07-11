@@ -33,10 +33,21 @@
                 <tr v-for="weapon in shiftSummary.weapons" :key="weapon.weapon_id">
                   <td><main-weapon :weapon-id="weapon.weapon_id" /></td>
                   <td>
-                    {{ weapon.count }}
-                    <small class="weak">({{
-                      (weapon.count / (summary.clear_waves + summary.games - summary.clear_games)) | percentage
-                    }})</small>
+                    <p>
+                      {{ weapon.count }}
+                      <small>
+                        ({{
+                          (weapon.count / (summary.clear_waves + summary.games - summary.clear_games)) | percentage
+                        }})
+                      </small>
+                    </p>
+                    <p class="proportional-bar-chart-container">
+                      <weapon-proportional-bar-chart
+                        :value="weapon.count"
+                        :max="shiftSummary.weapons[0].count"
+                        :weapon="weapon.weapon_id"
+                      />
+                    </p>
                   </td>
                 </tr>
               </tbody>
@@ -60,12 +71,12 @@
 <script>
 import { Component } from 'vue-property-decorator';
 import MainWeapon from '@/components/MainWeapon.vue';
-import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
-import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
+import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import Results from '@/components/Results.vue';
 import ScheduleCard from '@/components/ScheduleCard.vue';
 import ShiftDetails from '@/components/ShiftDetails.vue';
+import WeaponProportionalBarChart from '@/components/WeaponProportionalBarChart.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { playersModule } from '@/store/modules/players';
 import { schedulesModule } from '@/store/modules/schedules';
@@ -73,7 +84,7 @@ import { percentage, toFixed } from '@/helper';
 
 @Component({
   name: 'PlayerShifts',
-  components: { MainWeapon, ProportionalBarChart, RequireFetchTemplate, ScheduleCard, ShiftDetails, Results },
+  components: { MainWeapon, RequireFetchTemplate, Results, ScheduleCard, ShiftDetails, WeaponProportionalBarChart },
   filters: { percentage, toFixed },
 })
 export default class PlayerShifts extends RequireFetchBase {

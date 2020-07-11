@@ -28,10 +28,10 @@
                     {{ weapon.count }}
                   </p>
                   <p class="proportional-bar-chart-container">
-                    <proportional-bar-chart
-                      :chart-key="isGrizzcoWeapon(weapon.weapon_id) ? 'golden-egg' : 'rescue'"
+                    <weapon-proportional-bar-chart
                       :value="weapon.count"
                       :max="playerSummary.weapons[0].count"
+                      :weapon="weapon.weapon_id"
                     />
                   </p>
                 </td>
@@ -52,18 +52,16 @@
 
 <script>
 import { Component, Watch } from 'vue-property-decorator';
-import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
+import MainWeapon from '@/components/MainWeapon.vue';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import Results from '@/components/Results.vue';
-import MainWeapon from '@/components/MainWeapon.vue';
+import WeaponProportionalBarChart from '@/components/WeaponProportionalBarChart.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
-import { isGrizzcoWeapon } from '@/helper';
 
 @Component({
   name: 'PlayerSummary',
-  components: { ProportionalBarChart, RequireFetchTemplate, Results, MainWeapon },
-  methods: { isGrizzcoWeapon },
+  components: { MainWeapon, WeaponProportionalBarChart, RequireFetchTemplate, Results },
 })
 export default class PlayerSummary extends RequireFetchBase {
   isWeaponTableExpanded = false;
