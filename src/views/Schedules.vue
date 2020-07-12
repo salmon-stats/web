@@ -77,6 +77,8 @@ export default class Schedules extends RequireFetchBase {
   }
 
   private fetch() {
+    this.currentPage = parseInt(this.$route.query.page as string, 10) || 1;
+
     state.fetch(this.apiPath).then((res) => {
       if (!res) {
         return;
@@ -87,7 +89,6 @@ export default class Schedules extends RequireFetchBase {
   }
 
   private mounted() {
-    this.currentPage = parseInt(this.$route.query.page as string, 10) || 1;
     this.fetch();
   }
 
