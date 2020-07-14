@@ -73,4 +73,23 @@ type ResultsFilter = {
   sort_by_order?: SortByOrderOptions;
 };
 
+type ResultsFilterQuery = {
+  golden_egg_min?: number;
+  golden_egg_max?: number;
+  power_egg_min?: number;
+  power_egg_max?: number;
+
+  events?: EventKey[];
+  stages?: number[];
+
+  weapons?: number[];
+
+  is_cleared?: boolean;
+  special?: number;
+
+  sort_by?: SortByOptions;
+  sort_by_order?: SortByOrderOptions;
+};
+
+
 export type FilterType = keyof ResultsFilter | 'player_results';

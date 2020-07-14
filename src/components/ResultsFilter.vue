@@ -174,11 +174,11 @@ img {
 
 <script lang="ts">
 import { Vue, Component, PropSync, Prop, Watch } from 'vue-property-decorator';
-import { Route } from 'vue-router';
+import { Route, RawLocation } from 'vue-router';
 import { mapGetters } from 'vuex';
 import { PickByValue } from 'utility-types';
 
-import { FilterType, ResultsFilter, SortByOptions, SortByOrderOptions } from '@/types/salmon-stats';
+import { FilterType, ResultsFilter, SortByOptions, SortByOrderOptions, ResultsFilterQuery } from '@/types/salmon-stats';
 import { translate } from '@/helper';
 
 import FormField from '@/components/FormField.vue';
@@ -213,7 +213,7 @@ export const createResultFilter = (): ResultsFilter => ({
   sort_by_order: undefined,
 });
 
-export const filterToRequestParams = (filters: ResultsFilter) => {
+export const filterToRequestParams = (filters: ResultsFilter): ResultsFilterQuery | null => {
   const params = {
     min_golden_egg: filters.golden_egg.min,
     max_golden_egg: filters.golden_egg.max,
@@ -246,13 +246,13 @@ export const filterToRequestParams = (filters: ResultsFilter) => {
   return Object.keys(params).length === 0 ? null : params;
 };
 
-export const paginatorWithFilters = (route: Route, page: number, filters?: ResultsFilter | null) => {
-  const query: { page: number; playerId?: number; filters?: any } = {
-    page,
+export const paginatorWithFilters = (route: Route, page: number, filters?: ResultsFilterQuery | null): RawLocation => {
+  const query: { [key: string]: string } = {
+    page: page.toString(),
   };
 
   const toRoute = {
-    name: route.name,
+    name: route.name!,
     query,
   };
 
@@ -260,7 +260,7 @@ export const paginatorWithFilters = (route: Route, page: number, filters?: Resul
     toRoute.query.filters = JSON.stringify(filters);
   } else if (filters !== null && route.query.filters) {
     // null filter means reset.
-    toRoute.query.filters = route.query.filters;
+    toRoute.query.filters = route.query.filters as string;
   }
 
   return toRoute;

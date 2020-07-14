@@ -49,6 +49,7 @@ import { schedulesModule } from '@/store/modules/schedules';
 import { parseRawSchedule, mapQueryParamsToApiPath } from '@/helper.ts';
 import { Pop } from '@/types/util';
 import { ResultsFilter } from '@/types/salmon-stats';
+import { RawLocation } from 'vue-router';
 
 @Component({
   name: 'Schedules',
@@ -69,10 +70,10 @@ export default class Schedules extends RequireFetchBase {
   }
 
   public paginate(toPage: number) {
-    this.$router.push(this.paginator(toPage) as any);
+    this.$router.push(this.paginator(toPage));
   }
 
-  public paginator(...args: Pop<Parameters<typeof paginatorWithFilters>>) {
+  public paginator(...args: Pop<Parameters<typeof paginatorWithFilters>>): RawLocation {
     return paginatorWithFilters(this.$route, ...args);
   }
 
