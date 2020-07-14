@@ -27,7 +27,7 @@
       <p>
         With contributions from <a href="https://twitter.com/tkgling">@tkgling</a> and
         <a href="https://twitter.com/barley_ural">@barley_ural</a>, developed &amp; run by
-        <a href="https://twitter.com">@Yukinkling</a>.
+        <a href="https://twitter.com/Yukinkling">@Yukinkling</a>.
       </p>
     </div>
 
