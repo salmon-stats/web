@@ -65,6 +65,7 @@ module.exports = {
         "@typescript-eslint/class-name-casing": "warn",
         // "@typescript-eslint/consistent-type-assertions": "warn",
         "@typescript-eslint/consistent-type-definitions": ["warn", "type"],
+        "@typescript-eslint/dot-notation": "warn",
         "@typescript-eslint/explicit-function-return-type": "off",
         // "@typescript-eslint/explicit-member-accessibility": [
         //     "warn",
@@ -183,7 +184,6 @@ module.exports = {
             "warn",
             "never"
         ],
-        "prefer-arrow/prefer-arrow-functions": "warn",
         "prefer-const": "warn",
         "quote-props": [
             "warn",
