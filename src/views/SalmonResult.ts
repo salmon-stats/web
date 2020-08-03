@@ -43,6 +43,7 @@ export default class SalmonResult extends RequireFetchBase {
   public formatDate = formatDateToMdhm;
   public iconUrl = iconUrl;
   public sum = sum;
+  public makeNonRegisteredUserAnonymous = true;
 
   get bossIds(): BossIdKeys[] {
     return idKeyMap.bossIds as BossIdKeys[];
@@ -74,6 +75,10 @@ export default class SalmonResult extends RequireFetchBase {
     return this.totalBossElimination(bossId) === this.totalBossSpawn(bossId);
   }
   public getPlayerName(playerId: PlayerId): string {
+    if (this.makeNonRegisteredUserAnonymous && !this.isRegistered(playerId)) {
+      return `Player ${this.salmonResult!.members.findIndex((id) => playerId === id) + 1}`;
+    }
+
     return this.getAccountByPlayerId(playerId).name;
   }
   public translate(key: keyof IIdKeyMap, id: string | number): string {

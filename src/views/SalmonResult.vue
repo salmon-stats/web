@@ -25,7 +25,10 @@
       </section>
 
       <section class="scores">
-        <h2>Scores</h2>
+        <div class="is-flex scores-heading" style="justify-content: space-between;">
+          <h2>Scores</h2>
+          <b-switch class="is-small privacy-switch" v-model="makeNonRegisteredUserAnonymous" :true-value="false" :false-value="true" />
+        </div>
 
         <!-- For phones -->
         <div class="is-hidden-tablet">
@@ -285,6 +288,20 @@
 .waves,
 .bosses {
   margin-top: 1.5em;
+}
+
+.scores {
+  .scores-heading {
+    margin-bottom: .5em;
+
+    h2 {
+      margin: 0;
+    }
+
+    .privacy-switch {
+      margin-left: 1em;
+    }
+  }
 }
 
 th.player-icon,
