@@ -96,9 +96,6 @@
       <router-link :to="`/players/${playerId}/schedules`">
         Shifts
       </router-link>
-      <router-link :exact="true" :to="`/players/${playerId}/results/latest`">
-        Latest Result
-      </router-link>
       <a v-if="twitterProfileUrl" class="external twitter" :href="twitterProfileUrl">
         Twitter
       </a>

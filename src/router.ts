@@ -27,6 +27,7 @@ export default new Router({
       component: Home,
     },
     {
+      // Currently there are no visible link to this route.
       path: '/results',
       name: 'results',
       component: LatestResults,
