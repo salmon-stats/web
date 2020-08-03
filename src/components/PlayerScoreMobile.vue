@@ -5,7 +5,12 @@
         <player-avatar :user="getAccountByPlayerId(p.player_id)" :size="32" :blockiesSeed="p.player_id" />
         <div class="name-container">
           <p class="player-name">
-            {{ getPlayerName(p.player_id) }}
+            <template v-if="isPlayerAnonymous(p.player_id)">
+              <span class="anonymous-name">{{ getPlayerName(p.player_id) }}</span>
+            </template>
+            <template v-else>
+              {{ getPlayerName(p.player_id) }}
+            </template>
           </p>
           <p class="grade-point" v-if="p.grade_point && p.grade_point > 400">
             <span>{{ p.grade_point - 400 }}</span>
@@ -168,6 +173,7 @@ import SpecialUsage from '@/components/SpecialUsage.vue';
     getAccountByPlayerId: Function,
     getPlayerName: Function,
     hasMost: Function,
+    isPlayerAnonymous: Function,
     player: Object,
   },
 })

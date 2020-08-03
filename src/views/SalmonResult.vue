@@ -39,6 +39,7 @@
             :get-account-by-player-id="getAccountByPlayerId"
             :get-player-name="getPlayerName"
             :has-most="hasMost"
+            :is-player-anonymous="isPlayerAnonymous"
           />
         </div>
 
@@ -75,7 +76,12 @@
                   <player-avatar :user="getAccountByPlayerId(p.player_id)" :size="32" :blockiesSeed="p.player_id" />
                 </td>
                 <td class="player-name">
-                  {{ getPlayerName(p.player_id) }}
+                  <template v-if="isPlayerAnonymous(p.player_id)">
+                    <span class="anonymous-name">{{ getPlayerName(p.player_id) }}</span>
+                  </template>
+                  <template v-else>
+                    {{ getPlayerName(p.player_id) }}
+                  </template>
                 </td>
                 <td class="special-usage">
                   <special-usage

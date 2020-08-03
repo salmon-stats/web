@@ -169,6 +169,10 @@ table.is-hoverable tbody tr:hover {
 .fail {
   color: $loss;
 }
+
+.anonymous-name {
+  font-style: italic;
+}
 </style>
 
 <script>

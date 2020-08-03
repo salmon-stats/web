@@ -68,6 +68,9 @@ export default class SalmonResult extends RequireFetchBase {
     return parseRawSchedule(this.salmonResult!.schedule);
   }
 
+  public isPlayerAnonymous(playerId: PlayerId): boolean {
+    return this.makeNonRegisteredUserAnonymous && !this.isRegistered(playerId);
+  }
   public isRegistered(playerId: PlayerId): boolean {
     return this.getAccountByPlayerId(playerId).isRegistered;
   }
@@ -75,7 +78,7 @@ export default class SalmonResult extends RequireFetchBase {
     return this.totalBossElimination(bossId) === this.totalBossSpawn(bossId);
   }
   public getPlayerName(playerId: PlayerId): string {
-    if (this.makeNonRegisteredUserAnonymous && !this.isRegistered(playerId)) {
+    if (this.isPlayerAnonymous(playerId)) {
       return `Player ${this.salmonResult!.members.findIndex((id) => playerId === id) + 1}`;
     }
 
