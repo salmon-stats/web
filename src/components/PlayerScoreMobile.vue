@@ -15,7 +15,7 @@
       <div>
         <special-usage :special-id="p.special_id" :count="sum(p.special_uses.map((special) => special.count))" />
         <span class="weapon-icon main" v-for="(w, i) in p.weapons" :key="i">
-          <main-weapon :weapon-id="w.weapon_id" />
+          <main-weapon :weapon-id="w.weapon_id" :size="24" />
         </span>
       </div>
     </div>
@@ -77,11 +77,6 @@ img {
   border-radius: 50%;
   height: 24px;
   margin-left: 0.25em;
-
-  img {
-    height: 24px;
-    width: 24px;
-  }
 }
 
 .player-name-row {
