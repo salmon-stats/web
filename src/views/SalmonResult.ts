@@ -43,7 +43,7 @@ export default class SalmonResult extends RequireFetchBase {
   public formatDate = formatDateToMdhm;
   public iconUrl = iconUrl;
   public sum = sum;
-  public makeNonRegisteredUserAnonymous = true;
+  public makeNonRegisteredUserAnonymous = false;
 
   get bossIds(): BossIdKeys[] {
     return idKeyMap.bossIds as BossIdKeys[];
