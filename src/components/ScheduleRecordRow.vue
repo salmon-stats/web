@@ -48,6 +48,13 @@ export default Vue.extend({
 
       if (this.recordType === eggKind) {
         classNames.push('highlight');
+      } else {
+        const alsoRecordsOf = eggKinds.filter((kind) => kind !== eggKind)
+          .filter((otherKind) => this.records[otherKind][eggKind] === this.records[eggKind][eggKind]);
+
+        if (alsoRecordsOf.includes(this.recordType as EggKind)) {
+          classNames.push('highlight');
+        }
       }
 
       return classNames;
