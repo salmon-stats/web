@@ -64,14 +64,6 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-div {
-  display: flex;
-  width: 100%;
-  justify-content: flex-end;
-  align-items: center;
-  height: 100%;
-}
-
 .highlight {
   font-weight: bold;
 }

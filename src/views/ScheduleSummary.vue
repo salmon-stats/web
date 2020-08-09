@@ -23,8 +23,8 @@
               <thead>
                 <tr>
                   <th>Event</th>
-                  <th><img src="@/assets/golden-egg.png" /><span class="is-hidden-mobile">Golden Eggs</span></th>
-                  <th><img src="@/assets/power-egg.png" /><span class="is-hidden-mobile">Power Eggs</span></th>
+                  <th><div class="v-center"><img src="@/assets/golden-egg.png" /><span class="is-hidden-mobile">Golden Eggs</span></div></th>
+                  <th><div class="v-center"><img src="@/assets/power-egg.png" /><span class="is-hidden-mobile">Power Eggs</span></div></th>
                 </tr>
               </thead>
               <tbody>
@@ -64,8 +64,8 @@
                 <thead>
                   <tr>
                     <th>Event</th>
-                    <th><img src="@/assets/golden-egg.png" /><span class="is-hidden-mobile">Golden Eggs</span></th>
-                    <th><img src="@/assets/power-egg.png" /><span class="is-hidden-mobile">Power Eggs</span></th>
+                    <th><div class="v-center"><img src="@/assets/golden-egg.png" /><span class="is-hidden-mobile">Golden Eggs</span></div></th>
+                    <th><div class="v-center"><img src="@/assets/power-egg.png" /><span class="is-hidden-mobile">Power Eggs</span></div></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -277,5 +277,11 @@ h3 {
 
 .page-section:not(:first-child) {
   margin-top: 1em;
+}
+
+.v-center {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 </style>
