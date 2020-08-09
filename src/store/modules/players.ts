@@ -2,7 +2,7 @@ import { Mutation, Action, VuexModule, getModule, Module } from 'vuex-module-dec
 import { UserData } from '@/types/salmon-stats';
 import store from '@/store/store';
 import apiCleint from '@/api-client';
-import { parseRawUserData } from '@/helper';
+import { parseRawUserData } from '@/helpers/helper';
 
 export type IPlayers = {
   players: Map<string, object>;

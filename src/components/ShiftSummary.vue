@@ -137,7 +137,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import ScheduleCard from '@/components/ScheduleCard';
-import { getTranslationKey, percentage, toFixed } from '@/helper';
+import { getTranslationKey, percentage, toFixed } from '@/helpers/helper';
 
 @Component({
   name: 'ShiftSummary',

@@ -80,7 +80,7 @@ import WeaponProportionalBarChart from '@/components/WeaponProportionalBarChart.
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { playersModule } from '@/store/modules/players';
 import { schedulesModule } from '@/store/modules/schedules';
-import { percentage, toFixed } from '@/helper';
+import { percentage, toFixed } from '@/helpers/helper';
 
 @Component({
   name: 'PlayerShifts',

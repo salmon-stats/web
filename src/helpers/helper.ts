@@ -1,7 +1,7 @@
 import { Schedule, UserData } from '@/types/salmon-stats';
 import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import dayjs, { Dayjs } from 'dayjs';
-import { i18n } from './i18n-setup';
+import { i18n } from '../i18n-setup';
 
 export type DateFormatter = (dateLikeObject: string | number | Date | Dayjs) => string;
 

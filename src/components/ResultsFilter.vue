@@ -179,7 +179,7 @@ import { mapGetters } from 'vuex';
 import { PickByValue } from 'utility-types';
 
 import { FilterType, ResultsFilter, SortByOptions, SortByOrderOptions, ResultsFilterQuery } from '@/types/salmon-stats';
-import { translate } from '@/helper';
+import { translate } from '@/helpers/helper';
 
 import FormField from '@/components/FormField.vue';
 import WeaponPicker from '@/components/WeaponPicker.vue';

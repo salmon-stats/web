@@ -103,7 +103,7 @@ import { metadataModule } from '@/store/modules/metadata';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { schedulesModule } from '@/store/modules/schedules';
 import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
-import { formatDateToYmdhm, getTranslationKey, parseRawSchedule } from '@/helper.ts';
+import { formatDateToYmdhm, getTranslationKey, parseRawSchedule } from '@/helpers/helper';
 
 @Component({
   name: 'ScheduleRecords',

@@ -207,7 +207,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
 import ScheduleCard from '@/components/ScheduleCard.vue';
 import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
-import { getTranslationKey, percentage, toFixed } from '@/helper';
+import { getTranslationKey, percentage, toFixed } from '@/helpers/helper';
 
 @Component({
   name: 'ShiftDetails',

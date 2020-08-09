@@ -46,7 +46,7 @@ import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import ScheduleCard from '@/components/ScheduleCard.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { schedulesModule } from '@/store/modules/schedules';
-import { parseRawSchedule, mapQueryParamsToApiPath } from '@/helper.ts';
+import { parseRawSchedule, mapQueryParamsToApiPath } from '@/helpers/helper';
 import { Pop } from '@/types/util';
 import { ResultsFilter } from '@/types/salmon-stats';
 import { RawLocation } from 'vue-router';

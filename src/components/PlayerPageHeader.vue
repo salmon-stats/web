@@ -208,7 +208,7 @@ h1 {
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import PlayerAvatar from '@/components/PlayerAvatar.vue';
-import { percentage, toFixed, useMetricPrefix } from '@/helper';
+import { percentage, toFixed, useMetricPrefix } from '@/helpers/helper';
 
 @Component({
   name: 'PlayerPageHeader',

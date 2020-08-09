@@ -1,7 +1,7 @@
 import { Mutation, Action, VuexModule, getModule, Module } from 'vuex-module-decorators';
 import store from '@/store/store';
 import apiCleint from '@/api-client';
-import { parseRawSchedule } from '@/helper';
+import { parseRawSchedule } from '@/helpers/helper';
 import { Schedule } from '@/types/salmon-stats';
 
 export type IScheduleStore = {

@@ -33,7 +33,7 @@ import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import ScheduleCard from '@/components/ScheduleCard.vue';
 import ShiftSummary from '@/components/ShiftSummary.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
-import { formatScheduleId, parseRawSchedule, percentage, toFixed, mapQueryParamsToApiPath } from '@/helper';
+import { formatScheduleId, parseRawSchedule, percentage, toFixed, mapQueryParamsToApiPath } from '@/helpers/helper';
 
 @Component({
   name: 'PlayerShifts',

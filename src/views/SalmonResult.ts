@@ -11,7 +11,7 @@ import {
   parseRawUserData,
   sum,
   parseRawSchedule,
-} from '@/helper';
+} from '@/helpers/helper';
 import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import HazardLevel from '@/components/HazardLevel.vue';

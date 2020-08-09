@@ -13,7 +13,7 @@
 
 <script>
 import { Component, Watch } from 'vue-property-decorator';
-import { mapQueryParamsToApiPath } from '@/helper';
+import { mapQueryParamsToApiPath } from '@/helpers/helper';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';

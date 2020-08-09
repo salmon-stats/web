@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { isMaxHazard } from '@/helper';
+import { isMaxHazard } from '@/helpers/helper';
 
 import { Component, Prop, Vue } from 'vue-property-decorator';
 

@@ -1,7 +1,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import dayjs, { Dayjs } from 'dayjs';
 
-import { formatDateToMdhm, timeDifference, DateFormatter } from '@/helper';
+import { formatDateToMdhm, timeDifference, DateFormatter } from '@/helpers/helper';
 import MainWeapon from '@/components/MainWeapon.vue';
 import { idKeyMapModule } from '@/store/modules/id-key-map';
 import { Schedule } from '@/types/salmon-stats';

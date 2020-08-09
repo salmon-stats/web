@@ -160,7 +160,7 @@ img {
 <script>
 import { Component, Vue } from 'vue-property-decorator';
 
-import { sum } from '@/helper';
+import { sum } from '@/helpers/helper';
 
 import MainWeapon from '@/components/MainWeapon.vue';
 import PlayerAvatar from '@/components/PlayerAvatar.vue';

@@ -13,7 +13,7 @@ import RequireFetchBase from '@/components/RequireFetchBase.vue';
 import Results from '@/components/Results.vue';
 import { paginatorWithFilters } from '@/components/ResultsFilter.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
-import { mapQueryParamsToApiPath } from '@/helper';
+import { mapQueryParamsToApiPath } from '@/helpers/helper';
 
 @Component({
   name: 'PlayerResults',

@@ -1,6 +1,6 @@
 <script>
 import ProportionalBarChart from '@/components/ProportionalBarChart.vue';
-import { isGrizzcoWeapon } from '@/helper';
+import { isGrizzcoWeapon } from '@/helpers/helper';
 
 export default {
   props: [

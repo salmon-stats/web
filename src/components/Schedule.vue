@@ -18,7 +18,7 @@ a {
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
-import { formatDateToMdhm, formatScheduleId, DateFormatter } from '@/helper';
+import { formatDateToMdhm, formatScheduleId, DateFormatter } from '@/helpers/helper';
 
 @Component({
   name: 'Schedule',

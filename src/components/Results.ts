@@ -13,7 +13,7 @@ import ResultsFilterComponent, {
   restoreFilters,
 } from '@/components/ResultsFilter.vue';
 import FilterController from '@/components/FilterController.vue';
-import { formatDateToMdhm, formatDateInLocalTz, formatScheduleId, DateFormatter } from '@/helper';
+import { formatDateToMdhm, formatDateInLocalTz, formatScheduleId, DateFormatter } from '@/helpers/helper';
 import { playersModule } from '@/store/modules/players';
 import { UserData, User, ResultsFilter, FilterType } from '@/types/salmon-stats';
 import { metadataModule } from '@/store/modules/metadata';

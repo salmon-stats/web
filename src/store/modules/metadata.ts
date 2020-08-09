@@ -2,7 +2,7 @@ import { Mutation, Action, VuexModule, getModule, Module } from 'vuex-module-dec
 
 import store from '@/store/store';
 import { Schedule, User } from '@/types/salmon-stats';
-import { parseRawSchedule } from '@/helper';
+import { parseRawSchedule } from '@/helpers/helper';
 import { statefulApiClient } from '@/api-client';
 import { schedulesModule } from '@/store/modules/schedules';
 

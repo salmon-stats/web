@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import { iconUrl } from '@/helper';
+import { iconUrl } from '@/helpers/helper';
 
 @Component({
   methods: { iconUrl },

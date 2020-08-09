@@ -25,7 +25,7 @@ img {
 
 <script>
 import { Vue, Component } from 'vue-property-decorator';
-import { iconUrl } from '../helper';
+import { iconUrl } from '@/helpers/helper';
 
 @Component({
   name: 'SpecialUsage',
