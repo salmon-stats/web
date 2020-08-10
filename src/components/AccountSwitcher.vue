@@ -1,19 +1,20 @@
 <template>
-  <div class="dropdown is-right is-hoverable">
-    <div class="dropdown-trigger">
-      <router-link :to="`/players/${accounts[0].player_id}`">
+  <div>
+    <b-dropdown
+      hoverable
+      position="is-bottom-left"
+    >
+      <router-link :to="`/players/${accounts[0].player_id}`" slot="trigger">
         <player-avatar style="vertical-align: middle;" :size="32" :user="user" />
       </router-link>
-    </div>
-    <div v-if="hasMultipleAccounts" class="dropdown-menu">
-      <div class="dropdown-content">
-        <div v-for="account in accounts" :key="account.player_id" class="dropdown-item">
+      <template v-if="hasMultipleAccounts">
+        <b-dropdown-item v-for="account in accounts" :key="account.player_id" class="dropdown-item">
           <router-link class="my" :to="`/players/${account.player_id}`">
             {{ account.name.name }}
           </router-link>
-        </div>
-      </div>
-    </div>
+        </b-dropdown-item>
+      </template>
+    </b-dropdown>
   </div>
 </template>
 
@@ -42,3 +43,12 @@ export default class AccountSwitcher extends Vue {
   }
 }
 </script>
+
+<style scoped>
+::v-deep .dropdown-menu {
+  min-width: 0;
+}
+::v-deep .dropdown-content {
+  min-width: 5rem;
+}
+</style>
