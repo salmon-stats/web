@@ -1,11 +1,13 @@
 <template>
   <tr
-    :class="record ? 'clickable' : null"
+    :class="[record ? 'clickable' : null, isValidEvent ? null : 'weak']"
     @click="record ? toResultPage(record.id) : null"
   >
     <th>{{ heading }}</th>
     <td v-for="eggKind in ['golden_eggs', 'power_eggs']">
-      <span v-if="record" :class="getClassNames(eggKind)">{{ record[eggKind] }}</span>
+      <span v-if="record" :class="getClassNames(isValidEvent, eggKind)">{{ record[eggKind] }}</span>
+      <span v-else-if="isValidEvent">N/A</span>
+      <span v-else>-</span>
     </td>
   </tr>
 </template>
@@ -25,6 +27,10 @@ export const eggKinds = Object.keys(classNameTable) as EggKind[];
 export default Vue.extend({
   mixins: [RouterHelperMixin],
   props: {
+    isValidEvent: {
+      type: Boolean,
+      required: true,
+    },
     recordType: {
       type: String,
       required: true,
@@ -43,7 +49,7 @@ export default Vue.extend({
     },
   },
   methods: {
-    getClassNames(eggKind: keyof typeof classNameTable): string[] {
+    getClassNames(isValidEvent: boolean, eggKind: keyof typeof classNameTable): string[] {
       const classNames: string[] = [classNameTable[eggKind]];
 
       if (this.recordType === eggKind) {
@@ -63,8 +69,12 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '@/assets/bulma-variables.scss';
+
 .highlight {
   font-weight: bold;
 }
+
+.weak { color: darken($text, 10%); }
 </style>

@@ -30,6 +30,7 @@
               <tbody>
                 <schedule-record-row
                   v-for="key in ['totals', 'no_night_totals']"
+                  :is-valid-event="true"
                   :key="key"
                   :heading="key === 'totals' ? 'All' : 'No Night'"
                   :records="records[key]"
@@ -69,13 +70,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <schedule-record-row
-                    v-for="eventId in events"
-                    :key="`${waterLevelId}-${eventId}`"
-                    :heading="eventId ? $t(getTranslationKey('event', eventId)) : '-'"
-                    :records="eventWaterLevelRecord(eventId, waterLevelId)"
-                    :record-type="recordType"
-                  />
+                  <template v-for="eventId in events">
+                    <schedule-record-row
+                      :is-valid-event="isValidEventForWaterLevel(waterLevelId, eventId)"
+                      :key="`${waterLevelId}-${eventId}`"
+                      :heading="eventId ? $t(getTranslationKey('event', eventId)) : 'No Event'"
+                      :records="eventWaterLevelRecord(eventId, waterLevelId)"
+                      :record-type="recordType"
+                    />
+                  </template>
                 </tbody>
               </table>
             </div>
@@ -98,6 +101,7 @@ import Schedule from '@/components/Schedule.vue';
 import ScheduleCard from '@/components/ScheduleCard.vue';
 import ScheduleRecordRow, { eggKinds } from '@/components/ScheduleRecordRow.vue';
 import Results from '@/components/Results.vue';
+import { waterLevelEventTable } from '@/constants';
 import RouterHelperMixin from '@/helpers/router-helper';
 import { metadataModule } from '@/store/modules/metadata';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
@@ -107,7 +111,7 @@ import { formatDateToYmdhm, getTranslationKey, parseRawSchedule } from '@/helper
 
 @Component({
   name: 'ScheduleRecords',
-  components: { Results, RequireFetchTemplate, Schedule, ScheduleCard,  ScheduleRecordRow },
+  components: { Results, RequireFetchTemplate, Schedule, ScheduleCard, ScheduleRecordRow },
   mixins: [RouterHelperMixin],
 })
 export default class ScheduleRecords extends RequireFetchBase {
@@ -163,8 +167,8 @@ export default class ScheduleRecords extends RequireFetchBase {
     ]));
   }
 
-  isCellClicable(eventId, waterLevelId) {
-    return !!this.eventWaterLevelRecord(eventId, waterLevelId);
+  isValidEventForWaterLevel(waterLevelId, eventId) {
+    return waterLevelEventTable[waterLevelId].includes(eventId);
   }
 
   fetch() {
