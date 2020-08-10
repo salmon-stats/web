@@ -22,7 +22,7 @@
             <table>
               <thead>
                 <tr>
-                  <th>Event</th>
+                  <th></th>
                   <th><div class="v-center"><img src="@/assets/golden-egg.png" /><span class="is-hidden-mobile">Golden Eggs</span></div></th>
                   <th><div class="v-center"><img src="@/assets/power-egg.png" /><span class="is-hidden-mobile">Power Eggs</span></div></th>
                 </tr>
@@ -63,7 +63,7 @@
               <table>
                 <thead>
                   <tr>
-                    <th>Event</th>
+                    <th></th>
                     <th><div class="v-center"><img src="@/assets/golden-egg.png" /><span class="is-hidden-mobile">Golden Eggs</span></div></th>
                     <th><div class="v-center"><img src="@/assets/power-egg.png" /><span class="is-hidden-mobile">Power Eggs</span></div></th>
                   </tr>
