@@ -1,28 +1,17 @@
-<template>
-  <img v-if="avatar" :style="style" :src="avatar" />
-  <blockies
-    v-else
-    :style="style"
-    :sizePerPixel="blockiesSizePerPixel"
-    :pixels="blockiesPixels"
-    :seed="blockiesSeed || (user && (user.player_id || user.playerId))"
-  />
-</template>
-
 <style scoped>
 img {
   border-radius: 50%;
 }
 </style>
 
-<script>
-import { Vue, Component } from 'vue-property-decorator';
-import Blockies from './Blockies.vue';
+<script lang="tsx">
+import Vue from 'vue';
+import Blockies from '@/components/Blockies.vue';
 
 // Note: size should be divisible by blockiesPixel. (otherwise Blockies will be streched)
 const blockiesPixels = 8;
 
-@Component({
+export default Vue.extend({
   name: 'PlayerAvatar',
   components: { Blockies },
   props: {
@@ -33,27 +22,52 @@ const blockiesPixels = 8;
     size: {
       type: [Number, undefined],
     },
+    showTooltip: {
+      type: Boolean,
+      default: true,
+    },
     blockiesSeed: String,
   },
-})
-export default class PlayerAvatar extends Vue {
-  blockiesPixels = blockiesPixels;
-  get avatar() {
-    if (!this.user) {
-      return;
-    }
+  computed: {
+    avatar() {
+      if (!this.user) {
+        return;
+      }
 
-    return this.user.avatar || this.user.twitter_avatar;
-  }
-  get blockiesSizePerPixel() {
-    return this.size / this.blockiesPixels;
-  }
-  get style() {
-    return {
-      height: `${this.size}px`,
-      minWidth: `${this.size}px`,
-      width: `${this.size}px`,
-    };
-  }
-}
+      return this.user.avatar || this.user.twitter_avatar;
+    },
+    blockiesSizePerPixel() {
+      return this.size / this.blockiesPixels;
+    },
+    style() {
+      return {
+        height: `${this.size}px`,
+        minWidth: `${this.size}px`,
+        width: `${this.size}px`,
+      };
+    },
+  },
+  render(h) {
+    const { $props: props } = this;
+
+    const child = (
+      this.avatar
+        ? <img style={this.style} src={this.avatar} />
+        : <blockies
+            style={this.style}
+            sizePerPixel={this.blockiesSizePerPixel}
+            pixels={blockiesPixels}
+            seed={props.blockiesSeed || (props.user && (props.user.player_id || props.user.playerId))}
+          />
+    );
+
+    return props.showTooltip && props.user
+      ? (
+        <b-tooltip label={props.user.name} type="is-black">
+          {child}
+        </b-tooltip>
+      )
+      : child;
+  },
+});
 </script>
