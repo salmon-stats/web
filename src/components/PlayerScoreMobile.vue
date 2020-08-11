@@ -92,7 +92,6 @@ img {
     height: fit-content;
     align-items: center;
     align-content: center;
-    overflow: hidden;
 
     &:first-child {
       flex: 1;
@@ -101,6 +100,9 @@ img {
     .grade-point,
     .player-name {
       margin-left: 0.5em;
+    }
+    .player-name {
+      overflow: hidden;
     }
     .grade-point {
       font-size: 80%;
