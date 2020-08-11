@@ -25,6 +25,7 @@
                   <th></th>
                   <th><div class="v-center"><img src="@/assets/golden-egg.png" /><span class="is-hidden-mobile">Golden Eggs</span></div></th>
                   <th><div class="v-center"><img src="@/assets/power-egg.png" /><span class="is-hidden-mobile">Power Eggs</span></div></th>
+                  <th>Members</th>
                 </tr>
               </thead>
               <tbody>
@@ -67,6 +68,7 @@
                     <th></th>
                     <th><div class="v-center"><img src="@/assets/golden-egg.png" /><span class="is-hidden-mobile">Golden Eggs</span></div></th>
                     <th><div class="v-center"><img src="@/assets/power-egg.png" /><span class="is-hidden-mobile">Power Eggs</span></div></th>
+                    <th>Members</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -218,6 +220,13 @@ export default class ScheduleRecords extends RequireFetchBase {
 .table-wrap, table {
   width: 100%;
 }
+
+@media (min-width: $tablet) {
+  table {
+    table-layout: fixed;
+  }
+}
+
 thead,
 tbody {
   th,
@@ -226,13 +235,20 @@ tbody {
   ::v-deep td {
     padding: 0.5em;
     height: 4em;
-    text-align: right;
 
     &:first-child {
-      width: 40%;
+      text-align: right;
+      padding-right: 1.5em !important;
     }
-    &:not(:first-child) {
-      width: 30%;
+
+    @media (max-width: $tablet - 1) {
+      &:nth-child(1) {
+        width: 30%;
+      }
+      &:nth-child(2),
+      &:nth-child(3) {
+        width: 15%;
+      }
     }
   }
 }
@@ -298,6 +314,6 @@ h3 {
 .v-center {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 </style>

@@ -7,21 +7,23 @@
     <td v-for="eggKind in ['golden_eggs', 'power_eggs']">
       <div v-if="record">
         <span :class="getClassNames(isValidEvent, eggKind)">{{ record[eggKind] }}</span>
-        <div>
-          <router-link
-            v-for="member in getMembersMetadata(record.members)"
-            :key="member.playerId"
-            @click.stop.native
-            :to="`/players/${member.playerId}`"
-          >
-            <player-avatar class="avatar" :size="member.isRegistered ? 32 : 24" :user="member">
-              {{ record.members }}
-            </player-avatar>
-          </router-link>
-        </div>
       </div>
       <span v-else-if="isValidEvent">N/A</span>
       <span v-else>-</span>
+    </td>
+    <td>
+      <template v-if="record">
+        <router-link
+          v-for="member in getMembersMetadata(record.members)"
+          :key="member.playerId"
+          @click.stop.native
+          :to="`/players/${member.playerId}`"
+        >
+          <player-avatar class="avatar" :size="member.isRegistered ? 32 : 24" :user="member">
+            {{ record.members }}
+          </player-avatar>
+        </router-link>
+      </template>
     </td>
   </tr>
 </template>
@@ -30,10 +32,10 @@
 import Vue from 'vue';
 
 import PlayerAvatar from '@/components/PlayerAvatar.vue';
+import { sortPlayersData } from '@/helpers/helper';
 import RouterHelperMixin from '@/helpers/router-helper';
 import { playersModule } from '@/store/modules/players';
-import { sortPlayersData } from '../helpers/helper';
-import { UserData } from '../types/salmon-stats';
+import { UserData } from '@/types/salmon-stats';
 
 type EggKind = keyof typeof classNameTable;
 
