@@ -52,6 +52,10 @@ export default class AccountSwitcher extends Vue {
 </script>
 
 <style scoped>
+a {
+  font-weight: normal;
+}
+
 ::v-deep .dropdown-menu {
   min-width: 0;
 }

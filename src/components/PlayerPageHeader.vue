@@ -16,7 +16,7 @@
         <template v-else>
           <div class="avatar">
             <div v-if="isLoadingUserData" class="placeholder" />
-            <player-avatar v-else class="avatar" :size="72" :blockies-seed="playerId" />
+            <player-avatar v-else class="avatar" :size="72" :blockies-seed="playerId" :show-tooltip="false" />
           </div>
           <div>
             <h1>

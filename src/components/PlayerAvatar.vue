@@ -37,7 +37,7 @@ export default Vue.extend({
       return this.user.avatar || this.user.twitter_avatar;
     },
     blockiesSizePerPixel() {
-      return this.size / this.blockiesPixels;
+      return this.size / blockiesPixels;
     },
     style() {
       return {
