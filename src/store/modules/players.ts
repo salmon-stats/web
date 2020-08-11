@@ -2,10 +2,10 @@ import { Mutation, Action, VuexModule, getModule, Module } from 'vuex-module-dec
 import { UserData } from '@/types/salmon-stats';
 import store from '@/store/store';
 import apiCleint from '@/api-client';
-import { parseRawUserData } from '@/helpers/helper';
+import { parseRawUserData, unique } from '@/helpers/helper';
 
 export type IPlayers = {
-  players: Map<string, object>;
+  players: Map<string, UserData>;
 };
 
 @Module({ dynamic: true, store, name: 'players', namespaced: true })
@@ -14,50 +14,36 @@ class Players extends VuexModule implements IPlayers {
   players = new Map<string, UserData>();
 
   @Action
-  public setPlayerData(rawUser: any) {
-    this.SET_PLAYER_USER_DATA({ playerId: rawUser.player_id, rawUser });
-  }
-
-  @Action
   public async fetchPlayer(playerId: string): Promise<UserData> {
-    return (await this.fetchPlayers([playerId]))[0];
+    const players = await this.fetchPlayers([playerId]);
+    return players[0];
   }
 
   @Action
   public async fetchPlayers(playerIds: string[]): Promise<UserData[]> {
-    // TODO: client-side caching mechanism
-    const uniquePlayerIds = Array.from(new Set(playerIds));
+    const players = new Map(this.players);
 
-    const cachedIds = uniquePlayerIds.filter((playerId) => this.players.has(playerId));
-    const cachedUsers: UserData[] = cachedIds.map((playerId) => this.players.get(playerId)!);
-    const uncachedIds = uniquePlayerIds.filter((playerId) => !this.players.has(playerId));
-    let fetchedUsers: UserData[] = [];
+    // TODO: client-side caching mechanism
+    const uniquePlayerIds = unique(playerIds);
+    const uncachedIds = uniquePlayerIds.filter((playerId) => !players.has(playerId));
 
     if (uncachedIds.length > 0) {
-      const res = await apiCleint.get(`/players/metadata/?ids=${uncachedIds.join(',')}`);
+      const { data } = await apiCleint.get(`/players/metadata/?ids=${uncachedIds.join(',')}`);
 
-      fetchedUsers = res.data.map((rawUser: any) => {
+      data.map((rawUser: any) => {
         const playerId = rawUser.player_id as string;
-        this.SET_PLAYER_USER_DATA({ playerId, rawUser });
-
-        return this.players.get(playerId);
+        players.set(playerId, parseRawUserData(rawUser));
       });
     }
 
-    if (fetchedUsers.length === 0) {
-      return cachedUsers;
-    } else if (cachedUsers.length === 0) {
-      return fetchedUsers;
-    }
+    this.SET_PLAYERS(players);
 
-    return [...cachedUsers, ...fetchedUsers];
+    return playerIds.map((id) => players.get(id)!);
   }
 
   @Mutation
-  private SET_PLAYER_USER_DATA(options: { playerId: string; rawUser: any }) {
-    const { playerId, rawUser } = options;
-
-    this.players.set(playerId, parseRawUserData(rawUser));
+  private SET_PLAYERS(playersToAdd: Map<string, UserData>) {
+    this.players = new Map([...this.players, ...playersToAdd]);
   }
 }
 

@@ -123,21 +123,19 @@
               </td>
 
               <td class="members">
-                <template v-if="membersData(result.members).length > 0">
-                  <router-link
-                    v-for="member in membersData(result.members)"
-                    :key="member.playerId"
-                    @click.stop.native
-                    :to="`/players/${member.playerId}`"
-                  >
-                    <span class="is-hidden-mobile">
-                      <player-avatar class="avatar" :size="member.isRegistered ? 32 : 24" :user="member" />
-                    </span>
-                    <span class="is-hidden-tablet">
-                      <player-avatar class="avatar" :size="member.isRegistered ? 24 : 18" :user="member" />
-                    </span>
-                  </router-link>
-                </template>
+                <router-link
+                  v-for="member in membersData(result.members)"
+                  :key="member.playerId"
+                  @click.stop.native
+                  :to="`/players/${member.playerId}`"
+                >
+                  <span class="is-hidden-mobile">
+                    <player-avatar class="avatar" :size="member.isRegistered ? 32 : 24" :user="member" />
+                  </span>
+                  <span class="is-hidden-tablet">
+                    <player-avatar class="avatar" :size="member.isRegistered ? 24 : 18" :user="member" />
+                  </span>
+                </router-link>
               </td>
             </tr>
           </template>
@@ -180,8 +178,8 @@
   }
 }
 
-.avatar {
-  margin-left: 0.25em;
+:not(:first-child) .avatar {
+  margin-right: 0.25em;
 }
 
 .start-date {

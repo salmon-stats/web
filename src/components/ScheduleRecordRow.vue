@@ -5,7 +5,21 @@
   >
     <th>{{ heading }}</th>
     <td v-for="eggKind in ['golden_eggs', 'power_eggs']">
-      <span v-if="record" :class="getClassNames(isValidEvent, eggKind)">{{ record[eggKind] }}</span>
+      <div v-if="record">
+        <span :class="getClassNames(isValidEvent, eggKind)">{{ record[eggKind] }}</span>
+        <div>
+          <router-link
+            v-for="member in getMembersMetadata(record.members)"
+            :key="member.playerId"
+            @click.stop.native
+            :to="`/players/${member.playerId}`"
+          >
+            <player-avatar class="avatar" :size="member.isRegistered ? 32 : 24" :user="member">
+              {{ record.members }}
+            </player-avatar>
+          </router-link>
+        </div>
+      </div>
       <span v-else-if="isValidEvent">N/A</span>
       <span v-else>-</span>
     </td>
@@ -14,7 +28,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
+
+import PlayerAvatar from '@/components/PlayerAvatar.vue';
 import RouterHelperMixin from '@/helpers/router-helper';
+import { playersModule } from '@/store/modules/players';
+import { sortPlayersData } from '../helpers/helper';
+import { UserData } from '../types/salmon-stats';
 
 type EggKind = keyof typeof classNameTable;
 
@@ -25,6 +44,7 @@ const classNameTable = {
 export const eggKinds = Object.keys(classNameTable) as EggKind[];
 
 export default Vue.extend({
+  components: { PlayerAvatar },
   mixins: [RouterHelperMixin],
   props: {
     isValidEvent: {
@@ -65,6 +85,10 @@ export default Vue.extend({
 
       return classNames;
     },
+    getMembersMetadata(ids: string[]): UserData[] {
+      const players = ids.map((id) => playersModule.players.get(id)).filter(Boolean) as UserData[];
+      return sortPlayersData(players);
+    },
   },
 });
 </script>
@@ -74,6 +98,10 @@ export default Vue.extend({
 
 .highlight {
   font-weight: bold;
+}
+
+:not(:last-child) .avatar {
+  margin-left: 0.25em;
 }
 
 .weak { color: darken($text, 10%); }
