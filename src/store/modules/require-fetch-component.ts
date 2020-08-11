@@ -7,14 +7,14 @@ const CancelToken = axios.CancelToken;
 
 export type IRequireFetchComponent = {
   isLoading: boolean;
-  error: null | object;
-  data: null | object;
+  error: null | any;
+  data: null | any;
 };
 
 @Module({ dynamic: true, store, name: 'require-fetch-component', namespaced: true })
 class RequireFetchComponent extends VuexModule implements IRequireFetchComponent {
-  public data: null | object = null;
-  public error: null | object = null;
+  public data: null | any = null;
+  public error: null | any = null;
   public isLoading = false;
   private requestCanceler: any = null;
 
@@ -66,12 +66,12 @@ class RequireFetchComponent extends VuexModule implements IRequireFetchComponent
   }
 
   @Mutation
-  private SET_DATA(data: object | null) {
+  private SET_DATA(data: any | null) {
     this.data = data;
   }
 
   @Mutation
-  private SET_ERROR(error: object | null) {
+  private SET_ERROR(error: any | null) {
     this.error = error;
   }
 
