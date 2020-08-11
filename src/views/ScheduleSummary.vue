@@ -102,12 +102,13 @@ import ScheduleCard from '@/components/ScheduleCard.vue';
 import ScheduleRecordRow, { eggKinds } from '@/components/ScheduleRecordRow.vue';
 import Results from '@/components/Results.vue';
 import { waterLevelEventTable } from '@/constants';
+import { formatDateToYmdhm, getTranslationKey, parseRawSchedule, unique } from '@/helpers/helper';
 import RouterHelperMixin from '@/helpers/router-helper';
 import { metadataModule } from '@/store/modules/metadata';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
-import { schedulesModule } from '@/store/modules/schedules';
 import { idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
-import { formatDateToYmdhm, getTranslationKey, parseRawSchedule } from '@/helpers/helper';
+import { playersModule } from '@/store/modules/players';
+import { schedulesModule } from '@/store/modules/schedules';
 
 @Component({
   name: 'ScheduleRecords',

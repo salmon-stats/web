@@ -13,7 +13,7 @@ import ResultsFilterComponent, {
   restoreFilters,
 } from '@/components/ResultsFilter.vue';
 import FilterController from '@/components/FilterController.vue';
-import { formatDateToMdhm, formatDateInLocalTz, formatScheduleId, DateFormatter } from '@/helpers/helper';
+import { formatDateToMdhm, formatDateInLocalTz, formatScheduleId, DateFormatter, sortPlayersData } from '@/helpers/helper';
 import { playersModule } from '@/store/modules/players';
 import { UserData, User, ResultsFilter, FilterType } from '@/types/salmon-stats';
 import { metadataModule } from '@/store/modules/metadata';
@@ -30,7 +30,9 @@ import { metadataModule } from '@/store/modules/metadata';
     Schedule,
     SpecialUsage,
   },
-  methods: { createResultFilter },
+  methods: {
+    createResultFilter,
+  },
 })
 export default class Results extends Vue {
   @Prop({ default: formatDateToMdhm, type: Function })
@@ -61,7 +63,6 @@ export default class Results extends Vue {
   availableFilters!: FilterType[];
 
   private filters: ResultsFilter = createResultFilter();
-  private playersMetadata: Map<string, UserData> = new Map();
   private scheduleIdHeadings = new Set<string>();
   private currentPage = 1;
   private isTeamView = true;
@@ -96,31 +97,10 @@ export default class Results extends Vue {
     const playerIds = typeof ids === 'string' ? (JSON.parse(ids) as string[]) : ids;
 
     const players = playerIds
-      .map((playerId) => this.playersMetadata.get(playerId))
-      .filter((user) => user !== undefined) as UserData[];
+      .map((playerId) => playersModule.players.get(playerId))
+      .filter(Boolean) as UserData[];
 
-    const isMyself = (user: string | User | UserData): boolean => {
-      const isUserData = (item: any): item is UserData => 'playerId' in item;
-
-      if (!metadataModule.user) {
-        return false;
-      }
-
-      if (typeof user === 'string') {
-        return metadataModule.myPlayerId === user;
-      } else if (isUserData(user)) {
-        return metadataModule.myPlayerId === user.playerId;
-      }
-
-      return false;
-    };
-
-    return players.sort(
-      (a, b) =>
-        (b.isRegistered ? 1 : 0) - (a.isRegistered ? 1 : 0) ||
-        (isMyself(b) ? 1 : 0) - (isMyself(a) ? 1 : 0) ||
-        a.playerId.localeCompare(b.playerId),
-    );
+    return sortPlayersData(players);
   }
 
   public paginate(toPage: number) {
@@ -188,13 +168,7 @@ export default class Results extends Vue {
       return result.members;
     });
 
-    playersModule.fetchPlayers(members).then((players) => {
-      players.forEach((player) => {
-        this.playersMetadata.set(player.playerId, player);
-      });
-
-      this.playersMetadata = new Map(this.playersMetadata);
-    });
+    playersModule.fetchPlayers(members);
   }
 
   public beforeUpdate() {

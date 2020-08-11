@@ -1,7 +1,9 @@
-import { Schedule, UserData } from '@/types/salmon-stats';
-import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
 import dayjs, { Dayjs } from 'dayjs';
-import { i18n } from '../i18n-setup';
+
+import { i18n } from '@/i18n-setup';
+import { Schedule, UserData, User } from '@/types/salmon-stats';
+import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
+import { metadataModule } from '@/store/modules/metadata';
 
 export type DateFormatter = (dateLikeObject: string | number | Date | Dayjs) => string;
 
@@ -114,6 +116,31 @@ export const parseRawUserData = (rawUser: any): UserData => ({
   results: rawUser.results,
 });
 
+export const sortPlayersData = (players: UserData[]): UserData[] => {
+  const isMyself = (user: string | User | UserData): boolean => {
+    const isUserData = (item: any): item is UserData => 'playerId' in item;
+
+    if (!metadataModule.user) {
+      return false;
+    }
+
+    if (typeof user === 'string') {
+      return metadataModule.myPlayerId === user;
+    } else if (isUserData(user)) {
+      return metadataModule.myPlayerId === user.playerId;
+    }
+
+    return false;
+  };
+
+  return players.sort(
+    (a, b) =>
+      (b.isRegistered ? 1 : 0) - (a.isRegistered ? 1 : 0) ||
+      (isMyself(b) ? 1 : 0) - (isMyself(a) ? 1 : 0) ||
+      a.playerId.localeCompare(b.playerId),
+  );
+};
+
 export const sum = (collection: number[] | object) => {
   let numbers: number[];
 
@@ -132,6 +159,8 @@ export const timeDifference = (a: Date | Dayjs, b: Date | Dayjs): string => {
     .map((fragment) => fragment.toString().padStart(2, '0'))
     .join(':');
 };
+
+export const unique = <T>(array: T[]): T[] => Array.from(new Set(array));
 
 export const useMetricPrefix = (n: number, fractionDigits: number) => {
   const megaThreshold = 10e6;
