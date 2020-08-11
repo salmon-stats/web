@@ -178,8 +178,8 @@
   }
 }
 
-.avatar {
-  margin-left: 0.25em;
+:not(:first-child) .avatar {
+  margin-right: 0.25em;
 }
 
 .start-date {
