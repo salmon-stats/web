@@ -18,14 +18,9 @@
 .user {
   display: flex;
 
-  img {
-    width: 32px;
-    height: 32px;
-
-    & + .name {
-      margin-left: 0.5em;
-      align-self: center;
-    }
+  span+.name {
+    margin-left: 0.5em;
+    align-self: center;
   }
 
   .name {

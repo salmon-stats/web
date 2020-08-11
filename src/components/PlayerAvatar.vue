@@ -21,6 +21,7 @@ export default Vue.extend({
     },
     size: {
       type: [Number, undefined],
+      default: 32,
     },
     showTooltip: {
       type: Boolean,
