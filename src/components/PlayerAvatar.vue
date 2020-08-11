@@ -4,7 +4,7 @@ img {
 }
 </style>
 
-<script lang="tsx">
+<script lang="jsx">
 import Vue from 'vue';
 import Blockies from '@/components/Blockies.vue';
 
