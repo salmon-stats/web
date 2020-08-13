@@ -3,7 +3,7 @@
     <div class="is-marginless columns user is-clipped">
       <router-link class="is-flex" tag="div" :to="`/players/${playerId}`">
         <template v-if="user" class="is-marginless is-flex">
-          <player-avatar class="avatar" :size="72" :user="user" :blockies-seed="playerId" :key="playerId" />
+          <player-avatar class="avatar" :size="72" :user="user" :blockies-seed="playerId" :key="playerId" :show-tooltip="false" />
           <div>
             <h1>
               <a>
@@ -16,7 +16,7 @@
         <template v-else>
           <div class="avatar">
             <div v-if="isLoadingUserData" class="placeholder" />
-            <player-avatar v-else class="avatar" :size="72" :blockies-seed="playerId" />
+            <player-avatar v-else class="avatar" :size="72" :blockies-seed="playerId" :show-tooltip="false" />
           </div>
           <div>
             <h1>
