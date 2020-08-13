@@ -187,9 +187,10 @@ export default class ScheduleRecords extends RequireFetchBase {
       }
 
       const { totals, no_night_totals, wave_records } = state.data.records;
-      const recordHolderIds = unique([totals, no_night_totals, ...Object.values(wave_records.golden_eggs), ...Object.values(wave_records.power_eggs)]
-        .flatMap((record) => record.members)
-        .filter(Boolean));
+      const recordHolderIds = unique([totals, no_night_totals, wave_records.golden_eggs, wave_records.power_eggs]
+        .flatMap(Object.values)
+        .filter(Boolean)
+        .flatMap((record) => record.members));
 
       playersModule.fetchPlayers(recordHolderIds);
     });
