@@ -107,7 +107,7 @@ a {
 </style>
 
 <script>
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Watch } from 'vue-property-decorator';
 import { metadataModule as metadata } from '../store/modules/metadata';
 import { mapGetters } from 'vuex';
 import AccountSwitcher from '@/components/AccountSwitcher.vue';
@@ -132,6 +132,11 @@ export default class GlobalHeader extends Vue {
 
   toggleBurgerMenu() {
     this.isBurgerMenuOpen = !this.isBurgerMenuOpen;
+  }
+
+  @Watch('$route')
+  onRouteChange() {
+    this.isBurgerMenuOpen = false;
   }
 }
 </script>
