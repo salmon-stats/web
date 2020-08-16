@@ -18,6 +18,12 @@
 
                 <span>Hazard level:</span>
                 <hazard-level :hazard-level="salmonResult.danger_rate" />
+
+                <span class="is-hidden-tablet"><img src="@/assets/golden-egg.png" /></span>
+                <span class="is-hidden-tablet golden-egg">{{salmonResult.golden_egg_delivered}}</span>
+
+                <span class="is-hidden-tablet"><img src="@/assets/power-egg.png" /></span>
+                <span class="is-hidden-tablet power-egg">{{salmonResult.power_egg_collected}}</span>
               </div>
             </schedule-card>
           </div>
@@ -384,6 +390,10 @@ th.boss-name {
 .inner-schedule-card {
   display: grid;
   grid-template-columns: auto 1fr;
+  img {
+    height: 16px;
+    width: auto;
+  }
   span:nth-child(odd) {
     text-align: right;
   }
