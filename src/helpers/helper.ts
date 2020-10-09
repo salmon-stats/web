@@ -1,9 +1,9 @@
+import { i18n } from '@/i18n-setup';
+import { idKeyMapModule as idKeyMap, IIdKeyMap } from '@/store/modules/id-key-map';
+import { metadataModule } from '@/store/modules/metadata';
+import { Schedule, User, UserData } from '@/types/salmon-stats';
 import dayjs, { Dayjs } from 'dayjs';
 
-import { i18n } from '@/i18n-setup';
-import { Schedule, UserData, User } from '@/types/salmon-stats';
-import { IIdKeyMap, idKeyMapModule as idKeyMap } from '@/store/modules/id-key-map';
-import { metadataModule } from '@/store/modules/metadata';
 
 export type DateFormatter = (dateLikeObject: string | number | Date | Dayjs) => string;
 
@@ -11,6 +11,8 @@ export const iconUrl = (weaponType: string, id: string | number) =>
   `https://splatoon-stats-api.yuki.games/static/images/${weaponType}/${id}.png`;
 
 export const isGrizzcoWeapon = (weaponId: number): boolean => weaponId >= 20000;
+
+export const hasRandomWeapon = (schedule: Schedule): boolean => schedule.weapons.some((id) => id < 0);
 
 type QueryParams = {
   page?: number;

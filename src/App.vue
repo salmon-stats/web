@@ -50,6 +50,10 @@ h2 {
   width: 100%;
 }
 
+.pseudo-link {
+  color: $link;
+}
+
 .has-title[title] {
   text-decoration: underline;
   text-decoration-style: dotted;
@@ -134,6 +138,15 @@ tbody tr:nth-child(even) {
 }
 table.is-hoverable tbody tr:hover {
   background-color: lighten($background, 5%);
+}
+
+.modal {
+  padding: 1em;
+}
+
+.modal-content {
+  padding: 1em;
+  background-color: $modal-content-background-color;
 }
 
 .clickable {

@@ -26,7 +26,25 @@
         </div>
 
         <section class="column is-3">
-          <h2>Main weapons</h2>
+          <h2>
+            Main weapons
+            <small v-if="schedule.weapons.includes(-1)" class="pseudo-link" @click="isWeaponsModalOpen = true">
+              ({{ shiftSummary.weapons.length }} / {{ availableWeapons }})
+            </small>
+          </h2>
+
+          <b-modal :active.sync="isWeaponsModalOpen">
+            <h2>Weapons played</h2>
+            <template v-for="({ count, weapon_id: weaponId }) in idOrderedWeapons">
+              <weapon-count :key="weaponId" :count="count" :weapon-id="weaponId" />
+            </template>
+
+            <h2 style="margin-top: 1em">Unused weapons</h2>
+            <template v-for="weaponId in unusedWeaponIds">
+              <main-weapon :key="weaponId" :weapon-id="weaponId" style="margin: 8px" />
+            </template>
+          </b-modal>
+
           <div class="table-wrap box is-fullwidth">
             <table class="is-hoverable is-fullwidth">
               <tbody>
@@ -68,7 +86,7 @@
 @import '@/assets/bulma-variables.scss';
 </style>
 
-<script>
+<script lang="ts">
 import { Component } from 'vue-property-decorator';
 import MainWeapon from '@/components/MainWeapon.vue';
 import RequireFetchBase from '@/components/RequireFetchBase.vue';
@@ -76,24 +94,42 @@ import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import Results from '@/components/Results.vue';
 import ScheduleCard from '@/components/ScheduleCard.vue';
 import ShiftDetails from '@/components/ShiftDetails.vue';
+import WeaponCount from '@/components/WeaponCount.vue';
 import WeaponProportionalBarChart from '@/components/WeaponProportionalBarChart.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
 import { playersModule } from '@/store/modules/players';
 import { schedulesModule } from '@/store/modules/schedules';
-import { percentage, toFixed } from '@/helpers/helper';
+import { hasRandomWeapon, isGrizzcoWeapon, percentage, toFixed, unique } from '@/helpers/helper';
+import { rareWeaponIds, Schedule, UserData } from '@/types/salmon-stats';
+import { idKeyMapModule } from '@/store/modules/id-key-map';
 
 @Component({
   name: 'PlayerShifts',
-  components: { MainWeapon, RequireFetchTemplate, Results, ScheduleCard, ShiftDetails, WeaponProportionalBarChart },
+  components: { MainWeapon, RequireFetchTemplate, Results, ScheduleCard, ShiftDetails, WeaponCount, WeaponProportionalBarChart },
   filters: { percentage, toFixed },
+  methods: { hasRandomWeapon },
 })
 export default class PlayerShifts extends RequireFetchBase {
-  normalizeFailedGame = false;
-  player = null;
-  schedule = null;
+  public normalizeFailedGame = false;
+  public player: UserData | null = null;
+  public schedule: Schedule | null = null;
+  public isWeaponsModalOpen = false;
 
   get apiPath() {
     return `players/${this.playerId}/schedules/${this.scheduleId}`;
+  }
+  get availableWeapons() {
+    const { weapons } = this.schedule!;
+    if (weapons.includes(-2)) { // Golden "?"
+      return rareWeaponIds.length;
+    } else if (weapons.includes(-1)) { // Green "?"
+      return idKeyMapModule.weaponIds.length + 1;
+    }
+
+    return unique(weapons).length
+  }
+  get idOrderedWeapons() {
+    return [...this.shiftSummary.weapons].sort((a: any, b: any) => a.weapon_id - b.weapon_id);
   }
   get playerId() {
     return this.$route.params.playerId;
@@ -111,8 +147,8 @@ export default class PlayerShifts extends RequireFetchBase {
     };
   }
   get summary() {
-    const summary = state.data.summary;
-    const result = {};
+    const summary = state.data.summary as Record<string, string>;
+    const result: Record<string, string> = {};
 
     Object.entries(summary).forEach((pair) => {
       const [k, v] = pair;
@@ -127,6 +163,17 @@ export default class PlayerShifts extends RequireFetchBase {
     });
 
     return result;
+  }
+  get unusedWeaponIds() {
+    const unusedWeaponds: number[] = [];
+    const playedWeaponIds = (this.shiftSummary.weapons as Array<{ weapon_id: number }>).map((w) => w.weapon_id);
+    if (!playedWeaponIds.some(isGrizzcoWeapon)) {
+      unusedWeaponds.push(-1);
+    }
+
+    unusedWeaponds.push(...idKeyMapModule.weaponIds.filter((id) => !isGrizzcoWeapon(id) && !playedWeaponIds.includes(id)));
+
+    return unusedWeaponds;
   }
 
   mounted() {

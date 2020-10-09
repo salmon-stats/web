@@ -4,13 +4,16 @@ export type PlayerId = string;
 export type BossId = string | number;
 export type BossIdKeys = '3' | '6' | '9' | '12' | '13' | '14' | '15' | '16' | '21';
 
+export const rareWeaponIds = [20000, 20010, 20020, 20030] as const;
+type RareWeaponIds = typeof rareWeaponIds[number];
+
 export type Schedule = {
   scheduleId: string;
   startAt: Date;
   endAt: Date;
   weapons: number[];
   stageId: number;
-  rareWeaponId: null | 20000 | 20010 | 20020 | 20030;
+  rareWeaponId: null | RareWeaponIds;
 };
 
 export type UserData = {
@@ -54,10 +57,10 @@ type MinMax = {
   max?: number | string;
 };
 
-type SortByOptions = 'golden_egg_delivered' | 'player_golden_eggs' | 'power_egg_collected' | 'player_power_eggs';
-type SortByOrderOptions = 'asc' | 'desc';
+export type SortByOptions = 'golden_egg_delivered' | 'player_golden_eggs' | 'power_egg_collected' | 'player_power_eggs';
+export type SortByOrderOptions = 'asc' | 'desc';
 
-type ResultsFilter = {
+export type ResultsFilter = {
   golden_egg: MinMax;
   power_egg: MinMax;
 
@@ -73,7 +76,7 @@ type ResultsFilter = {
   sort_by_order?: SortByOrderOptions;
 };
 
-type ResultsFilterQuery = {
+export type ResultsFilterQuery = {
   golden_egg_min?: number;
   golden_egg_max?: number;
   power_egg_min?: number;
