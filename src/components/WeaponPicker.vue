@@ -19,14 +19,14 @@
           Apply
         </button>
       </div>
-
-      <div class="weapon-icon-container" v-for="weaponId in weapons" :key="weaponId" @click="toggleSelection(weaponId)">
-        <main-weapon
-          :weapon-id="weaponId"
-          :class="['weapon-icon', selectedWeapons.includes(weaponId) ? 'is-selected' : '']"
-        />
-        <span v-if="counts[weaponId]" class="count">{{ counts[weaponId] }}</span>
-      </div>
+      <weapon-count
+        v-for="weaponId in weapons"
+        :key="weaponId"
+        :count="counts[weaponId]"
+        :weapon-id="weaponId"
+        :class="['weapon-count', selectedWeapons.includes(weaponId) ? 'is-selected' : '']"
+        @click.native="toggleSelection(weaponId)"
+      />
     </b-modal>
   </div>
 </template>
@@ -44,39 +44,19 @@
   justify-content: space-between;
 }
 
-img:not(.is-selected) {
+::v-deep :not(.is-selected) > img {
   filter: grayscale(1);
   opacity: 0.5;
-}
-
-.weapon-icon-container {
-  margin: 8px;
-  width: 32px;
-  height: 32px;
-  display: inline-block;
-  position: relative;
-}
-img {
-  position: static;
-}
-.count {
-  font-size: 80%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 0 0.125em;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
 }
 </style>
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch, PropSync } from 'vue-property-decorator';
 import { idKeyMapModule } from '@/store/modules/id-key-map';
-import MainWeapon from '@/components/MainWeapon.vue';
+import WeaponCount from '@/components/WeaponCount.vue';
 
 @Component({
-  components: { MainWeapon },
+  components: { WeaponCount },
 })
 export default class WeaponPicker extends Vue {
   get allWeapons(): number[] {
