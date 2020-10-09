@@ -50,6 +50,10 @@ h2 {
   width: 100%;
 }
 
+.pseudo-link {
+  color: $link;
+}
+
 .has-title[title] {
   text-decoration: underline;
   text-decoration-style: dotted;
