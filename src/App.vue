@@ -136,6 +136,15 @@ table.is-hoverable tbody tr:hover {
   background-color: lighten($background, 5%);
 }
 
+.modal {
+  padding: 1em;
+}
+
+.modal-content {
+  padding: 1em;
+  background-color: $modal-content-background-color;
+}
+
 .clickable {
   cursor: pointer;
 }

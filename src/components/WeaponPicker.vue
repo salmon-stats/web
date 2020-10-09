@@ -34,11 +34,6 @@
 <style lang="scss" scoped>
 @import '@/assets/variables.scss';
 
-.modal {
-  padding: 0 1.5em;
-  background: $modal-background-color;
-}
-
 .modal-controls {
   display: flex;
   justify-content: space-between;
