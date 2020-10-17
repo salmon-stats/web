@@ -123,7 +123,7 @@ export default class PlayerShifts extends RequireFetchBase {
     if (weapons.includes(-2)) { // Golden "?"
       return rareWeaponIds.length;
     } else if (weapons.includes(-1)) { // Green "?"
-      return idKeyMapModule.weaponIds.length + 1;
+      return idKeyMapModule.weaponIds.length - rareWeaponIds.length + 1;
     }
 
     return unique(weapons).length
