@@ -70,7 +70,15 @@ export default class PlayerSearch extends Vue {
   public playerNames = [];
   public registeredUsers = [];
 
+  private isValidName(name: string): boolean {
+    return !!name && name.length <= MAX_LENGTH;
+  }
+
   public search() {
+    if (!this.isValidName(this.nameQuery)) {
+      return;
+    }
+
     this.$router.push({
       query: {
         name: this.nameQuery,
@@ -94,8 +102,7 @@ export default class PlayerSearch extends Vue {
 
   public mounted() {
     const nameQuery = this.$route.query.name as string;
-
-    if (nameQuery && nameQuery.length <= MAX_LENGTH) {
+    if (this.isValidName(nameQuery)) {
       this.nameQuery = nameQuery;
       this.search();
     }
