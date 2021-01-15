@@ -24,7 +24,6 @@ module.exports = {
     },
     "plugins": [
         "@typescript-eslint",
-        "prefer-arrow",
         "prettier"
     ],
     "rules": {
@@ -74,19 +73,6 @@ module.exports = {
         //     }
         // ],
         "@typescript-eslint/interface-name-prefix": "off",
-        "@typescript-eslint/member-delimiter-style": [
-            "warn",
-            {
-                "multiline": {
-                    "delimiter": "semi",
-                    "requireLast": true
-                },
-                "singleline": {
-                    "delimiter": "semi",
-                    "requireLast": false
-                }
-            }
-        ],
         "@typescript-eslint/member-ordering": "warn",
         "@typescript-eslint/no-empty-function": "warn",
         "@typescript-eslint/no-empty-interface": "warn",
@@ -109,7 +95,6 @@ module.exports = {
                 "lib": "always"
             }
         ],
-        "@typescript-eslint/type-annotation-spacing": "warn",
         "@typescript-eslint/unified-signatures": "warn",
 
         "vue/attributes-order": "off",
@@ -118,16 +103,10 @@ module.exports = {
         "vue/no-multiple-template-root": "off", // false positive
         "vue/singleline-html-element-content-newline": "off",
 
-        "arrow-body-style": "warn",
-        "brace-style": [
-            "warn",
-            "1tbs"
-        ],
         "complexity": "off",
         "constructor-super": "warn",
         "curly": "warn",
         "dot-notation": "warn",
-        "eol-last": "warn",
         "eqeqeq": [
             "warn",
             "smart"
@@ -147,7 +126,6 @@ module.exports = {
             "warn",
             1
         ],
-        "new-parens": "warn",
         "no-bitwise": [
             "warn",
             {
@@ -171,7 +149,6 @@ module.exports = {
             }
         ],
         "no-throw-literal": "warn",
-        // "no-trailing-spaces": "warn",
         "no-undef-init": "warn",
         "no-underscore-dangle": "warn",
         "no-unsafe-finally": "warn",
@@ -185,19 +162,7 @@ module.exports = {
             "never"
         ],
         "prefer-const": "warn",
-        "quote-props": [
-            "warn",
-            "consistent-as-needed"
-        ],
         "radix": "warn",
-        "space-before-function-paren": [
-            "warn",
-            {
-                "anonymous": "never",
-                "asyncArrow": "always",
-                "named": "never"
-            }
-        ],
         "spaced-comment": [
             "warn",
             "always",
