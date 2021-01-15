@@ -1,6 +1,10 @@
 import { apiBaseUrl } from '@/api-client';
+import { isDev } from '@/constants';
 
-const signIn = apiBaseUrl + '/auth/twitter';
+const signIn =
+  apiBaseUrl +
+  '/auth/twitter' +
+  (isDev ? '?redirect_to=' + encodeURIComponent(location.origin + '/auth/twitter/callback') : '');
 const signOut = apiBaseUrl + '/auth/twitter/logout';
 
 export { signIn, signOut };
