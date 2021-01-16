@@ -25,51 +25,85 @@
           />
         </div>
 
-        <section class="column is-3">
-          <h2>
-            Main weapons
-            <small v-if="schedule.weapons.includes(-1)" class="pseudo-link" @click="isWeaponsModalOpen = true">
-              ({{ shiftSummary.weapons.length }} / {{ availableWeapons }})
-            </small>
-          </h2>
+        <section class="column is-3 v-space-between-4">
+          <div>
+            <h2>
+              Main weapons
+              <small v-if="schedule.weapons.includes(-1)" class="pseudo-link" @click="isWeaponsModalOpen = true">
+                ({{ shiftSummary.weapons.length }} / {{ availableWeapons }})
+              </small>
+            </h2>
 
-          <b-modal :active.sync="isWeaponsModalOpen">
-            <h2>Weapons played</h2>
-            <template v-for="({ count, weapon_id: weaponId }) in idOrderedWeapons">
-              <weapon-count :key="weaponId" :count="count" :weapon-id="weaponId" />
-            </template>
+            <b-modal :active.sync="isWeaponsModalOpen">
+              <h2>Weapons played</h2>
+              <template v-for="({ count, weapon_id: weaponId }) in idOrderedWeapons">
+                <weapon-count :key="weaponId" :count="count" :weapon-id="weaponId" />
+              </template>
 
-            <h2 style="margin-top: 1em">Unused weapons</h2>
-            <template v-for="weaponId in unusedWeaponIds">
-              <main-weapon :key="weaponId" :weapon-id="weaponId" style="margin: 8px" />
-            </template>
-          </b-modal>
+              <h2 style="margin-top: 1em">Unused weapons</h2>
+              <template v-for="weaponId in unusedWeaponIds">
+                <main-weapon :key="weaponId" :weapon-id="weaponId" style="margin: 8px" />
+              </template>
+            </b-modal>
 
-          <div class="table-wrap box is-fullwidth">
-            <table class="is-hoverable is-fullwidth">
-              <tbody>
-                <tr v-for="weapon in shiftSummary.weapons" :key="weapon.weapon_id">
-                  <td><main-weapon :weapon-id="weapon.weapon_id" /></td>
-                  <td>
-                    <p>
-                      {{ weapon.count }}
-                      <small>
-                        ({{
-                          (weapon.count / (summary.clear_waves + summary.games - summary.clear_games)) | percentage
-                        }})
-                      </small>
-                    </p>
-                    <p class="proportional-bar-chart-container">
-                      <weapon-proportional-bar-chart
-                        :value="weapon.count"
-                        :max="shiftSummary.weapons[0].count"
-                        :weapon="weapon.weapon_id"
-                      />
-                    </p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-wrap box is-fullwidth">
+              <table class="is-hoverable is-fullwidth">
+                <tbody>
+                  <tr v-for="weapon in shiftSummary.weapons" :key="weapon.weapon_id">
+                    <td><main-weapon :weapon-id="weapon.weapon_id" /></td>
+                    <td>
+                      <p>
+                        {{ weapon.count }}
+                        <small>
+                          ({{
+                            (weapon.count / (summary.clear_waves + summary.games - summary.clear_games)) | percentage
+                          }})
+                        </small>
+                      </p>
+                      <p class="proportional-bar-chart-container">
+                        <weapon-proportional-bar-chart
+                          :value="weapon.count"
+                          :max="shiftSummary.weapons[0].count"
+                          :weapon="weapon.weapon_id"
+                        />
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <h2>Special weapons</h2>
+
+            <div class="table-wrap box is-fullwidth">
+              <table class="is-hoverable is-fullwidth">
+                <tbody>
+                  <tr v-for="({ count, games, special_id }) in shiftSummary.specials" :key="special_id">
+                    <td><weapon weapon-type="special" :weapon-id="special_id" /></td>
+                    <td>
+                      <p>
+                        {{ games }}
+                        <small>({{ count }})</small>
+                        <small>
+                          ({{
+                            (games / summary.games) | percentage
+                          }})
+                        </small>
+                      </p>
+                      <p class="proportional-bar-chart-container">
+                        <weapon-proportional-bar-chart
+                          :value="games"
+                          :max="shiftSummary.specials[0].games"
+                          :weapon="special_id"
+                        />
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </section>
       </div>
@@ -94,6 +128,7 @@ import RequireFetchTemplate from '@/components/RequireFetchTemplate.vue';
 import Results from '@/components/Results.vue';
 import ScheduleCard from '@/components/ScheduleCard.vue';
 import ShiftDetails from '@/components/ShiftDetails.vue';
+import Weapon from '@/components/Weapon.vue';
 import WeaponCount from '@/components/WeaponCount.vue';
 import WeaponProportionalBarChart from '@/components/WeaponProportionalBarChart.vue';
 import { requireFetchComponentModule as state } from '@/store/modules/require-fetch-component';
@@ -105,7 +140,7 @@ import { idKeyMapModule } from '@/store/modules/id-key-map';
 
 @Component({
   name: 'PlayerShifts',
-  components: { MainWeapon, RequireFetchTemplate, Results, ScheduleCard, ShiftDetails, WeaponCount, WeaponProportionalBarChart },
+  components: { MainWeapon, Weapon, RequireFetchTemplate, Results, ScheduleCard, ShiftDetails, WeaponCount, WeaponProportionalBarChart },
   filters: { percentage, toFixed },
   methods: { hasRandomWeapon },
 })

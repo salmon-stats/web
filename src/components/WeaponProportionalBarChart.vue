@@ -4,14 +4,14 @@ import { isGrizzcoWeapon } from '@/helpers/helper';
 
 export default {
   props: [
-    'value', 'max', 'weapon',
+    'value', 'max', 'weapon', 'isSpecial',
   ],
   render(h) {
     const props = this.$props;
 
     return (
       <ProportionalBarChart
-        chart-key={isGrizzcoWeapon(props.weapon) ? 'golden-egg' : 'rescue'}
+        chart-key={!props.isSpecial && isGrizzcoWeapon(props.weapon) ? 'golden-egg' : 'rescue'}
         {...{ attrs: props }}
       />
     );

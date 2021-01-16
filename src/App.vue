@@ -186,6 +186,25 @@ table.is-hoverable tbody tr:hover {
 .anonymous-name {
   font-style: italic;
 }
+
+// Spacing helper
+$range: 1, 2, 3, 4, 6, 8, 10, 12, 16, 20, 24, 32;
+
+.h-space-between- {
+  @each $i in $range {
+    &#{$i} > *:not(:first-child) {
+      margin-left: 0.125em * $i;
+    }
+  }
+}
+
+.v-space-between- {
+  @each $i in $range {
+    &#{$i} > *:not(:last-child) {
+      margin-bottom: 0.125em * $i;
+    }
+  }
+}
 </style>
 
 <script>

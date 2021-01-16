@@ -1,7 +1,7 @@
 <template>
   <require-fetch-template>
-    <div v-if="playerShifts">
-      <div v-for="playerShift in playerShifts" :key="playerShift.schedule_id" class="columns">
+    <div class="v-space-between-20" v-if="playerShifts">
+      <div v-for="playerShift in playerShifts" :key="playerShift.schedule_id" class="columns v-space-between-4">
         <div class="column is-4">
           <schedule-card
             :schedule="formatSchedule(playerShift)"
