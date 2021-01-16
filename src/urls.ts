@@ -4,7 +4,9 @@ import { isDev } from '@/constants';
 const signIn =
   apiBaseUrl +
   '/auth/twitter' +
-  (isDev ? '?redirect_to=' + encodeURIComponent(location.origin + '/auth/twitter/callback') : '');
+  (isDev
+    ? '?redirect_to=' + encodeURIComponent(location.protocol + '//' + location.hostname + '/auth/twitter/callback')
+    : '');
 const signOut = apiBaseUrl + '/auth/twitter/logout';
 
 export { signIn, signOut };
