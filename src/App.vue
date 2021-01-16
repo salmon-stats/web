@@ -11,6 +11,10 @@
     </footer>
 
     <confirmation-dialog ref="confirm" />
+
+    <div v-if="isDev" class="p-4" style="position: fixed; bottom: 0; right: 0;">
+      <a target="_blank" :href="productionLink">[Open in Production]</a>
+    </div>
   </div>
 </template>
 
@@ -214,12 +218,22 @@ import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
 import GlobalHeader from '@/components/GlobalHeader.vue';
 import GlobalFooter from '@/components/GlobalFooter.vue';
 import { metadataModule } from '@/store/modules/metadata';
+import { isDev } from '@/constants';
+import { production } from '@/urls';
 
 @Component({
   name: 'App',
   components: { ConfirmationDialog, GlobalHeader, GlobalFooter },
 })
 export default class App extends Vue {
+  get productionLink() {
+    return production + this.$route.fullPath;
+  }
+
+  get isDev() {
+    return isDev;
+  }
+
   mounted() {
     this.$root.$confirm = this.$refs.confirm.open;
 

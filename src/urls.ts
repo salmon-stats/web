@@ -1,6 +1,8 @@
 import { apiBaseUrl } from '@/api-client';
 import { isDev } from '@/constants';
 
+const production = 'https://salmon-stats.yuki.games';
+
 const signIn =
   apiBaseUrl +
   '/auth/twitter' +
@@ -9,4 +11,4 @@ const signIn =
     : '');
 const signOut = apiBaseUrl + '/auth/twitter/logout';
 
-export { signIn, signOut };
+export { production, signIn, signOut };
