@@ -85,9 +85,9 @@
     </div>
 
     <div class="column is-4 is-hidden-mobile">
-      <template v-for="({ count, games }, specialId) in shiftSummary.specials">
-        <div :key="specialId">
-          <weapon weapon-type="special" :weapon-id="specialId" />
+      <template v-for="({ count, games, special_id }) in shiftSummary.specials">
+        <div :key="special_id">
+          <weapon weapon-type="special" :weapon-id="special_id" />
           {{ games }} <small>({{ count }})</small>
         </div>
       </template>
