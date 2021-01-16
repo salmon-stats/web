@@ -50,7 +50,7 @@
               <table class="is-hoverable is-fullwidth">
                 <tbody>
                   <tr v-for="weapon in shiftSummary.weapons" :key="weapon.weapon_id">
-                    <td><main-weapon :weapon-id="weapon.weapon_id" /></td>
+                    <td><div class="is-flex"><main-weapon :weapon-id="weapon.weapon_id" /></div></td>
                     <td>
                       <p>
                         {{ weapon.count }}
@@ -81,7 +81,7 @@
               <table class="is-hoverable is-fullwidth">
                 <tbody>
                   <tr v-for="({ count, games, special_id }) in shiftSummary.specials" :key="special_id">
-                    <td><weapon weapon-type="special" :weapon-id="special_id" /></td>
+                    <td><div class="is-flex"><weapon weapon-type="special" :weapon-id="special_id" /></div></td>
                     <td>
                       <p>
                         {{ games }}
