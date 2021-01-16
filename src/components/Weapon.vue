@@ -1,14 +1,13 @@
 <template>
-  <weapon weapon-type="weapon" :weapon-id="weaponId" :size="size" />
+  <img :src="iconUrl(weaponType, weaponId)" :style="style" />
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { iconUrl } from '@/helpers/helper';
-import Weapon from '@/components/Weapon.vue';
+import { PropType } from 'vue';
 
 @Component({
-  components: { Weapon },
   methods: { iconUrl },
 })
 export default class MainWeapon extends Vue {
@@ -19,9 +18,25 @@ export default class MainWeapon extends Vue {
   weaponId!: number | string;
 
   @Prop({
+    type: String,
+    required: true,
+  })
+  weaponType!: string;
+
+  @Prop({
     type: Number,
     default: 32,
   })
   size!: number;
+
+  get style() {
+    const size = `${this.size}px`;
+
+    return {
+      minWidth: size,
+      width: size,
+      height: size,
+    };
+  }
 }
 </script>
