@@ -11,7 +11,7 @@
         @keypress.enter.native="search"
       />
       <p class="control">
-        <b-button @click="search" :disabled="isSearching" class="button is-primary">
+        <b-button @click="search" :disabled="isSearching" type="is-primary">
           Search
         </b-button>
       </p>

@@ -3,7 +3,7 @@
 
 // Pagination
 .pagination-link, .pagination-next, .pagination-previous {
-  background-color: white;
+  background-color: $background;
 }
 nav.pagination > a[role=button] {
   display: none;

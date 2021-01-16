@@ -2,6 +2,10 @@ $body-color: #c8cdd0;
 $background: #2c3e50;
 $body-background-color: #131a22; // == darken(#1c2732, 5%);
 $border: #46627f;
+$button-color: $body-background-color;
+$primary-invert: white;
+$pagination-current-color: white;
+$pagination-hover-color: $pagination-current-color;
 $link: #2fe3be;
 $modal-content-background-color: rgba($body-background-color, 0.75);
 

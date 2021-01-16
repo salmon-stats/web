@@ -151,6 +151,7 @@
 
     <div v-if="resultsWithPagination">
       <b-pagination
+        class="mt-4"
         :total="resultsWithPagination.total"
         :current.sync="currentPage"
         :per-page="resultsWithPagination.per_page"

@@ -4,19 +4,19 @@
       <slot />
 
       <div class="is-flex">
-        <button class="button" @click="toggleVisibility">{{ isFilterVisible ? 'Close' : 'Open' }} filters</button>
+        <b-button @click="toggleVisibility">{{ isFilterVisible ? 'Close' : 'Open' }} filters</b-button>
         <div>
-          <button class="button is-danger" @click="$emit('clear')">
+          <b-button class="is-danger" @click="$emit('clear')">
             Clear
-          </button>
-          <button class="button is-success" @click="$emit('search')">
+          </b-button>
+          <b-button class="is-success" @click="$emit('search')">
             Apply
-          </button>
+          </b-button>
         </div>
       </div>
     </template>
     <div v-else class="visibility-button to-open has-text-centered">
-      <button class="button" @click="toggleVisibility">{{ isFilterVisible ? 'Close' : 'Open' }} filters</button>
+      <b-button @click="toggleVisibility">{{ isFilterVisible ? 'Close' : 'Open' }} filters</b-button>
     </div>
   </div>
 </template>
