@@ -4,7 +4,6 @@ import { metadataModule } from '@/store/modules/metadata';
 import { Schedule, User, UserData } from '@/types/salmon-stats';
 import dayjs, { Dayjs } from 'dayjs';
 
-
 export type DateFormatter = (dateLikeObject: string | number | Date | Dayjs) => string;
 
 export const iconUrl = (weaponType: string, id: string | number) =>
@@ -179,4 +178,17 @@ export const useMetricPrefix = (n: number, fractionDigits: number) => {
     return `${convert(n, kilo)}K`;
   }
   return n;
+};
+
+type UAType = 'ios' | 'browser';
+export const getUAType = (): UAType => {
+  const isIOS =
+    ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'].includes(navigator.platform) ||
+    // iPad on iOS 13 detection
+    (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
+  if (isIOS) {
+    return 'ios';
+  }
+
+  return 'browser';
 };

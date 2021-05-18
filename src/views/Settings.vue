@@ -7,11 +7,18 @@
       <template v-else>
         <div>
           <h1>API token</h1>
+
+          <template v-if="uaType === 'ios'">
+            <b-button class="is-primary mb-5" @click="onClickFetchAPIToken" :disabled="isFetchingAPIToken">
+              Connect with Salmonia
+            </b-button>
+          </template>
+
           <b-field>
             <b-button
               class="is-primary"
               @click="onClickGenerateApiToken"
-              :disabled="isRequesting || (!regenerateToken && apiToken !== '')"
+              :disabled="isFetchingAPIToken || (!regenerateToken && apiToken !== '')"
             >
               {{ regenerateToken ? 'Regenerate' : 'Get' }} API token
             </b-button>
@@ -47,7 +54,7 @@
             </b-checkbox>
           </b-field>
           <b-field horizontal>
-            <b-button class="is-primary" @click="onClickUpdatePrivacySettings" :disabled="isRequesting">
+            <b-button class="is-primary" @click="onClickUpdatePrivacySettings" :disabled="isFetchingAPIToken">
               Update privacy settings
             </b-button>
           </b-field>
@@ -137,6 +144,7 @@ import { statefulApiClient } from '@/api-client';
 import { metadataModule as metadata } from '@/store/modules/metadata';
 import RequireSignIn from '@/components/RequireSignIn.vue';
 import { signOut as signOutUrl } from '@/urls';
+import { getUAType } from '@/helpers/helper';
 
 @Component({
   name: 'Settings',
@@ -147,13 +155,14 @@ export default class Settings extends Vue {
   appTokenMode = false;
   clipboard = null;
   displayName = '';
+  isFetchingAPIToken = false;
   isUploading = false;
-  isRequesting = false;
   removeListner = null;
   selectedFiles = [];
   uploadLog = [];
   useTwitterAvatar = true;
   regenerateToken = false;
+  uaType = getUAType();
 
   get isBrowserUploadEnabled() {
     return IS_BROWSER_UPLOAD_ENABLED;
@@ -230,22 +239,19 @@ export default class Settings extends Vue {
   onClickClearFiles() {
     this.selectedFiles = [];
   }
+  async onClickFetchAPIToken() {
+    const res = await this.getAPIToken();
+    location.href = `salmon-stats://api-token=${res.data.api_token}`;
+  }
   onClickGenerateApiToken() {
-    this.isRequesting = true;
+    this.isFetchingAPIToken = true;
 
-    statefulApiClient
-      .get('/api-token', {
-        params: { regenerate: this.regenerateToken },
-      })
-      .then((res) => {
-        this.apiToken = res.data.api_token;
-      })
-      .finally(() => {
-        this.isRequesting = false;
-      });
+    this.getAPIToken(this.regenerateToken).then((res) => {
+      this.apiToken = res.data.api_token;
+    });
   }
   onClickUpdatePrivacySettings() {
-    this.isRequesting = true;
+    this.isFetchingAPIToken = true;
 
     statefulApiClient
       .post('/settings/privacy', {
@@ -256,13 +262,23 @@ export default class Settings extends Vue {
         metadata.SET_USER_METADATA(res.data);
       })
       .finally(() => {
-        this.isRequesting = false;
+        this.isFetchingAPIToken = false;
       });
   }
   async onClickSignOut() {
     if (await this.$root.$confirm('Are you sure you want to sign out of Salmon Stats account?')) {
       location.href = signOutUrl;
     }
+  }
+
+  getAPIToken(regenerate = false) {
+    return statefulApiClient
+      .get('/api-token', {
+        params: { regenerate },
+      })
+      .finally(() => {
+        this.isFetchingAPIToken = false;
+      });
   }
 
   uploadResults() {
