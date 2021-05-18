@@ -35,7 +35,7 @@ export default class PlayerPeers extends Vue {
   }
 
   public mounted() {
-    this.timerId = setInterval(() => (this.now = dayjs()), 1000);
+    this.timerId = window.setInterval(() => (this.now = dayjs()), 1000);
   }
 
   public beforeDestroy() {
